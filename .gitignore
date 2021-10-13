@@ -1,0 +1,16 @@
+**/.vscode/
+*.pyc
+.env
+env
+.DS_Store
+**/__pycache__/**
+venv/
+bin/
+include/
+lib/
+*.cfg
+db.sqlite3
+duovenv/
+env/
+Pipfile*
+openapi.yaml
