@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-red-100 text-center">
+  <div class="pt-bg-green-100 pt-text-center">
     This is the official page of the project tracker app
   </div>
 </template>
