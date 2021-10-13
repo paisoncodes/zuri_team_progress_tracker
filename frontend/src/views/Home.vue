@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-red-100 text-center">
-    This is the official page of the project tracker app
+  <div class="text-center">
+    <div class="bg-brand-gray-light-2">This is the official page of the project tracker app</div> 
     <HomeContainer />
   </div>
 </template>

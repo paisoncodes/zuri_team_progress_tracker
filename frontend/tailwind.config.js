@@ -3,12 +3,12 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-       colors:{
+      colors:{
         brand: {
           red: {
             light: {
               1: "#F7F3F2",
-              2: 'F2EBE9'
+              2: '#F2EBE9'
             },           
             dark: "#E7332B"
           },
@@ -17,7 +17,10 @@ module.exports = {
               1: '#514949',
               2: '#898989',
             },
-            light: '#A08F8F',
+            light: {
+              1: "#A08F8F",
+              2: "#E5E5E5"
+            },
             blue: '#4774E8'
           }
         },
