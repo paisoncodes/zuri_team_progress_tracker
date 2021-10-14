@@ -1,18 +1,18 @@
 <template>
-  <div class="bg-white text-center flex flex-col">
+  <div class="flex flex-col text-center bg-white">
     <NavbarComponent/>
     <HomeContainer />
-    <Footer />
+    <Footer1 />
   </div>
 </template>
 
 <script>
 import HomeContainer from '../components/HomeContainer.vue'
-import Footer from '../components/Footer.vue'
+import Footer1 from '../components/Footer1.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
 
 export default {
-  components: { NavbarComponent, HomeContainer, Footer },
+  components: { NavbarComponent, HomeContainer, Footer1 },
   name: 'Home',
 }
 </script>

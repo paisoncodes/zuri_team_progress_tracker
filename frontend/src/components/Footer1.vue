@@ -58,7 +58,7 @@
         </div>
         <div class="w-full px-4 lg:w-1/4 md:w-1/2">
           <h2 class="mb-3 text-lg font-bold tracking-widest title-font">Follow us</h2>
-          <div class="flex space-x-6 lg:justify-between">
+          <div class="flex space-x-6 lg:items-center">
                     <div><img src="../assets/instagram.png" alt="Instagram Logo"></div>
                     <div><img src="../assets/facebook.png" alt="Facebook Logo"></div>
                     <div><img src="../assets/linkedin.png" alt="LinkedIn Logo"></div>

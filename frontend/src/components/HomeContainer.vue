@@ -1,24 +1,24 @@
 <template>
 
-<div class="mx-auto my-6">
+<div class="w-4/5 mx-auto my-6">
 
     <nav class="flex flex-col sm:flex-row">
-        <button class="py-4 bg-brand-red-light-2 padtab1 block hover:text-blue-500 focus:outline-none text-brand-gray-dark-1 font-medium border-brand-gray-light">
+        <button class="block py-4 font-medium bg-brand-red-light-2 padtab1 hover:text-blue-500 focus:outline-none text-brand-gray-dark-1 border-brand-gray-light">
             OVERVIEW
         </button>
         
-        <button class="text-brand-gray-light py-4 padothers block hover:text-brand-gray-dark-1 focus:outline-none">
+        <button class="block py-4 text-brand-gray-light padothers hover:text-brand-gray-dark-1 focus:outline-none">
             2021
         </button>
         
-        <button class="text-brand-gray-light py-4 padothers block hover:text-brand-gray-dark-1 focus:outline-none">
+        <button class="block py-4 text-brand-gray-light padothers hover:text-brand-gray-dark-1 focus:outline-none">
             2020
         </button>
         
-        <button class="text-brand-gray-light py-4 padothers block hover:text-brand-gray-dark-1 focus:outline-none">
+        <button class="block py-4 text-brand-gray-light padothers hover:text-brand-gray-dark-1 focus:outline-none">
             2019
         </button>
-        <button class="text-brand-gray-light py-4 padothers block hover:text-brand-gray-dark-1 focus:outline-none">
+        <button class="block py-4 text-brand-gray-light padothers hover:text-brand-gray-dark-1 focus:outline-none">
             2018
         </button>
     </nav>
