@@ -1,18 +1,15 @@
 <template>
   <div>
-    <!--This is the official page of the project tracker app
-    <HomeContainer />-->
-    <NavbarComponent/>
+    This is the official page of the project tracker app
+    <HomeContainer />
   </div>
 </template>
 
 <script>
-// import HomeContainer from '../components/HomeContainer.vue'
-import NavbarComponent from '../components/NavbarComponent.vue'
+import HomeContainer from '../components/HomeContainer.vue'
 
 export default {
-  // components: { HomeContainer, NavbarComponent },
-  components: {NavbarComponent },
+  components: { HomeContainer },
   name: 'Home',
 }
 </script>
