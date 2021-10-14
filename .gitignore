@@ -17,3 +17,4 @@ openapi.yaml
 backend/app/migrations
 backend/app/__pycache__
 backend/config/__pycache__
+.idea

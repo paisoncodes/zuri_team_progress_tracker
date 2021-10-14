@@ -1,11 +1,12 @@
-from rest_framework import  status, views
+from rest_framework import status, views
 from rest_framework.views import APIView
 # from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from .serializers import UserSerializer, UserUpdateSerializer, JobSerializer
-from .models import User,Intern
+from .models import User, Intern
 from .serializers import *
 from django.http import Http404
+
 
 # Create your views here.
 class UserCreateView(APIView):
@@ -13,12 +14,18 @@ class UserCreateView(APIView):
     Create Users View
     '''
     serializer_class = UserSerializer
+
+    def get(self, request, *args, **kwargs):
+        user = User.objects.all()
+        serializer = UserSerializer(user, many=True)
+        return Response(serializer.data)
+
     def post(self, request, *args, **kwargs):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserUpdateView(APIView):
@@ -27,14 +34,13 @@ class UserUpdateView(APIView):
     '''
     serializer_class = UserUpdateSerializer
 
-    def put(self, request, user_id,  *args, **kwargs):
+    def put(self, request, user_id, *args, **kwargs):
         user = User.objects.get(pk=user_id)
         serializer = UserUpdateSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)   
-  
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserDetailView(APIView):
@@ -43,6 +49,11 @@ class UserDetailView(APIView):
         '''
         Get User Details
         '''
+
+        UserInfo = self.get_object(pk)
+        serializer = UserSerializer(UserInfo)
+        if UserInfo:
+            UserInfo.get()
         UserInfo = User.objects.get(pk=user_id)        
         serializer = UserUpdateSerializer(UserInfo, data=request.data)
         if serializer.is_valid():
@@ -59,8 +70,8 @@ class UserDetailView(APIView):
         UserInfo = User.objects.get(pk=user_id)
         UserInfo.delete()
         return Response(
-        {"message": "User deleted successfully."},
-        status=status.HTTP_204_NO_CONTENT,
+            {"message": "User deleted successfully."},
+            status=status.HTTP_204_NO_CONTENT,
         )
 
 
@@ -69,15 +80,12 @@ class JobView(APIView):
         intern = Intern.objects.get(username=username)
         serializer = JobSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.validated_data["intern"]=intern
+            serializer.validated_data["intern"] = intern
             serializer.save()
-            
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors)
 
-
-
-        
 
 ######### Intern Models
 class InternDetailView(APIView):
@@ -91,9 +99,27 @@ class InternDetailView(APIView):
         except Intern.DoesNotExist:
             raise Http404
 
-
     def delete(self, request, pk, format=None):
         intern = self.get_object(pk)
         intern.delete()
-        
+
         return Response(status=status.HTTP_200_OK)
+
+
+class InternCreateUpdateView(APIView):
+    def post(self, request):
+        serializer = InternSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+    def put(self, request):
+        intern_id = request.data.pop('intern_id')
+        try:
+            intern = Intern.objects.get(pk=intern_id)
+        except Intern.DoesNotExist:
+            return Response({"message": "This intern does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = InternSerializer(data=request, instance=intern)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
