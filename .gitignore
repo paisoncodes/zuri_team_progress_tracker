@@ -15,3 +15,35 @@ env/
 Pipfile*
 openapi.yaml
 backend/app/migrations
+
+db.sqlite3
+
+# virtual environment
+env/
+/.env
+.env
+static
+venv
+.venv
+venv/
+
+# Django
+*.log
+*.pot
+*.pyc
+*__pycache__
+database.sqlite
+.coverage
+
+*.idea
+
+*Pipfile.lock
+Pipfile.lock
+# *media
+*.DS_Store
+/.vscode
+/__pycache__
+.yarn
+*/node_modules
+
+node_modules
