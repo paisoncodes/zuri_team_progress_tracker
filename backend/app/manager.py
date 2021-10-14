@@ -8,7 +8,7 @@ class UserManager(BaseUserManager):
             raise ValueError('user must have a password')
 
         user_obj = self.model(
-            email=email,
+            email=self.normalize_email(email),
             **extra_fields
         )
         user_obj.set_password(password)
@@ -20,7 +20,7 @@ class UserManager(BaseUserManager):
 
     def create_staffuser(self, email, password=None):
         user = self.create_user(
-            email,
+            email=self.normalize_email(email),
             password=password,
             is_staff=True,
 
@@ -30,7 +30,7 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email, password=None):
         user = self.create_user(
-            email,
+            email=self.normalize_email(email),
             password=password,
             is_staff=True,
             is_admin=True,

@@ -1,8 +1,11 @@
-from rest_framework import serializers, status, views
+from rest_framework import  status, views
 from rest_framework.views import APIView
+# from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
-from .models import User
-from .serializers import UserSerializer, UpdateUserSerializer
+from .serializers import UserSerializer, UserUpdateSerializer, JobSerializer
+from .models import User,Intern
+from .serializers import *
+from django.http import Http404
 
 # Create your views here.
 class UserCreateView(APIView):
@@ -29,11 +32,11 @@ class UserUpdateView(APIView):
     '''
     Update Users View
     '''
-    serializer_class = UpdateUserSerializer
+    serializer_class = UserUpdateSerializer
 
     def put(self, request, user_id,  *args, **kwargs):
         user = User.objects.get(pk=user_id)
-        serializer = UpdateUserSerializer(user, data=request.data)
+        serializer = UserUpdateSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -68,3 +71,36 @@ class UserClassView(APIView):
         status=status.HTTP_204_NO_CONTENT,
         )
 
+class JobView(APIView):
+    def post(self, request, username):
+        intern = Intern.objects.get(username=username)
+        serializer = JobSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.validated_data["intern"]=intern
+            serializer.save()
+            
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors)
+
+
+
+        
+
+######### Intern Models
+class InternDetailView(APIView):
+    """
+        Intern Update View
+    """
+
+    def get_object(self, pk):
+        try:
+            return Intern.objects.get(pk=pk)
+        except Intern.DoesNotExist:
+            raise Http404
+
+
+    def delete(self, request, pk, format=None):
+        intern = self.get_object(pk)
+        intern.delete()
+        
+        return Response(status=status.HTTP_200_OK)
