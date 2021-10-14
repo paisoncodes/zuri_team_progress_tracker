@@ -65,8 +65,12 @@ class Job(models.Model):
     intern = models.ForeignKey(Intern, on_delete=models.CASCADE)
     job_title = models.CharField(max_length=255)
     gotten_at = models.DateTimeField()
+    company_name = models.CharField(max_length=255)
     last_updated_at = models.DateTimeField()
     job_description = models.CharField(max_length=255)
     currently_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.intern.full_name}'s Job at {self.company_name}"
 
