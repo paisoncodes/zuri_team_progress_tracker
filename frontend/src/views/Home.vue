@@ -1,17 +1,21 @@
 <template>
-  <div class="text-center">
-    <div class="bg-brand-gray-light-2">This is the official page of the project tracker app</div> 
+  <div class="bg-red-100 ">
+    <p class="text-center">This is the official page of the project tracker app</p>
     <HomeContainer />
-    <Footer />
+  <div>
+    <!--This is the official page of the project tracker app
+    <HomeContainer />-->
+    <NavbarComponent/>
   </div>
 </template>
 
 <script>
-import HomeContainer from '../components/HomeContainer.vue'
-import Footer from '../components/Footer.vue'
+// import HomeContainer from '../components/HomeContainer.vue'
+import NavbarComponent from '../components/NavbarComponent.vue'
 
 export default {
-  components: { HomeContainer, Footer },
+  // components: { HomeContainer, NavbarComponent },
+  components: {NavbarComponent },
   name: 'Home',
 }
 </script>
