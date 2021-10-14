@@ -54,7 +54,19 @@ class User(AbstractBaseUser):
 
 
 class Intern(models.Model):
-    name = models.CharField(max_length=100)
+    full_name = models.CharField(max_length=100)
     stack = models.CharField(max_length = 100)
     job = models.CharField(max_length=100)
     batch = models.IntegerField()
+   
+
+
+class Job(models.Model):
+    intern = models.ForeignKey(Intern, on_delete=models.CASCADE)
+    job_title = models.CharField(max_length=255)
+    gotten_at = models.DateTimeField()
+    last_updated_at = models.DateTimeField()
+    job_description = models.CharField(max_length=255)
+    currently_active = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
