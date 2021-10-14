@@ -10,7 +10,7 @@ class User(AbstractBaseUser):
     address     = models.TextField(null=True)
     city        = models.CharField(max_length=300, null = True)
     state       = models.CharField(max_length=300, null = True)
-    about       = models.BooleanField(default=False)
+    about       = models.TextField(null=True)
     date        = models.DateTimeField(auto_now_add=True)
     
     active      = models.BooleanField(default=True)
@@ -57,4 +57,4 @@ class Intern(models.Model):
     name = models.CharField(max_length=100)
     stack = models.CharField(max_length = 100)
     job = models.CharField(max_length=100)
-    batch = models.IntegerField(max_length=100)
+    batch = models.IntegerField()

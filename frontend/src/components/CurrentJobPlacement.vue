@@ -1,6 +1,6 @@
 <template>
     <div class="cjb-container p-6">
-        <h2 class="cjb-heading">CURRENT JOB PLACEMENTS</h2>
+        <h2 class="cjb-heading text-left">CURRENT JOB PLACEMENTS</h2>
         <div class="flex justify-between">
             <div class="cjb-month mt-5">January</div>
             <div class="cjb-month mt-5">December</div>
@@ -8,15 +8,15 @@
         <div class="relative pt-5">
             <div class="overflow-hidden h-5 text-lg flex rounded-xl bg-gray-200">
                 <div style="width:60%"
-                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gray-600">
+                    class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-brand-gray-dark-1">
                 </div>
             </div>
         </div>
-        <p class="emp-status mt-5">1,54500,000 / 2,056,789 Employed</p>
-        <h2 class="cjb-heading mt-10">WHERE SOME OF OUR</h2>
-        <h2 class="cjb-heading mt-2">INTERNS NOW WORK</h2>
+        <p class="emp-status mt-5 text-left">1,54500,000 / 2,056,789 Employed</p>
+        <h2 class="cjb-heading mt-10 text-left">WHERE SOME OF OUR</h2>
+        <h2 class="cjb-heading mt-2 text-left">INTERNS NOW WORK</h2>
 
-        <div class="flex justify-between mt-5">
+        <div class="flex mt-5">
             <span>
                 <img src="@/assets/CurrentJobPlacement/company_1.png">
             </span>
@@ -43,7 +43,7 @@
             </span>
         </div>
 
-        <div class="mt-10 mb-8 text-blue-700">
+        <div class="mt-10 mb-8 text-brand-gray-blue text-left">
             <h2><a href="#">VIEW COMPLETE PROGRESS ></a></h2>
         </div>
     </div>
@@ -58,7 +58,6 @@
 <style scoped>
     .cjb-container {
         background: #F7F3F2;
-        font-family: Averta Demo PE Cutted Demo;
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
@@ -73,4 +72,9 @@
     .emp-status {
         color: #786B6B;
     }
-</style>>
+
+    span{
+        width: 50%;
+        margin: 5px;
+    }
+</style>
