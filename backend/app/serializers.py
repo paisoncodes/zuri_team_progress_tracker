@@ -6,7 +6,7 @@ from .models import Intern, User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "first_name", "last_name", "email", "address", "city", "state", "active","staff","admin","date" ]
+        fields = ["id", "first_name", "last_name", "email", "address", "city", "state"]
 
 class UpdateUserSerializer(serializers.ModelSerializer):
     class Meta:
