@@ -8,7 +8,8 @@ module.exports = {
           red: {
             light: {
               1: "#F7F3F2",
-              2: 'F2EBE9'
+              2: '#F2EBE9',
+              3: '#EDE2E2'
             },           
             dark: "#E7332B"
           },
