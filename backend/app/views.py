@@ -43,27 +43,31 @@ class UserUpdateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserClassView(APIView):
+class UserDetailView(APIView):
 
-    def get(self, request, pk, format=None):
+    def get(self, request, user_id):
         '''
         Get User Details
         '''
+
         UserInfo = self.get_object(pk)
         serializer = UserSerializer(UserInfo)
         if UserInfo:
             UserInfo.get()
+        UserInfo = User.objects.get(pk=user_id)        
+        serializer = UserUpdateSerializer(UserInfo, data=request.data)
+        if serializer.is_valid():
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(
             {"message": "Unable to retrieve user details"},
             status=status.HTTP_400_BAD_REQUEST
         )
-
-    def delete(self, request, pk, format=None):
+        
+    def delete(self, request, user_id, format=None):
         '''
-        Delete Users
+        Delete User
         '''
-        UserInfo = self.get_object(pk)
+        UserInfo = User.objects.get(pk=user_id)
         UserInfo.delete()
         return Response(
             {"message": "User deleted successfully."},
