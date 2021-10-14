@@ -51,3 +51,10 @@ class User(AbstractBaseUser):
     @property
     def is_active(self):
         return self.active
+
+
+class Intern(models.Model):
+    name = models.CharField(max_length=100)
+    stack = models.CharField(max_length = 100)
+    job = models.CharField(max_length=100)
+    batch = models.IntegerField(max_length=100)
