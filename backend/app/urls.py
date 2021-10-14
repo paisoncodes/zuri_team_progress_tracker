@@ -1,4 +1,4 @@
-from .import views
+# from .import views
 
 from django.urls import path
 from django.conf import settings
