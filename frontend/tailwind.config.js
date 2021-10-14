@@ -23,12 +23,6 @@ module.exports = {
           }
         },
       },
-      fontSize: {
-        'md': '2rem',
-        },
-      height: {
-        'pth': '27.125rem',
-        },
     },
   },
   variants: {
