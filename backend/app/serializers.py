@@ -30,10 +30,12 @@ class UserSerializer(serializers.Serializer):
 
 class InternSerializer(serializers.Serializer):
     
-    name = serializers.CharField(max_length=100)
-    stack = serializers.CharField(max_length = 100)
-    job = serializers.CharField(max_length=100)
-    batch = serializers.IntegerField()
+    name = serializers.CharField(max_length=100,required=False)
+    stack = serializers.CharField(max_length = 100,required=False)
+    job = serializers.CharField(max_length=100,required=False)
+    batch = serializers.IntegerField(required=False)
+
+    
 
     def create(self, validated_data):
         return Intern.objects.create(**validated_data)
@@ -47,3 +49,8 @@ class InternSerializer(serializers.Serializer):
 
         instance.save()
         return instance
+
+
+
+class UpdateInternSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=100)
