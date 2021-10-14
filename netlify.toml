@@ -10,4 +10,4 @@
   # directory located at the absolute path "root/project/build-output"
 
   # Default build command.
-  command = "npm run build"
+  command = "yarn build"
