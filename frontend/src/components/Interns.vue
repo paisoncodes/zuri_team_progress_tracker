@@ -10,11 +10,11 @@
              {{ intern.name}}
             </p>
           </a>
-          <p class="py-2 text-gray-700 text-brand-gray-dark-1">
+          <p class="py-2 text-brand-gray-dark-1">
           {{intern.track}}
           </p>
           <div class="flex space-x-4">
-            <span class="text-gray-700 text-brand-gray-light">
+            <span class="text-brand-gray-light">
          {{intern.stage}}
           </span>
           </div>

@@ -47,3 +47,5 @@ Pipfile.lock
 */node_modules
 
 node_modules
+backend/app/__pycache__
+backend/config/__pycache__
