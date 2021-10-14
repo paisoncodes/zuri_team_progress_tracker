@@ -3,6 +3,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      outline: {
+        black: '1px solid #514949',
+      },
        colors:{
         brand: {
           red: {

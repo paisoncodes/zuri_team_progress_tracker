@@ -1,7 +1,7 @@
 <template>
-    <div class="w-4/5 mx-auto px-2 py-4 text-brand-gray-dark-1">
-        <div class="lg:flex justify-between text-sm">
-            <div class="px-1 text-lg text-left font-medium">
+    <div class="w-4/5 px-2 py-4 mx-auto text-brand-gray-dark-1">
+        <div class="justify-between text-sm lg:flex">
+            <div class="px-1 text-lg font-medium text-left">
                 ZURI.TEAM
             </div>
             <div class="px-1 text-left">
@@ -42,5 +42,4 @@ name: 'Footer'
 </script>
 
 <style>
-
 </style>
