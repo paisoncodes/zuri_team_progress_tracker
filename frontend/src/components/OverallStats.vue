@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="md:py-16 bg-brand-red-light-1 text-center md:text-left flex flex-col md:flex-row border-b-2 ">
+        <div class="md:py-16 bg-brand-red-light-1 text-center md:text-left flex flex-col md:flex-row lg:flex-row border-b-2">
 
             <div v-for="stat in stats" :key="stat.category" class="py-11 md:py-0 md:px-11 border-b-2 md:border-b-0 md:border-r-2 border-brand-red-light-3 ">
                 

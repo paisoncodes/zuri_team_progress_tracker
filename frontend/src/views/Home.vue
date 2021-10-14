@@ -1,5 +1,6 @@
 <template>
-  <div class="bg-white text-center flex content-center">
+  <div class="bg-white text-center flex flex-col">
+    <NavbarComponent/>
     <HomeContainer />
     <Footer />
   </div>
@@ -8,9 +9,10 @@
 <script>
 import HomeContainer from '../components/HomeContainer.vue'
 import Footer from '../components/Footer.vue'
+import NavbarComponent from '../components/NavbarComponent.vue'
 
 export default {
-  components: { HomeContainer, Footer },
+  components: { NavbarComponent, HomeContainer, Footer },
   name: 'Home',
 }
 </script>

@@ -32,9 +32,9 @@
             <div>
                 <OverallStats/>
             </div>
-                <CurrentJobPlacement/>
+                
             <div>
-
+                <CurrentJobPlacement/>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@ data(){
 
 .grid-cont {
     display: grid;
-    grid-template-columns: 7.2rem 0.9fr;
+    grid-template-columns: 7.2rem 1fr;
     grid-template-rows: 1fr;
     grid-auto-flow: row;
 }
