@@ -4,16 +4,11 @@
         <div>This is the sidebar</div>
         <div class="flex-grow-1 bg-green-200">This is the main div</div>
     </div>
-        <JobPlacement/>
-
 </div>
 </template>
 
 <script>
-import JobPlacement from '../components/jobPlacement.vue'
-
 export default {
-  components: { JobPlacement},
 
 }
 </script>
