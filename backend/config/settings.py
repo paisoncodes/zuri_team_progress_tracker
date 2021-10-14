@@ -39,12 +39,25 @@ REST_FRAMEWORK = {
     "DEFAULT_PARSER_CLASSES": [
         'rest_framework.parsers.JSONParser',
     ],
+
+    'DEFAULT_SCHEMA_CLASS': [
+        'drf_spectacular.openapi.AutoSchema'
+    ],
     
     "DEFAULT_PAGINATION_CLASS": [
         'apps.core.pagination.StandardResultsSetPagination',
-        ],
+    ],
 
 }
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Progress Tracker API',
+    'DESCRIPTION': 'Tracks the progress of past interns',
+    'VERSION': '1.0.0',
+    # OTHER SETTINGS
+}
+
 
 # Application definition
 
@@ -60,6 +73,7 @@ INSTALLED_APPS = [
     'app.apps.AppConfig'
     'corsheaders',
     'drf_yasg',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
