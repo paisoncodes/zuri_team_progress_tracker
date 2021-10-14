@@ -4,6 +4,7 @@
 <div v-for="(profile, i) in profiles" :key="i" class="py-6 mx-auto ">
   <div class="flex mx-auto overflow-hidden shadow-md bg-brand-red-light-1 sm:max-w-xl md:max-w-full lg:max-w-screen-xl h-60">
     <div class="bg-cover w-96 h-60" style="background-image: url('./assets/mariam.png')">
+    <img class="object-cover w-64 h-60" v-bind:src="profile.picture" v-bind:alt="profile.alt" />
     </div> 
     <div class="px-6 text-left">
       <h1 class="text-4xl font-normal font-bold leading-loose text-gray-900 text-brand-gray-dark-1">{{profile.name}}</h1>
@@ -26,7 +27,7 @@ export default {
           name:"John Doe",
           role: 'Senior Digital Product Designer @andela',
           stage:  'Zuri Training Finalist',
-           picture: require('../assets/mariam.png'),
+           picture: require('../assets/chuks.png'),
            alt: 'Mariam Danjuma',
            about: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Accumsan sit amet in morbi dolor nunc, at. At scelerisque sed leo in pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
         },
