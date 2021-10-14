@@ -5,10 +5,10 @@
         <div class="text-base font-normal text-brand-gray-dark-1">ZURI.TEAM</div>
 
         <div class="hidden md:flex text-base space-x-5 items-center">
-            <a href="#" class=" ">Home</a>
-            <a href="#" class="">Curriculum</a>
-            <a href="#" class="">Program</a>
-            <a href="#" class=" text-brand-red-dark">Progress so far</a>
+            <a href="#">Home</a>
+            <a href="#">Curriculum</a>
+            <a href="#">Program</a>
+            <a href="#" class="text-brand-red-dark">Progress so far</a>
             <button class="bg-brand-red-dark hover:bg-white text-white hover:text-brand-red-dark font-normal px-4 py-4 text-sm">Join Zuri Training</button>
         </div>
         <!--mobile button-->
