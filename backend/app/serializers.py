@@ -1,6 +1,7 @@
+from django.db import models
 from rest_framework import serializers
 
-from .models import Intern, User
+from .models import *
 
 
 class UserSerializer(serializers.Serializer):
@@ -49,6 +50,11 @@ class InternSerializer(serializers.Serializer):
 
         instance.save()
         return instance
+
+class JobSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Jobs
+        fields = ['job_title', 'company_name','gotten_at', 'last_updated_at', 'job_description', 'currently_active']
 
 
 
