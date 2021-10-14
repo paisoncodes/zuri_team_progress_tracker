@@ -13,13 +13,6 @@ class UserCreateView(APIView):
     Create Users View
     '''
     serializer_class = UserSerializer
-
-    def get(self, request, *args, **kwargs):
-        user = User.objects.all()
-        serializer = UserSerializer(user, many=True)
-        return Response(serializer.data)
-        
-
     def post(self, request, *args, **kwargs):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -44,14 +37,14 @@ class UserUpdateView(APIView):
   
 
 
-class UserClassView(APIView):
+class UserListView(APIView):
 
-    def get(self, request, pk, format=None):
+    def get(self, request, user_id, format=None):
         '''
         Get User Details
         '''
-        UserInfo = self.get_object(pk)        
-        serializer = UserSerializer(UserInfo)
+        UserInfo = User.objects.all()        
+        serializer = UserSerializer(UserInfo, many=False)
         if UserInfo:
             UserInfo.get()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -59,17 +52,20 @@ class UserClassView(APIView):
             {"message": "Unable to retrieve user details"},
             status=status.HTTP_400_BAD_REQUEST
         )
+        
 
-    def delete(self, request, pk, format=None):
+
+    def delete(self, request, user_id, format=None):
         '''
-        Delete Users
+        Delete User
         '''
-        UserInfo = self.get_object(pk)
+        UserInfo = User.objects.all()
         UserInfo.delete()
         return Response(
         {"message": "User deleted successfully."},
         status=status.HTTP_204_NO_CONTENT,
         )
+
 
 class JobView(APIView):
     def post(self, request, username):
