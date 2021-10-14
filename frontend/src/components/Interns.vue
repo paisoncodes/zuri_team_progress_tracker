@@ -2,7 +2,7 @@
   <div class="mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:py-20">
     <div class="grid gap-2 lg:grid-cols-4 sm:max-w-sm sm:mx-auto lg:max-w-full">
     <div v-for="(intern, i) in interns" :key="i" class="overflow-hidden text-left transition-shadow duration-300 rounded-sm">
-        <a href="/" aria-label="Article"><img src="https://images.pexels.com/photos/2123755/pexels-photo-2123755.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=750&amp;w=1260" class="object-cover w-64 h-60 " alt="" /></a>
+        <a href="/" aria-label="Article"><img class="object-cover w-64 h-60" v-bind:src="intern.picture" v-bind:alt="intern.alt" /></a>
         <div  class="py-4">
          
           <a href="/" aria-label="Article" class="inline-block text-black transition-colors duration-200 hover:text-deep-purple-accent-700">
@@ -27,31 +27,37 @@
 
 <script>
 export default {
-  name: 'VotersTable',
+  name: 'Interns',
   data(){
     return {
       interns:[
         {
-          name:"John Doe",
+          name:"Mariam Danjuma",
           track: 'UI/UX Designer/Figma',
           stage:  'Zuri Training Finalist',
-        
+           picture: require('../assets/mariam.png'),
+           alt: 'Mariam Danjuma'
         },
         {
-          name:"John Doe",
+          name:"Felix Abasi Franklin",
           track: 'UI/UX Designer/Figma',
           stage:  'Zuri Training Finalist',
-         
+          picture: require('../assets/felix.png'),
+          alt: 'Felix Abasi Franklin'
         },
         {
-         name:"John Doe",
+         name:"Afolanyan Gbeminiyi",
           track: 'UI/UX Designer/Figma',
           stage:  'Zuri Training Finalist',
+          picture: require('../assets/afolayan.png'),
+           alt: 'Afolanyan Gbeminiyi'
         },
         {
-         name:"John Doe",
+         name:"Namnso Ukpanah",
           track: 'UI/UX Designer/Figma',
           stage:  'Zuri Training Finalist',
+          picture: require('../assets/namso.png'),
+           alt: 'Namnso Ukpanah'
         },
       ]
     }
