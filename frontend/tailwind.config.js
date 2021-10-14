@@ -8,8 +8,12 @@ module.exports = {
           red: {
             light: {
               1: "#F7F3F2",
+<<<<<<< HEAD
+              2: '#F2EBE9'
+=======
               2: '#F2EBE9',
               3: '#EDE2E2'
+>>>>>>> d27258bf403215d701e737134aa2b0c5906963f5
             },           
             dark: "#E7332B"
           },
@@ -23,6 +27,12 @@ module.exports = {
           }
         },
       },
+      fontSize: {
+        'md': '2rem',
+        },
+      height: {
+        'pth': '27.125rem',
+        },
     },
   },
   variants: {
