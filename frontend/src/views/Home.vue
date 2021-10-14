@@ -1,15 +1,19 @@
 <template>
-  <div class="bg-red-100 text-center">
-    This is the official page of the project tracker app
-    <HomeContainer />
+  <div class="">
+   
+    <!-- <HomeContainer /> -->
+    <InternProfile />
+    <Interns />
   </div>
 </template>
 
 <script>
-import HomeContainer from '../components/HomeContainer.vue'
+// import HomeContainer from '../components/HomeContainer.vue'
+import InternProfile from '../components/InternProfile.vue'
+import Interns from '../components/Interns.vue'
 
 export default {
-  components: { HomeContainer },
+  components: {  InternProfile, Interns },
   name: 'Home',
 }
 </script>
