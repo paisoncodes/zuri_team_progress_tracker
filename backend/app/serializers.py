@@ -37,6 +37,6 @@ class InternSerializer(serializers.Serializer):
 
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Job
-        fields = ['intern', 'job_title', 'gotten_at', 'last_updated_at', 'job_description', 'currently_active']
+        model = Jobs
+        fields = ['job_title', 'company_name','gotten_at', 'last_updated_at', 'job_description', 'currently_active']
 

@@ -54,14 +54,19 @@ class User(AbstractBaseUser):
 
 
 class Intern(models.Model):
+    username = models.CharField(unique=True, max_length=255)
     full_name = models.CharField(max_length=100)
     stack = models.CharField(max_length = 100)
     job = models.CharField(max_length=100)
     batch = models.IntegerField()
+
+
+    def __str__(self):
+        return self.username
    
 
 
-class Job(models.Model):
+class Jobs(models.Model):
     intern = models.ForeignKey(Intern, on_delete=models.CASCADE)
     job_title = models.CharField(max_length=255)
     gotten_at = models.DateTimeField()
@@ -72,5 +77,5 @@ class Job(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.intern.full_name}'s Job at {self.company_name}"
+        return f"{self.intern.username}'s Job at {self.company_name}"
 
