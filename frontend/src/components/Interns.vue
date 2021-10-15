@@ -1,7 +1,7 @@
 <template>
-  <div class="max-w-6xl sm:max-w-xl md:max-w-full md:px-6 lg:py-6">
-    <div class="grid grid-cols-4 gap-12 sm:max-w-sm sm:mx-auto lg:max-w-6xl">
-    <div v-for="(intern, i) in interns" :key="i" class="text-left transition-shadow duration-300 rounded-sm ">
+  <div class="mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:py-20">
+    <div class="grid gap-2 lg:grid-cols-4 sm:max-w-sm sm:mx-auto lg:max-w-full">
+    <div v-for="(intern, i) in interns" :key="i" class="overflow-hidden text-left transition-shadow duration-300 rounded-sm">
         <a href="/" aria-label="Article"><img class="object-cover w-64 h-60" v-bind:src="intern.picture" v-bind:alt="intern.alt" /></a>
         <div  class="py-4">
          
