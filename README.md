@@ -29,9 +29,6 @@ source venv/bin/activate
 
 ### IMPORTANT: Delete the migrations folder inside the app folder
 
-</div>
-</div>
-
 
 create a folder name "migrations" inside the "app" folder & also create a "__init__.py" file inside the "migrations" 
 ```bash
