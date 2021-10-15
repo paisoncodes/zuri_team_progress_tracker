@@ -1,6 +1,6 @@
 <template>
 <div class="w-full min-h-pth bg-brand-red-light-1 ">
-    <div class="flex items-center justify-between max-w-6xl p-5 mx-auto">
+    <div class="flex items-center justify-between py-6 px-6 mx-auto max-w-7xl ">
 
         <div class="text-base font-normal text-brand-gray-dark-1">ZURI.TEAM</div>
 
@@ -16,6 +16,7 @@
            <button class="mobile-menu-button"><img src="../assets/hamburgerIcon.png" class="h-5 w-7" color="brand-gray-dark-1" v-on:click="menu()"></button>
         </div>
 
+
         </div>
         <!--mobile menu-->
             <div class="px-4 mobile-menu md:hidden">
@@ -24,7 +25,8 @@
                 <a href="#" class="block py-2 text-sm ">Program</a>
                 <a href="#" class="block py-2 text-sm text-brand-red-dark">Progress so far</a>
                 <button class="w-full py-4 text-sm font-normal text-white bg-brand-red-dark hover:bg-white hover:text-brand-red-dark">Join Zuri Training</button>
-            
+
+
             </div>
         <div class="py-12 font-normal">
             <p class="py-6 text-sm text-center text-brand-red-dark">INTERNS PROGRESS TRACKER</p>

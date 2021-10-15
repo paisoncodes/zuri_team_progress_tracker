@@ -1,12 +1,10 @@
 <template>
 
-<div class="mt-0 max-w-6xl mx-auto container pad-cont">
+<div class="px-6 mx-auto max-w-7xl bg-brand-red-light-1">
 
-
-    <div class="bg-brand-red-light-1 ">
-        <!-- 2021 -->
-        <div class="flex">
-            <div class="flex overview-width flex-col justify-center">
+    <div class="bg-brand-red-light-1">
+        <div class="flex sm:flex-col">
+            <div class="flex overview-width flex-col justify-center w-1/6">
                 <p>2021</p>
             </div>
 
@@ -17,7 +15,7 @@
         </div>
 
         <div class="flex">
-            <div class="flex overview-width flex-col justify-center">
+            <div class="flex overview-width flex-col justify-center w-1/6">
                 <p>2020</p>
             </div>
 
@@ -28,7 +26,7 @@
         </div>
 
         <div class="flex">
-            <div class="flex overview-width flex-col justify-center">
+            <div class="flex overview-width flex-col justify-center w-1/6">
                 <p>2019</p>
             </div>
 
@@ -72,7 +70,5 @@ data(){
     padding: 1.2rem 2.41rem;
 }
 
-.overview-width {
-    width: 7.2rem;
-}
+
 </style>
