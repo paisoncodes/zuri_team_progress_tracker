@@ -1,8 +1,9 @@
 from rest_framework import serializers, status, views
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import User
-from .serializers import UserSerializer, UpdateUserSerializer
+from .models import User,Intern
+from .serializers import UserSerializer, UpdateUserSerializer,InternSerializer
+from django.http import Http404
 
 # Create your views here.
 class UserCreateView(APIView):
@@ -68,3 +69,14 @@ class UserClassView(APIView):
         status=status.HTTP_204_NO_CONTENT,
         )
 
+class InternDetail(APIView):
+    def get_object(self, pk):
+        try:
+            return Intern.objects.get(pk=pk)
+        except Intern.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        intern = self.get_object(pk)
+        serializer = InternSerializer(intern)
+        return Response(serializer.data)
