@@ -13,6 +13,7 @@ db.sqlite3
 duovenv/
 env/
 Pipfile*
+
 openapi.yaml
 backend/app/migrations
 
@@ -47,6 +48,7 @@ Pipfile.lock
 */node_modules
 
 node_modules
+
 backend/app/__pycache__
 backend/config/__pycache__
 .idea
