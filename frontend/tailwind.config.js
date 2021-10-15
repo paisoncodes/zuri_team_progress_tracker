@@ -3,7 +3,10 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
-       colors:{
+      outline: {
+        black: '1px solid #514949',
+      },
+      colors:{
         brand: {
           red: {
             light: {
@@ -17,12 +20,20 @@ module.exports = {
             dark: {
               1: '#514949',
               2: '#898989',
+              3: '#CFC4C1',
             },
             light: '#A08F8F',
             blue: '#4774E8'
           }
         },
       },
+      screens: {
+        xs: '475px'
+      },
+      fontFamily: {
+        'mulish': ['Mulish', 'sans-serif'],
+        'poppins': ['Poppins', 'sans-serif']
+      }
     },
   },
   variants: {

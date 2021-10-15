@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
-from app.manager import UserManager
+from .manager import UserManager
 
 # Create your models here.
 class User(AbstractBaseUser):
@@ -10,7 +10,7 @@ class User(AbstractBaseUser):
     address     = models.TextField(null=True)
     city        = models.CharField(max_length=300, null = True)
     state       = models.CharField(max_length=300, null = True)
-    about       = models.BooleanField(default=False)
+    about       = models.TextField(null=True)
     date        = models.DateTimeField(auto_now_add=True)
     
     active      = models.BooleanField(default=True)
@@ -54,7 +54,40 @@ class User(AbstractBaseUser):
 
 
 class Intern(models.Model):
-    name = models.CharField(max_length=100)
-    stack = models.CharField(max_length = 100)
-    job = models.CharField(max_length=100)
-    batch = models.IntegerField(max_length=100)
+    GENDER_CHOICES = (
+        ("M", "Male"),
+        ("F", "Female")
+    )
+    username = models.CharField(unique=True, max_length=255, verbose_name="Slack name")
+    full_name = models.CharField(max_length=100)
+    stack = models.CharField(max_length = 1000)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    about = models.TextField()
+    state = models.CharField(max_length=200)
+    batch = models.IntegerField(verbose_name="Year")
+    is_employed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return self.username
+   
+
+
+class Jobs(models.Model):
+    intern = models.ForeignKey(Intern, on_delete=models.CASCADE)
+    job_title = models.CharField(max_length=255)
+    gotten_at = models.DateTimeField()
+    company_name = models.CharField(max_length=255, verbose_name="Organization name")
+    last_updated_at = models.DateTimeField()
+    job_description = models.CharField(max_length=255)
+    currently_active = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.company_name
+
+
+class NewsLetter(models.Model):
+    subscriber_email = models.EmailField(max_length=200, blank=False)
+
