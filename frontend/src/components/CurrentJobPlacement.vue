@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-brand-red-light-2 p-6 m-0 mr-5">
+    <div class="bg-brand-red-light-2 p-6 m-0">
         <h2 class="cjb-heading text-left text-xs">CURRENT JOB PLACEMENTS</h2>
         <div class="flex justify-between">
             <div class="cjb-month mt-5 text-sm">January</div>
