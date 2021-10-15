@@ -49,3 +49,4 @@ Pipfile.lock
 node_modules
 backend/app/__pycache__
 backend/config/__pycache__
+.idea

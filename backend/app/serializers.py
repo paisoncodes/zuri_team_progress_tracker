@@ -85,5 +85,8 @@ class JobSerializer(serializers.ModelSerializer):
 class UpdateInternSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=100)
 
-
+class NewsLetterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NewsLetter
+        fields = "__all__"
 
