@@ -26,11 +26,8 @@ venv/bin/activate
 # for linux
 source venv/bin/activate
 ```
-<div class="panel panel-warning">
-**Warning**
-{: .panel-heading}
-<div class="panel-body">
-Delete the migrations folder inside the app folder
+
+### IMPORTANT: Delete the migrations folder inside the app folder
 
 </div>
 </div>
