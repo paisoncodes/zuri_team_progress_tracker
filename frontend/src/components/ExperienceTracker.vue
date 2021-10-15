@@ -4,9 +4,9 @@
      <div class="icon w-full h-full ">
          <img class="object-cover object-center  h-full w-full" :src="intern.picture"/>
      </div>
-     <div class="md:col-span-3 " >
-      <div class="m-5" >
-          <div class="grid md:grid-cols-2 sm:grid-cols-1  gap-4" >
+     <div class="md:col-span-3 ">
+      <div class="mx-5 mt-5"  >
+          <div class="grid md:grid-cols-2  gap-4" >
           <div class="w-full text-brand-gray-dark-1 font-normal">
             <p class="text-xl">{{intern.name}}</p>
             <p class="text-base">{{intern.role}}</p>
@@ -15,46 +15,51 @@
             <p class="leading-tight text-brand-gray-dark-2">{{intern.about}}</p>
           </div> 
         </div>
-      <div>
-        <h3  class="lg:my-4 text-brand-gray-dark-2">EXPERIENCE TRACKER</h3>
+      <div >
+        <h3  class="my-4 text-brand-gray-dark-2">EXPERIENCE TRACKER</h3>
         
-        <div class="overflow-x-scroll   overflow-hidden" > 
-        <div class="tracker    ml-5 my-10 h-3 flex justify-between items-center text-brand-gray-dark-2 bg-brand-gray-dark-3">
-          <div class="h-10 w-10 grid justify-items-center tracker-jobless">
-            <div class="h-10 w-10  rounded-full bg-brand-gray-dark-3"> </div>
+        <div class="tracker_overflow" > 
+        <div  class="tracker    ml-5 my-10 h-3 flex justify-between items-center text-brand-gray-dark-2 bg-brand-gray-dark-3">
+          <div class="h-10 grid justify-items-center tracker-jobless">
+            <div class="h-10 w-10 mb-1  rounded-full bg-brand-gray-dark-3"> </div>
               <div >JOBLESS</div>
            
             </div>
-              <div  class="relative bottom-4">2016</div>
+              <div  class="relative  bottom-4">2016</div>
             
 
-            <div class="h-12 w-12 grid justify-items-center  relative">
-              <img src="@/assets/paypal.png" class="border-solid border-2 border-brand-gray-dark-3 h-12 w-12 relative rounded-full" alt="">
+            <div class="h-12  grid justify-items-center">
+              <img src="@/assets/paypal.png" class="border-solid border-2 border-brand-gray-dark-3 h-12 w-12  rounded-full" alt="">
                 <div>PAYPAL</div>
             </div>
             <div  class="relative bottom-4" >2017</div>
 
+            
 
-            <div class="h-12 w-12 grid justify-items-center  relative">
-              <img src="@/assets/flutterwave.png" class="h-12 w-12 relative border-solid border-2 border-brand-gray-dark-3 rounded-full" alt="">
+            <div class="h-12  grid justify-items-center  ">
+              <img src="@/assets/flutterwave.png" class="h-12 w-12 border-solid border-2 border-brand-gray-dark-3 rounded-full" alt="">
                 <div>FLUTTERWAVE</div>
             </div>
              <div  class="relative bottom-4" >2018</div>
 
 
-            <div class="h-12 w-12 grid justify-items-center relative">
-              <img src="@/assets/paystack.png" class="h-12 w-12 border-solid border-2 border-brand-gray-dark-3  relative rounded-full" alt="">
+            <div class="h-12 grid justify-items-center ">
+              <img src="@/assets/paystack.png" class="h-12 w-12 border-solid border-2 border-brand-gray-dark-3  rounded-full" alt="">
                 <div class="relative">PAYSTACK</div>
             </div>
             <div  class="relative bottom-4 " >2019</div>
 
-              <div class="h-20 w-20 grid justify-items-center relative rounded-full">
-              <img src="@/assets/hotels.png" class="h-20 w-20 border-solid border-2 border-brand-gray-dark-1  relative rounded-full" alt="">
+              <div class="h-20 grid justify-items-center relative rounded-full">
+              <img src="@/assets/hotels.png" class="h-20 w-20 border-solid border-2 border-brand-gray-dark-1  rounded-full" alt="">
             </div>
 
         </div>
         </div>
-        <p class="float-right text-blue-500 cursor-pointer mb-3">Edit</p>
+        <p class="float-right text-blue-500 cursor-pointer w-100 flex mb-3"  >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M14 1L19 6L6 19H1V14L14 1Z" stroke="#4774E8" stroke-width="1.22693" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg> <span class="ml-3">Edit</span>
+          </p>
       </div>
       </div>
       </div>
@@ -101,23 +106,35 @@ export default {
   .tracker{
     width:600px;
   }
+  .tracker_overflow{
+
+  min-width: 100%;
+  width:6rem;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  }
   .tracker-jobless{
-    margin-left:-2%
+    margin-left:-3%
   }
 
   
 /* custom scrollbar */
 /* width */
 ::-webkit-scrollbar {
-  width: 2px;
+  width: 1px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #514949; 
   border-radius: 10px;
+  scrollbar-width: thin;
 }
 
+/* ::-webkit-scrollbar-track { */
+    /* background-color: darkgrey; */
+
+/* } */
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #898989; 
