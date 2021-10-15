@@ -53,10 +53,10 @@ class UserUpdateSerializer(serializers.Serializer):
         return instance
     
 
-class InternSerializer(serializers.Serializer):
+class InternSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model: Intern
+        model= Intern
         fields = ['username', 'full_name', 'stack', 'state', 'about', 'batch', 'is_employed']
 
 class JobSerializer(serializers.ModelSerializer):

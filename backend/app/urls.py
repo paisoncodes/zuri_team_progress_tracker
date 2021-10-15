@@ -10,6 +10,7 @@ from .views import (
     InternCreateUpdateView,
     InternList,
     InternDetailView,
+    InternStackList,
 
     JobView,
     JobUpdateView,
@@ -30,8 +31,10 @@ urlpatterns = [
     path("interns/<str:username>/jobs/<int:pk>/", JobUpdateView.as_view(), name="job_update"),
     path('intern/create/', InternCreateUpdateView.as_view(), name='intern_create_update'),
     path('interns/', InternList.as_view(), name='intern_list'),
+    path("interns/stack/<str:stack>/", InternStackList.as_view(),name="intern_stack"),
     path("subscribers/", NewsLetterSubscribersView.as_view(), name="subscribers"),
     path("subscribers/subscribe/", NewsLetterSubscribeView.as_view(),name="subscribe"),
+
     
 ] 
 
