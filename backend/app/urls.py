@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 from django.urls import path
 from rest_framework import permissions
 from app import views
-from .views import UserClassView, UserCreateView, UserUpdateView
+from .views import UserClassView, UserCreateView, UserUpdateView, JobListView, JobUpdateView
 
 
 urlpatterns = [
@@ -15,6 +15,9 @@ urlpatterns = [
     path("users/<int:pk>/", views.UserClassView.as_view(), name="UserInfo"),
     path("jobs/create/<str:username>/", views.JobView.as_view(), name="Jobcreate"),
 
-    path("interns/update/<int:pk>/", views.InternDetailView.as_view())
+    path("interns/update/<int:pk>/", views.InternDetailView.as_view()),
+    path("get-jobs/<str:username>/", views.JobListView.as_view(), name="job_list"),
+    path("jobs/update/<str:username>/<int:pk>/", views.JobUpdateView.as_view(), name="job_update"),
+    
 ] 
 
