@@ -2,10 +2,11 @@ from rest_framework import status, views
 from rest_framework.views import APIView
 # from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
-from .serializers import UserSerializer, UserUpdateSerializer, JobSerializer
-from .models import User, Intern, NewsLetter
+from .models import User,Intern, NewsLetter
 from .serializers import *
 from django.http import Http404
+
+
 
 
 # Create your views here.
@@ -74,7 +75,6 @@ class UserDetailView(APIView):
             status=status.HTTP_204_NO_CONTENT,
         )
 
-
 class JobView(APIView):
     def post(self, request, username):
         intern = Intern.objects.get(username=username)
@@ -99,11 +99,21 @@ class InternDetailView(APIView):
         except Intern.DoesNotExist:
             raise Http404
 
+    def get(self, request, pk, format=None):
+        intern = self.get_object(pk)
+        serializer = InternSerializer(intern)
+        return Response(serializer.data)
+
     def delete(self, request, pk, format=None):
         intern = self.get_object(pk)
         intern.delete()
-
         return Response(status=status.HTTP_200_OK)
+
+class InternList(APIView):
+    def get(self, request, format=None):
+        interns = Intern.objects.all()
+        serializer = InternSerializer(interns, many=True)
+        return Response(serializer.data)
 
 
 class InternCreateUpdateView(APIView):

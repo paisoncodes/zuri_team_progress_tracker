@@ -22,6 +22,8 @@ venv\scripts\activate
 
 # for mac 
 venv/bin/activate
+# for linux
+source venv/bin/activate
 ```
 
 create a folder name "migrations" inside the "app" folder & also create a "__init__.py" file inside the "migrations" 

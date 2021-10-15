@@ -10,16 +10,17 @@ from app import views
 from .views import UserDetailView, UserCreateView, UserUpdateView, NewsLetterSubscribeView, NewsLetterSubscribersView
 
 
+
 urlpatterns = [
     path("users/create/",UserCreateView.as_view(),name="create_user"),
     path("users/update/<int:user_id>/",UserUpdateView.as_view(),name="update_user"),
+    # path("users/<int:pk>/", views.UserClassView.as_view(), name="UserInfo"),
+    path("intern/<int:pk>/", views.InternDetailView.as_view(), name="Intern_detail"),
     path("users/<int:user_id>/", UserDetailView.as_view(), name="UserInfo"),
     path("jobs/create/<str:username>/", views.JobView.as_view(), name="Jobcreate"),
-    path("interns/update/<int:pk>/", views.InternDetailView.as_view()),
     path('intern/create/', views.InternCreateUpdateView.as_view(), name='intern_create_update'),
+    path('interns/', views.InternList.as_view(), name='intern_list'),
     path("subscribers/", NewsLetterSubscribersView.as_view(), name="subscribers"),
     path("subscribers/subscribe/", NewsLetterSubscribeView.as_view(),name="subscribe"),
-
-
 ] 
 
