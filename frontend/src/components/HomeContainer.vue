@@ -1,6 +1,6 @@
 <template>
 
-<div class="my-6 pad-cont">
+<div class="my-6 max-w-6xl mx-auto container pad-cont">
 
     <nav class="flex flex-col text-sm sm:flex-row">
         <button class="block py-4 font-medium bg-brand-red-light-1 padtab1 hover:text-blue-500 focus:outline-none text-brand-gray-dark-1 border-brand-gray-light">
@@ -85,8 +85,7 @@ data(){
 <style scoped>
 
 .pad-cont{
-    padding: 3rem;
-    margin-top: 5rem;
+    margin-top: 4rem;
 }
 
 .padtab1{
