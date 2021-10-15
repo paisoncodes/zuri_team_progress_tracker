@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import FormOne from './ProfileFormOne.vue';
-import FormTwo from './ProfileFormTwo.vue';
+import FormOne from '@/components/ProfileFormOne.vue';
+import FormTwo from '@/components/ProfileFormTwo.vue';
 export default {
     components: {
         FormOne,

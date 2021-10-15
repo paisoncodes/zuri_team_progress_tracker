@@ -33,11 +33,11 @@
 
 
 <script>
-import HomeContainer from './HomeContainer.vue'
-import Eighteen from './Eighteen.vue'
-import Nineteen from './Nineteen.vue'
-import Twenty from './Twenty.vue'
-import TwentyOne from './TwentyOne.vue'
+import HomeContainer from '@/components/HomeContainer.vue'
+import Eighteen from '@/components/Eighteen.vue'
+import Nineteen from '@/components/Nineteen.vue'
+import Twenty from '@/components/Twenty.vue'
+import TwentyOne from '@/components/TwentyOne.vue'
 
 export default {
     components: {
