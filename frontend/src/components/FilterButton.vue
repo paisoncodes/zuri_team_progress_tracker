@@ -25,6 +25,7 @@
 export default {
     name: 'FilterButton',
     data(){
+        
     }
 }
 </script>
