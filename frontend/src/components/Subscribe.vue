@@ -1,6 +1,6 @@
 <template>
       <div class="w-full py-12 mx-auto font-normal bg-brand-red-light-1">
-        <h3 class="text-3xl leading-10 text-center text-brand-gray-dark-1">Subscribe to our newsletter today</h3>
+        <h3 class="py-6 text-3xl leading-10 text-center text-brand-gray-dark-1">Subscribe to our newsletter today</h3>
         <p class="w-1/3 mx-auto mb-5 text-base leading-6 text-center text-brand-gray-light ">Get the latest information, news blog, conversations with our most talented
             past interns and load of amazing information directly into your inbox<br>
         </p>
