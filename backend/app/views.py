@@ -2,10 +2,11 @@ from rest_framework import status, views
 from rest_framework.views import APIView
 # from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
-from .serializers import UserSerializer, UserUpdateSerializer, JobSerializer
-from .models import User, Intern
+from .models import User,Intern, NewsLetter
 from .serializers import *
 from django.http import Http404
+
+
 
 
 # Create your views here.
@@ -74,7 +75,6 @@ class UserDetailView(APIView):
             status=status.HTTP_204_NO_CONTENT,
         )
 
-
 class JobView(APIView):
     def post(self, request, username):
         intern = Intern.objects.get(username=username)
@@ -99,11 +99,21 @@ class InternDetailView(APIView):
         except Intern.DoesNotExist:
             raise Http404
 
+    def get(self, request, pk, format=None):
+        intern = self.get_object(pk)
+        serializer = InternSerializer(intern)
+        return Response(serializer.data)
+
     def delete(self, request, pk, format=None):
         intern = self.get_object(pk)
         intern.delete()
-
         return Response(status=status.HTTP_200_OK)
+
+class InternList(APIView):
+    def get(self, request, format=None):
+        interns = Intern.objects.all()
+        serializer = InternSerializer(interns, many=True)
+        return Response(serializer.data)
 
 
 class InternCreateUpdateView(APIView):
@@ -123,3 +133,34 @@ class InternCreateUpdateView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+
+class NewsLetterSubscribeView(APIView):
+    '''
+    Creates Subscribers For NewsLetters
+    '''
+    serializer_class = NewsLetterSerializer
+    def post(self, request, *args, **kwargs):
+        serializer = NewsLetterSerializer(data=request.data)  
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class NewsLetterSubscribersView(APIView):
+    '''
+    Lists all the NewsLetter Subscribers
+    '''
+    serializer_class = NewsLetterSerializer
+    def get(self, request, *args, **kwargs):
+        subscriber = NewsLetter.objects.all()
+        serializer = NewsLetterSerializer(subscriber, many=True)
+        return Response(serializer.data)
+
+# {
+# "subscriber_email" : "noor@gmail.com"
+# }

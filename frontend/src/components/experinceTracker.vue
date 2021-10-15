@@ -1,12 +1,12 @@
 <template>
-<div>
-  <div class="flex bg-brand-red-light-3 text-justify my-5" v-for="(intern, index) in internTraker" :key="index">
+<div class="max-w-6xl mx-auto">
+  <div class="flex my-5 text-justify bg-brand-red-light-3" v-for="(intern, index) in internTraker" :key="index">
      <div class="icon w-50 h-50">
-         <img class="object-cover h-full w-full" :src="intern.picture"/>
+         <img class="object-cover w-full h-full" :src="intern.picture"/>
      </div>
       <div class="p-5" >
           <div class="flex flex-row items-center w-1/3 w-full">
-          <div class="w-full text-brand-gray-dark-1 font-medium">
+          <div class="w-full font-medium text-brand-gray-dark-1">
             <h2>{{intern.name}}</h2>
             <p>{{intern.role}}</p>
           </div>
@@ -17,37 +17,37 @@
       <div>
         <h3  class="text-brand-gray-dark-2">EXPERIENCE TRACKER</h3>
         <!-- tracker -->   
-        <div class="tracker ml-5 my-10 h-3 flex justify-between items-center text-brand-gray-dark-2 bg-brand-gray-dark-3">
-          <div class="h-10 w-10 grid justify-items-center tracker-jobless">
-            <div class="h-10 w-10  rounded-full bg-brand-gray-dark-3"> </div>
+        <div class="flex items-center justify-between h-3 my-10 ml-5 tracker text-brand-gray-dark-2 bg-brand-gray-dark-3">
+          <div class="grid w-10 h-10 justify-items-center tracker-jobless">
+            <div class="w-10 h-10 rounded-full bg-brand-gray-dark-3"> </div>
               <div class="relative">JOBLESS</div>
            
             </div>
               <div  class="relative bottom-4">2016</div>
             
 
-            <div class="h-12 w-12 grid justify-items-center  relative">
-              <img src="@/assets/paypal.png" class="border-solid border-2 border-brand-gray-dark-3 h-12 w-12 relative rounded-full" alt="">
+            <div class="relative grid w-12 h-12 justify-items-center">
+              <img src="@/assets/paypal.png" class="relative w-12 h-12 border-2 border-solid rounded-full border-brand-gray-dark-3" alt="">
                 <div class="relative">PAYPAL</div>
             </div>
             <div  class="relative bottom-4" >2017</div>
 
 
-            <div class="h-12 w-12 grid justify-items-center  relative">
-              <img src="@/assets/flutterwave.png" class="h-12 w-12 relative border-solid border-2 border-brand-gray-dark-3 rounded-full" alt="">
+            <div class="relative grid w-12 h-12 justify-items-center">
+              <img src="@/assets/flutterwave.png" class="relative w-12 h-12 border-2 border-solid rounded-full border-brand-gray-dark-3" alt="">
                 <div class="relative">FLUTTERWAVE</div>
             </div>
              <div  class="relative bottom-4" >2018</div>
 
 
-            <div class="h-12 w-12 grid justify-items-center relative">
-              <img src="@/assets/paystack.png" class="h-12 w-12 border-solid border-2 border-brand-gray-dark-3  relative rounded-full" alt="">
+            <div class="relative grid w-12 h-12 justify-items-center">
+              <img src="@/assets/paystack.png" class="relative w-12 h-12 border-2 border-solid rounded-full border-brand-gray-dark-3" alt="">
                 <div class="relative">PAYSTACK</div>
             </div>
             <div  class="relative bottom-4 " >2019</div>
 
-              <div class="h-20 w-20 grid justify-items-center relative rounded-full">
-              <img src="@/assets/hotels.png" class="h-20 w-20 border-solid border-2 border-brand-gray-dark-1  relative rounded-full" alt="">
+              <div class="relative grid w-20 h-20 rounded-full justify-items-center">
+              <img src="@/assets/hotels.png" class="relative w-20 h-20 border-2 border-solid rounded-full border-brand-gray-dark-1" alt="">
             </div>
 
         </div>
