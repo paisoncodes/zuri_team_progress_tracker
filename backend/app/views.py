@@ -1,10 +1,13 @@
 from rest_framework import status, views
 from rest_framework.views import APIView
-# from rest_framework.generics import RetrieveUpdateDestroyAPIView
+# from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
-from .models import User,Intern, NewsLetter
+from .serializers import UserSerializer, UserUpdateSerializer, JobSerializer
+from .models import User,Intern, Jobs, NewsLetter
 from .serializers import *
 from django.http import Http404
+from django.core import serializers
+from rest_framework.pagination import PageNumberPagination
 
 
 
@@ -75,6 +78,7 @@ class UserDetailView(APIView):
             status=status.HTTP_204_NO_CONTENT,
         )
 
+
 class JobView(APIView):
     def post(self, request, username):
         intern = Intern.objects.get(username=username)
@@ -86,6 +90,46 @@ class JobView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors)
 
+
+
+class JobListView(APIView):
+    # def __init__(self, name, player_type):
+	# 	self.name = name
+	# 	self.player_type = player_type
+    """
+    Retrieves and list the job details of all the intern
+    """
+    def get(self, request, username):
+        intern =Intern.objects.get(username=username)
+        jobsList_objects = Jobs.objects.filter(intern=intern)
+        if len(jobsList_objects)> 0:
+            serializer = JobSerializer(jobsList_objects, many=True)
+            print(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response("no details", status=status.HTTP_400_BAD_REQUEST)
+
+
+class JobUpdateView(APIView):
+    """
+    Updates the job information 
+    """
+    def put(self, request):
+        intern_id = request.data.pop('intern_id')
+        try:
+            intern =Intern.objects.get(pk=intern_id)
+        
+        except  Intern.DoesNotExist:
+              return Response({"message": "This intern does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        jobupdate_objects = Jobs.objects.filter(intern=intern)
+        # jobupdate_objects= Jobs.get_object(pk=intern)
+        serializer = JobSerializer(jobupdate_objects, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_200_OK )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    
+    
 
 ######### Intern Models
 class InternDetailView(APIView):

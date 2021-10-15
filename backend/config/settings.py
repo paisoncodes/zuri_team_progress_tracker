@@ -15,6 +15,7 @@ from pathlib import Path
 from decouple import config
 from corsheaders.defaults import default_methods
 from corsheaders.defaults import default_headers
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -171,4 +172,8 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
 
