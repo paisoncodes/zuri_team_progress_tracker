@@ -1,10 +1,13 @@
-from rest_framework import status, views
+from rest_framework import status, views, permissions
 from rest_framework.views import APIView
-# from rest_framework.generics import RetrieveUpdateDestroyAPIView
+from rest_framework.generics import UpdateAPIView
 from rest_framework.response import Response
-from .models import User,Intern, NewsLetter
+from .serializers import UserSerializer, UserUpdateSerializer, JobSerializer
+from .models import User,Intern, Jobs, NewsLetter
 from .serializers import *
 from django.http import Http404
+from django.core import serializers
+from rest_framework.pagination import PageNumberPagination
 
 
 
@@ -51,7 +54,7 @@ class UserDetailView(APIView):
         Get User Details
         '''
 
-        UserInfo = self.get_object(pk)
+        UserInfo = self.get_object(user_id)
         serializer = UserSerializer(UserInfo)
         if UserInfo:
             UserInfo.get()
@@ -75,17 +78,79 @@ class UserDetailView(APIView):
             status=status.HTTP_204_NO_CONTENT,
         )
 
+
 class JobView(APIView):
     def post(self, request, username):
+        """
+        Creates a new job for a particular intern
+        """
+        try:
+            intern = Intern.objects.get(username=username)
+        
+            serializer = JobSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.validated_data["intern"] = intern
+                serializer.save()
+
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors)
+        except Exception as e:
+            return Response({"exception": f'{e}'}, status=status.HTTP_404_NOT_FOUND)
+
+    def get(self, request, username):
+        """
+        Retrieves and list the job details of all the intern
+        """
+        try:
+            intern =Intern.objects.get(username=username)
+            jobsList_objects = Jobs.objects.filter(intern=intern)
+            if len(jobsList_objects)> 0:
+                serializer = JobSerializer(jobsList_objects, many=True)
+                print(serializer.data)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response("Unemployed", status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"exception": f'{e}'}, status=status.HTTP_404_NOT_FOUND)
+
+
+    
+    
+
+class JobUpdateView(UpdateAPIView):
+    """
+    Updates the job information 
+    """
+    queryset = Jobs.objects.all()
+    serializer_class = JobSerializer
+    permission_classes = (permissions.AllowAny,)
+    def update(self, request, username, pk):
         intern = Intern.objects.get(username=username)
-        serializer = JobSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.validated_data["intern"] = intern
-            serializer.save()
+        instance = Jobs.objects.get(intern=intern, pk=pk)
+        data = {
+            "job_title": request.data.get("job_title"),
+            "company_name": request.data.get("company_name"),
+            "gotten_at": request.data.get("gotten_at"),
+            "last_updated_at": request.data.get("last_updated_at"),
+            "job_description": request.data.get("job_description"),
+            "currently_active": request.data.get("currently_active")
+        }
+        instance.save()
+        
+        serializer = JobSerializer(instance, data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
 
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors)
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
+    def get(self, request, username, pk):
+        intern = Intern.objects.get(username=username)
+        job = Jobs.objects.get(pk=pk, intern=intern)
+        serializer = JobSerializer(job)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        
+    
+    
 
 ######### Intern Models
 class InternDetailView(APIView):
