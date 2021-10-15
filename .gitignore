@@ -16,6 +16,8 @@ Pipfile*
 
 openapi.yaml
 backend/app/migrations
+./backend/app/migrations
+
 
 db.sqlite3
 

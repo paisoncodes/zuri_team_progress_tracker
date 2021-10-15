@@ -74,3 +74,9 @@ class NewsLetterSerializer(serializers.ModelSerializer):
         model = NewsLetter
         fields = "__all__"
 
+
+class StatisticSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Statistic
+        fields =["year","male", "female", "finalist", "participant"]
+

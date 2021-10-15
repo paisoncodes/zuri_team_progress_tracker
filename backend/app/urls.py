@@ -17,7 +17,9 @@ from .views import (
 
 
     NewsLetterSubscribeView,
-    NewsLetterSubscribersView
+    NewsLetterSubscribersView,
+
+    StatisticView
 )
 
 
@@ -34,6 +36,7 @@ urlpatterns = [
     path("interns/stack/<str:stack>/", InternStackList.as_view(),name="intern_stack"),
     path("subscribers/", NewsLetterSubscribersView.as_view(), name="subscribers"),
     path("subscribers/subscribe/", NewsLetterSubscribeView.as_view(),name="subscribe"),
+    path('statistics/', StatisticView.as_view())
 
     
 ] 
