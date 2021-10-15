@@ -79,3 +79,7 @@ class Jobs(models.Model):
     def __str__(self):
         return f"{self.intern.username}'s Job at {self.company_name}"
 
+
+class NewsLetter(models.Model):
+    subscriber_email = models.EmailField(max_length=200, blank=False)
+
