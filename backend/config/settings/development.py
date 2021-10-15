@@ -1,6 +1,9 @@
-SECRET_KEY = config("SECRET_KEY")
-
+from decouple import config
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = True
+
+SECRET_KEY = "5467"
 
 ALLOWED_HOSTS = ["127.0.0.1"]
 
