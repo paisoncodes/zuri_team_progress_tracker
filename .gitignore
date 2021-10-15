@@ -13,8 +13,6 @@ db.sqlite3
 duovenv/
 env/
 Pipfile*
-openapi.yaml
-
 backend/app/__pycache__
 backend/config/__pycache__
 .idea
