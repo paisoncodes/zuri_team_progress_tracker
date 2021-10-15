@@ -5,7 +5,7 @@ DEBUG = True
 
 SECRET_KEY = "5467"
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'zuri-progress-tracker.herokuapp.com']
 
 
 
