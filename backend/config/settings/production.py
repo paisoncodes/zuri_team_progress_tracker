@@ -1,3 +1,5 @@
+import os
+
 DEBUG = False
 SECRET_KEY = os.environ.get("SECRET_KEY")
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'zuri-progress-tracker.herokuapp.com']
