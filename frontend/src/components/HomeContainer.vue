@@ -45,6 +45,7 @@
 <script>
 import CurrentJobPlacement from '@/components/CurrentJobPlacement'
 import OverallStats from '@/components/OverallStats'
+
 export default {
 name: "HomeContainer",
 components:{
@@ -53,16 +54,21 @@ components:{
 },
 data(){
     return{
+
     }
 }
 }
 </script>
 
 <style scoped>
+
 .padtab1{
     padding: 0 1.07rem;
 }
+
 .padothers{
     padding: 1.2rem 2.41rem;
 }
+
+
 </style>
