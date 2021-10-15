@@ -3,7 +3,7 @@
 <!-- component -->
 
   <footer class="bg-white text-brand-gray-dark-1 ">
-    <div class="flex flex-col flex-wrap max-w-6xl px-4 py-24 mx-auto md:items-center lg:items-start md:flex-row md:flex-nowrap">
+    <div class="flex flex-col flex-wrap max-w-6xl px-4 py-8 mx-auto md:items-center lg:items-start md:flex-row md:flex-nowrap">
       <div class="flex-shrink-0 w-64 mx-auto text-center md:mx-0 md:text-left">
         <a class="flex items-center justify-center font-medium text-gray-900 md:justify-start">
           
