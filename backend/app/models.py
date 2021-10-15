@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
-from app.manager import UserManager
+from .manager import UserManager
 
 # Create your models here.
 class User(AbstractBaseUser):
@@ -54,7 +54,28 @@ class User(AbstractBaseUser):
 
 
 class Intern(models.Model):
-    name = models.CharField(max_length=100)
+    username = models.CharField(unique=True, max_length=255)
+    full_name = models.CharField(max_length=100)
     stack = models.CharField(max_length = 100)
     job = models.CharField(max_length=100)
     batch = models.IntegerField()
+
+
+    def __str__(self):
+        return self.username
+   
+
+
+class Jobs(models.Model):
+    intern = models.ForeignKey(Intern, on_delete=models.CASCADE)
+    job_title = models.CharField(max_length=255)
+    gotten_at = models.DateTimeField()
+    company_name = models.CharField(max_length=255)
+    last_updated_at = models.DateTimeField()
+    job_description = models.CharField(max_length=255)
+    currently_active = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.intern.username}'s Job at {self.company_name}"
+

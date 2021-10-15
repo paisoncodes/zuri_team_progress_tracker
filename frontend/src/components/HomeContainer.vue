@@ -1,43 +1,66 @@
 <template>
 
-<div class="mx-auto my-6">
+<div class="my-6 pad-cont">
 
-    <nav class="flex flex-col sm:flex-row">
-        <button class="py-4 bg-brand-red-light-2 padtab1 block hover:text-blue-500 focus:outline-none text-brand-gray-dark-1 font-medium border-brand-gray-light">
-            OVERVIEW
+    <nav class="flex flex-col text-sm sm:flex-row">
+        <button class="block py-4 font-medium bg-brand-red-light-1 padtab1 hover:text-blue-500 focus:outline-none text-brand-gray-dark-1 border-brand-gray-light">
+            OVERVIEW 
         </button>
         
-        <button class="text-brand-gray-light py-4 padothers block hover:text-brand-gray-dark-1 focus:outline-none">
-            2021
+        <button class="block py-4 text-brand-gray-light padothers hover:text-brand-gray-dark-1 focus:outline-none">
+            2021 <br> (10,000 interns)
         </button>
         
-        <button class="text-brand-gray-light py-4 padothers block hover:text-brand-gray-dark-1 focus:outline-none">
-            2020
+        <button class="block py-4 text-brand-gray-light padothers hover:text-brand-gray-dark-1 focus:outline-none">
+            2020 <br> (10,000 interns)
         </button>
         
-        <button class="text-brand-gray-light py-4 padothers block hover:text-brand-gray-dark-1 focus:outline-none">
-            2019
+        <button class="block py-4 text-brand-gray-light padothers hover:text-brand-gray-dark-1 focus:outline-none">
+            2019 <br> (10,000 interns)
         </button>
-        <button class="text-brand-gray-light py-4 padothers block hover:text-brand-gray-dark-1 focus:outline-none">
-            2018
+        <button class="block py-4 text-brand-gray-light padothers hover:text-brand-gray-dark-1 focus:outline-none">
+            2018 <br> (10,000 interns)
         </button>
     </nav>
 
-    <div class="grid-cont">
-        <div class="flex items-center bg-brand-red-light-2">
-            <p class="mx-auto text-brand-gray-dark-1">2021</p>
-        </div>
-
-        <div>
-            <div>
-                <OverallStats/>
+    <div class="bg-brand-red-light-1 ">
+        <!-- 2021 -->
+        <div class="flex">
+            <div class="flex flex-col justify-center overview-width">
+                <p>2021</p>
             </div>
-                
-            <div>
+
+            <div class="w-full">
+                <OverallStats/>
                 <CurrentJobPlacement/>
             </div>
         </div>
+
+        <div class="flex">
+            <div class="flex flex-col justify-center overview-width">
+                <p>2020</p>
+            </div>
+
+            <div class="w-full">
+                <OverallStats/>
+                <CurrentJobPlacement/>
+            </div>
+        </div>
+
+        <div class="flex">
+            <div class="flex flex-col justify-center overview-width">
+                <p>2019</p>
+            </div>
+
+            <div class="w-full">
+                <OverallStats/>
+                <CurrentJobPlacement class="mb-5"/>
+            </div>
+        </div>
+
     </div>
+
+    
 </div>
 </template>
 
@@ -61,6 +84,11 @@ data(){
 
 <style scoped>
 
+.pad-cont{
+    padding: 3rem;
+    margin-top: 5rem;
+}
+
 .padtab1{
     padding: 0 1.07rem;
 }
@@ -69,10 +97,7 @@ data(){
     padding: 1.2rem 2.41rem;
 }
 
-.grid-cont {
-    display: grid;
-    grid-template-columns: 7.2rem 1fr;
-    grid-template-rows: 1fr;
-    grid-auto-flow: row;
+.overview-width {
+    width: 7.2rem;
 }
 </style>

@@ -1,7 +1,9 @@
 <template>
-  <div class="bg-white text-center flex flex-col">
-    <NavbarComponent/>
-    <HomeContainer />
+  <div>
+    <div class="flex flex-col text-center bg-white">
+      <NavbarComponent/>
+      <HomeContainer />
+    </div>
     <Footer />
   </div>
 </template>

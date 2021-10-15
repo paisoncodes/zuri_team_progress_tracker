@@ -1,7 +1,13 @@
+from .import views
+
+from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 from rest_framework import permissions
+from . import views
 from app import views
-from .views import UserClassView, UserCreateView, UserUpdateView
+from .views import UserDetailView, UserCreateView, UserUpdateView,
 
 
 urlpatterns = [
@@ -9,4 +15,10 @@ urlpatterns = [
     path("users/update/<int:user_id>/",UserUpdateView.as_view(),name="update_user"),
     path("users/<int:pk>/", views.UserClassView.as_view(), name="UserInfo"),
     path("interns/<int:pk/", views.InternDetail.as_view(), name="Intern_detail"),
+    path("users/<int:user_id>/", UserDetailView.as_view(), name="UserInfo"),
+    path("jobs/create/<str:username>/", views.JobView.as_view(), name="Jobcreate"),
+    path("interns/update/<int:pk>/", views.InternDetailView.as_view()),
+    path('intern/create/', views.InternCreateUpdateView.as_view(), name='intern_create_update'),
+
 ] 
+
