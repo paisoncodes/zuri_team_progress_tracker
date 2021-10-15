@@ -128,18 +128,7 @@ class JobUpdateView(APIView):
             return Response(serializer.data,status=status.HTTP_200_OK )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        # def put(self, request):
-        # intern_id = request.data.pop('intern_id')
-        # try:
-        #     intern = Intern.objects.get(pk=intern_id)
-        # except Intern.DoesNotExist:
-        #     return Response({"message": "This intern does not exist"}, status=status.HTTP_404_NOT_FOUND)
-        # serializer = InternSerializer(data=request, instance=intern)
-        # serializer.is_valid(raise_exception=True)
-        # serializer.save()
-        # return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
-
+    
     
 
 ######### Intern Models
