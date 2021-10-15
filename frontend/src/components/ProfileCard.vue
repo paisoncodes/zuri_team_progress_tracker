@@ -14,7 +14,6 @@
                     <button @click.prevent="" type="submit" class="py-3 px-12 bg-brand-gray-dark-1 text-white border border-brand-gray-dark-1">Save</button>
                 </div>
             </form>
-            
         </div>
     </div>
 </template>

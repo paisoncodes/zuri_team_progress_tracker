@@ -1,27 +1,7 @@
 <template>
 
-<div class="my-6 pad-cont">
+<div class="mt-0 max-w-6xl mx-auto container pad-cont">
 
-    <nav class="flex flex-col text-sm sm:flex-row">
-        <button class="block py-4 font-medium bg-brand-red-light-1 padtab1 hover:text-blue-500 focus:outline-none text-brand-gray-dark-1 border-brand-gray-light">
-            OVERVIEW 
-        </button>
-        
-        <button class="block py-4 text-brand-gray-light padothers hover:text-brand-gray-dark-1 focus:outline-none">
-            2021 <br> (10,000 interns)
-        </button>
-        
-        <button class="block py-4 text-brand-gray-light padothers hover:text-brand-gray-dark-1 focus:outline-none">
-            2020 <br> (10,000 interns)
-        </button>
-        
-        <button class="block py-4 text-brand-gray-light padothers hover:text-brand-gray-dark-1 focus:outline-none">
-            2019 <br> (10,000 interns)
-        </button>
-        <button class="block py-4 text-brand-gray-light padothers hover:text-brand-gray-dark-1 focus:outline-none">
-            2018 <br> (10,000 interns)
-        </button>
-    </nav>
 
     <div class="bg-brand-red-light-1 ">
         <!-- 2021 -->
@@ -83,11 +63,6 @@ data(){
 </script>
 
 <style scoped>
-
-.pad-cont{
-    padding: 3rem;
-    margin-top: 5rem;
-}
 
 .padtab1{
     padding: 0 1.07rem;

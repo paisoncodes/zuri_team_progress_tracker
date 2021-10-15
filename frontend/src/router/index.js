@@ -1,16 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import TwentyOne from '../views/TwentyOne.vue'
-import Twenty from '../views/Twenty.vue'
-import Nineteen from '../views/Nineteen.vue'
-import Eighteen from '../views/Eighteen.vue'
+// import TwentyOne from '../views/TwentyOne.vue'
+// import Twenty from '../views/Twenty.vue'
+// import Nineteen from '../views/Nineteen.vue'
+// import Eighteen from '../views/Eighteen.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home
-  },{
+  },
+/*   {
     path: '/TwentyOne',
     name: 'TwentyOne',
     component: TwentyOne
@@ -26,7 +27,7 @@ const routes = [
     path: '/Eighteen',
     name: 'Eighteen',
     component: Eighteen
-  },
+  }, */
   {
     path: '/about',
     name: 'About',
