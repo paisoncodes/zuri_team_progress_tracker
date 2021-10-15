@@ -1,5 +1,6 @@
 from django.db.models.query import QuerySet
 from rest_framework import status, views, permissions
+from rest_framework import response
 from rest_framework.views import APIView
 from rest_framework.generics import UpdateAPIView
 from rest_framework.response import Response
@@ -9,6 +10,7 @@ from .serializers import *
 from django.http import Http404
 from django.core import serializers
 from rest_framework.pagination import PageNumberPagination
+
 
 
 
@@ -237,4 +239,12 @@ class InternStackList(APIView):
     def get(self, request, stack):
         interns = Intern.objects.filter(stack=stack)
         serializer = InternSerializer(interns, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)     
+        return Response(serializer.data, status=status.HTTP_200_OK)   
+
+
+
+class StatisticView(APIView):
+    def get(self, request, format=None):
+        queryset = Statistic.objects.all()
+        serializer = StatisticSerializer(queryset, many=True)
+        return Response(serializer.data)
