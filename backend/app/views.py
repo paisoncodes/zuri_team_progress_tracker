@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from rest_framework import status, views, permissions
 from rest_framework.views import APIView
 from rest_framework.generics import UpdateAPIView
@@ -53,19 +54,20 @@ class UserDetailView(APIView):
         '''
         Get User Details
         '''
-
-        UserInfo = self.get_object(user_id)
-        serializer = UserSerializer(UserInfo)
-        if UserInfo:
-            UserInfo.get()
-        UserInfo = User.objects.get(pk=user_id)        
-        serializer = UserUpdateSerializer(UserInfo, data=request.data)
-        if serializer.is_valid():
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(
-            {"message": "Unable to retrieve user details"},
-            status=status.HTTP_400_BAD_REQUEST
-        )
+        try:
+            UserInfo = User.objects.get(pk=user_id)        
+            serializer = UserUpdateSerializer(UserInfo, data=request.data)
+            if serializer.is_valid():
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(
+                {"message": "Unable to retrieve user details"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        except Exception as e:
+            return Response(
+                {"message": f"{e}"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
         
     def delete(self, request, user_id, format=None):
         '''
@@ -229,3 +231,10 @@ class NewsLetterSubscribersView(APIView):
 # {
 # "subscriber_email" : "noor@gmail.com"
 # }
+
+class InternStackList(APIView):
+
+    def get(self, request, stack):
+        interns = Intern.objects.filter(stack=stack)
+        serializer = InternSerializer(interns, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)     
