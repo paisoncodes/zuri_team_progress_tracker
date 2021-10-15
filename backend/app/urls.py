@@ -7,7 +7,8 @@ from django.urls import path
 from rest_framework import permissions
 from . import views
 from app import views
-from .views import UserDetailView, UserCreateView, UserUpdateView
+from .views import UserDetailView, UserCreateView, UserUpdateView, NewsLetterSubscribeView, NewsLetterSubscribersView
+
 
 
 urlpatterns = [
@@ -19,6 +20,7 @@ urlpatterns = [
     path("jobs/create/<str:username>/", views.JobView.as_view(), name="Jobcreate"),
     path('intern/create/', views.InternCreateUpdateView.as_view(), name='intern_create_update'),
     path('interns/', views.InternList.as_view(), name='intern_list'),
-
+    path("subscribers/", NewsLetterSubscribersView.as_view(), name="subscribers"),
+    path("subscribers/subscribe/", NewsLetterSubscribeView.as_view(),name="subscribe"),
 ] 
 

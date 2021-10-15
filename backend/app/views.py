@@ -2,9 +2,10 @@ from rest_framework import status, views
 from rest_framework.views import APIView
 # from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
-from .models import User,Intern
-from django.http import Http404
+from .models import User,Intern, NewsLetter
 from .serializers import *
+from django.http import Http404
+
 
 
 
@@ -132,3 +133,34 @@ class InternCreateUpdateView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+
+class NewsLetterSubscribeView(APIView):
+    '''
+    Creates Subscribers For NewsLetters
+    '''
+    serializer_class = NewsLetterSerializer
+    def post(self, request, *args, **kwargs):
+        serializer = NewsLetterSerializer(data=request.data)  
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class NewsLetterSubscribersView(APIView):
+    '''
+    Lists all the NewsLetter Subscribers
+    '''
+    serializer_class = NewsLetterSerializer
+    def get(self, request, *args, **kwargs):
+        subscriber = NewsLetter.objects.all()
+        serializer = NewsLetterSerializer(subscriber, many=True)
+        return Response(serializer.data)
+
+# {
+# "subscriber_email" : "noor@gmail.com"
+# }
