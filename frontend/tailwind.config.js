@@ -6,7 +6,7 @@ module.exports = {
       outline: {
         black: '1px solid #514949',
       },
-       colors:{
+      colors:{
         brand: {
           red: {
             light: {
@@ -30,6 +30,10 @@ module.exports = {
       screens: {
         xs: '475px'
       },
+      fontFamily: {
+        'mulish': ['Mulish', 'sans-serif'],
+        'poppins': ['Poppins', 'sans-serif']
+      }
     },
   },
   variants: {
