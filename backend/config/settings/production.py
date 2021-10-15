@@ -1,4 +1,4 @@
-import os,dj_database_url
+import os,dj_database_url,subprocess
 
 
 DEBUG = False
