@@ -86,3 +86,18 @@ class Jobs(models.Model):
 
 class NewsLetter(models.Model):
     subscriber_email = models.EmailField(max_length=200, blank=False)
+
+
+
+class Statistic(models.Model):
+    male        = models.IntegerField()
+    female      = models.IntegerField()
+    year        = models.IntegerField()
+    finalist    = models.IntegerField()
+
+    def __str__(self):
+        return str(self.year)
+
+    @property
+    def participant(self):
+        return self.male + self.female
