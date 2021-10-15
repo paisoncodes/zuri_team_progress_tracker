@@ -15,6 +15,7 @@ from pathlib import Path
 from decouple import config
 from corsheaders.defaults import default_methods
 from corsheaders.defaults import default_headers
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +41,7 @@ REST_FRAMEWORK = {
 
     'DEFAULT_SCHEMA_CLASS': [
         'drf_spectacular.openapi.AutoSchema'
-    ],
+    ]
     
     # "DEFAULT_PAGINATION_CLASS": [
     #     'apps.core.pagination.StandardResultsSetPagination',
@@ -165,3 +166,5 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
