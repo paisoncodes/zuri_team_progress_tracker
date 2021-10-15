@@ -6,36 +6,24 @@
     <div class="py-8">
 
       <nav class="flex flex-col text-sm sm:flex-row mx-auto max-w-7xl">
+          <button class="block py-4 text-brand-gray-light mx-auto w-1/6 hover:text-brand-gray-dark-1 focus:outline-none">
+              OVERVIEW 
+          </button>
           
-          <router-link to="/" class="block py-4 text-brand-gray-light-1 w-1/6 sm:mx-auto hover:text-brand-gray-dark-1 focus:outline-none">
-							<button class="p-0 m-0">
-                OVERVIEW 
-              </button>
-					</router-link>
-          
-          <router-link to="/TwentyOne" class="block py-4 font-medium bg-brand-red-light sm:mx-auto hover:text-blue-500 focus:outline-none text-brand-gray-dark-1 border-brand-gray-light bg-brand-red-light-1 w-1/6">
-							<button >
+          <button class="block py-4 text-brand-gray-light mx-auto w-1/6 hover:text-brand-gray-dark-1 focus:outline-none">
               2021 <br> (10,000 interns)
-            </button>
-					</router-link>
-
-          <router-link to="/Twenty" class="block py-4 text-brand-gray-light w-1/6 sm:mx-auto hover:text-brand-gray-dark-1 focus:outline-none">
-							<button >
+          </button>
+          
+          <button class="block py-4 text-brand-gray-light mx-auto w-1/6 hover:text-brand-gray-dark-1 focus:outline-none">
               2020 <br> (10,000 interns)
           </button>
-					</router-link>
-
-          <router-link to="/Nineteen" class="block py-4 text-brand-gray-light w-1/6 sm:mx-auto hover:text-brand-gray-dark-1 focus:outline-none">
-							<button>
+          
+          <button class="block py-4 font-medium bg-brand-red-light mx-auto hover:text-blue-500 focus:outline-none text-brand-gray-dark-1 border-brand-gray-light bg-brand-red-light-1 w-1/6">
               2019 <br> (10,000 interns)
           </button>
-					</router-link>
-          
-          <router-link to="/Eighteen" class="block py-4 text-brand-gray-light w-1/6 msm:x-auto hover:text-brand-gray-dark-1 focus:outline-none">
-							<button>
+          <button class="block py-4 text-brand-gray-light w-1/6 mx-auto hover:text-brand-gray-dark-1 focus:outline-none">
               2018 <br> (10,000 interns)
           </button>
-					</router-link>          
       </nav>
     
       <div class="px-6 py-10 mx-auto max-w-7xl bg-brand-red-light-1 ">
@@ -71,7 +59,7 @@ export default {
     experinceTracker,
     Footer,
   },
-  name: "TwentyOne",
+  name: "Nineteen",
 };
 </script>
 
