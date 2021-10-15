@@ -93,9 +93,7 @@ class JobView(APIView):
 
 
 class JobListView(APIView):
-    # def __init__(self, name, player_type):
-	# 	self.name = name
-	# 	self.player_type = player_type
+    
     """
     Retrieves and list the job details of all the intern
     """
@@ -121,7 +119,6 @@ class JobUpdateView(APIView):
         except  Intern.DoesNotExist:
               return Response({"message": "This intern does not exist"}, status=status.HTTP_404_NOT_FOUND)
         jobupdate_objects = Jobs.objects.filter(intern=intern)
-        # jobupdate_objects= Jobs.get_object(pk=intern)
         serializer = JobSerializer(jobupdate_objects, data=request.data)
         if serializer.is_valid():
             serializer.save()
