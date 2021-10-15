@@ -3,7 +3,7 @@
 <div class="px-6 mx-auto max-w-7xl bg-brand-red-light-1">
 
     <div class="bg-brand-red-light-1">
-        <div class="flex sm:flex-col">
+        <div class="flex">
             <div class="flex overview-width flex-col justify-center w-1/6">
                 <p>2021</p>
             </div>
