@@ -6,7 +6,7 @@
     <div class="bg-brand-red-light-1 ">
         <!-- 2021 -->
         <div class="flex">
-            <div class="flex flex-col justify-center overview-width">
+            <div class="flex overview-width flex-col justify-center">
                 <p>2021</p>
             </div>
 
@@ -17,7 +17,7 @@
         </div>
 
         <div class="flex">
-            <div class="flex flex-col justify-center overview-width">
+            <div class="flex overview-width flex-col justify-center">
                 <p>2020</p>
             </div>
 
@@ -28,7 +28,7 @@
         </div>
 
         <div class="flex">
-            <div class="flex flex-col justify-center overview-width">
+            <div class="flex overview-width flex-col justify-center">
                 <p>2019</p>
             </div>
 
