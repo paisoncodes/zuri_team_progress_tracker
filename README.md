@@ -26,8 +26,15 @@ venv/bin/activate
 # for linux
 source venv/bin/activate
 ```
+<div class="panel panel-warning">
+**Warning**
+{: .panel-heading}
+<div class="panel-body">
+Delete the migrations folder inside the app folder
 
-## Delete the migrations folder inside the app folder
+</div>
+</div>
+
 
 create a folder name "migrations" inside the "app" folder & also create a "__init__.py" file inside the "migrations" 
 ```bash
