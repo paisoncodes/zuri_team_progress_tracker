@@ -3,21 +3,21 @@ from django.contrib.auth.models import AbstractBaseUser
 from .manager import UserManager
 
 # Create your models here.
+
+
 class User(AbstractBaseUser):
-    email       = models.EmailField(unique=True)
-    first_name  = models.CharField(max_length=300, null=True)
-    last_name   = models.CharField(max_length=300, null=True)
-    address     = models.TextField(null=True)
-    city        = models.CharField(max_length=300, null = True)
-    state       = models.CharField(max_length=300, null = True)
-    about       = models.TextField(null=True)
-    date        = models.DateTimeField(auto_now_add=True)
-    
-    active      = models.BooleanField(default=True)
-    staff       = models.BooleanField(default=False)
-    admin       = models.BooleanField(default=False)
-    
-    
+    email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=300, null=True)
+    last_name = models.CharField(max_length=300, null=True)
+    address = models.TextField(null=True)
+    city = models.CharField(max_length=300, null=True)
+    state = models.CharField(max_length=300, null=True)
+    about = models.TextField(null=True)
+    date = models.DateTimeField(auto_now_add=True)
+
+    active = models.BooleanField(default=True)
+    staff = models.BooleanField(default=False)
+    admin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -58,9 +58,10 @@ class Intern(models.Model):
         ("M", "Male"),
         ("F", "Female")
     )
-    username = models.CharField(unique=True, max_length=255, verbose_name="Slack name")
+    username = models.CharField(
+        unique=True, max_length=255, verbose_name="Slack name")
     full_name = models.CharField(max_length=100)
-    stack = models.CharField(max_length = 1000)
+    stack = models.CharField(max_length=1000)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     about = models.TextField()
     state = models.CharField(max_length=200)
@@ -68,17 +69,17 @@ class Intern(models.Model):
     is_employed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
-
     def __str__(self):
         return self.username
-   
 
 
 class Jobs(models.Model):
-    intern = models.ForeignKey(Intern, on_delete=models.CASCADE)
+    intern = models.ForeignKey(
+        Intern, on_delete=models.CASCADE, related_name="job")
     job_title = models.CharField(max_length=255)
     gotten_at = models.DateTimeField()
-    company_name = models.CharField(max_length=255, verbose_name="Organization name")
+    company_name = models.CharField(
+        max_length=255, verbose_name="Organization name")
     last_updated_at = models.DateTimeField()
     job_description = models.CharField(max_length=255)
     currently_active = models.BooleanField(default=False)
@@ -90,4 +91,3 @@ class Jobs(models.Model):
 
 class NewsLetter(models.Model):
     subscriber_email = models.EmailField(max_length=200, blank=False)
-

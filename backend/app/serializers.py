@@ -53,16 +53,16 @@ class UserUpdateSerializer(serializers.Serializer):
         return instance
     
 
-class InternSerializer(serializers.Serializer):
+class InternSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model: Intern
+        model= Intern
         fields = ['username', 'full_name', 'stack', 'state', 'about', 'batch', 'is_employed']
 
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jobs
-        fields = ['job_title', 'company_name','gotten_at', 'last_updated_at', 'job_description', 'currently_active']
+        fields = ['id', 'job_title', 'company_name','gotten_at', 'last_updated_at', 'job_description', 'currently_active']
 
 
 

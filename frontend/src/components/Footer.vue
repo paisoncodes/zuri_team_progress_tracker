@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-6xl mx-auto px-5 pb-16 text-brand-gray-dark-1">
+    <div class="max-w-7xl mx-auto  pb-16 text-brand-gray-dark-1 py-8">
         <div class="md:grid md:grid-cols-3 lg:flex lg:justify-between lg:space-x-3 text-xs">
             <div class="mb-8 lg:mb-0 text-xl text-center lg:text-left">
                 ZURI.TEAM
