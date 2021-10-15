@@ -1,16 +1,22 @@
 from django.contrib.auth.models import BaseUserManager
 
-class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, is_staff=False, is_active=True, is_admin=False, **extra_fields):
-        if not email:
-            raise ValueError('users must have a email')
-        if not password:
-            raise ValueError('user must have a password')
 
-        user_obj = self.model(
-            email=self.normalize_email(email),
-            **extra_fields
-        )
+class UserManager(BaseUserManager):
+    def create_user(
+        self,
+        email,
+        password=None,
+        is_staff=False,
+        is_active=True,
+        is_admin=False,
+        **extra_fields
+    ):
+        if not email:
+            raise ValueError("users must have a email")
+        if not password:
+            raise ValueError("user must have a password")
+
+        user_obj = self.model(email=self.normalize_email(email), **extra_fields)
         user_obj.set_password(password)
         user_obj.staff = is_staff
         user_obj.admin = is_admin
@@ -23,8 +29,6 @@ class UserManager(BaseUserManager):
             email=self.normalize_email(email),
             password=password,
             is_staff=True,
-
-
         )
         return user
 
@@ -34,7 +38,5 @@ class UserManager(BaseUserManager):
             password=password,
             is_staff=True,
             is_admin=True,
-
-
         )
         return user

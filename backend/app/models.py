@@ -19,7 +19,7 @@ class User(AbstractBaseUser):
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     objects = UserManager()
@@ -28,7 +28,7 @@ class User(AbstractBaseUser):
         return str(self.email)
 
     def get_full_name(self):
-        return (f"{self.first_name} {self.last_name}")
+        return f"{self.first_name} {self.last_name}"
 
     def get_short_name(self):
         return self.first_name
@@ -54,12 +54,8 @@ class User(AbstractBaseUser):
 
 
 class Intern(models.Model):
-    GENDER_CHOICES = (
-        ("M", "Male"),
-        ("F", "Female")
-    )
-    username = models.CharField(
-        unique=True, max_length=255, verbose_name="Slack name")
+    GENDER_CHOICES = (("M", "Male"), ("F", "Female"))
+    username = models.CharField(unique=True, max_length=255, verbose_name="Slack name")
     full_name = models.CharField(max_length=100)
     stack = models.CharField(max_length=1000)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
@@ -74,16 +70,15 @@ class Intern(models.Model):
 
 
 class Jobs(models.Model):
-    intern = models.ForeignKey(
-        Intern, on_delete=models.CASCADE, related_name="job")
+    intern = models.ForeignKey(Intern, on_delete=models.CASCADE, related_name="job")
     job_title = models.CharField(max_length=255)
     gotten_at = models.DateTimeField()
-    company_name = models.CharField(
-        max_length=255, verbose_name="Organization name")
+    company_name = models.CharField(max_length=255, verbose_name="Organization name")
     last_updated_at = models.DateTimeField()
     job_description = models.CharField(max_length=255)
     currently_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    job_logo = models.URLField()
 
     def __str__(self):
         return self.company_name
