@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg-white text-center flex flex-col">
+    <div class="bg-white flex flex-col">
       <NavbarComponent/>
       <HomeContainer />
     </div>
