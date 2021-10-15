@@ -22,9 +22,12 @@ venv\scripts\activate
 
 # for mac 
 venv/bin/activate
+
 # for linux
 source venv/bin/activate
 ```
+
+## Delete the migrations folder inside the app folder
 
 create a folder name "migrations" inside the "app" folder & also create a "__init__.py" file inside the "migrations" 
 ```bash
