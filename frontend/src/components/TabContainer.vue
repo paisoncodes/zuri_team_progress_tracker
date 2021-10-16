@@ -3,28 +3,26 @@
 
         <div class="pt-0">
 
-        <nav class="flex flex-row items-center mx-auto overflow-y-auto text-sm md:flex-row max-w-7xl">  
-            <ul class="flex">   
-            <li @click="component = 'HomeContainer', activeTab = 1" class="block py-6 cursor-pointer bg-brand-red-light focus:outline-none text-brand-gray-dark-1 border-brand-gray-light w-36 " :class="{'is-active': activeTab === 1}">			
+        <nav class="flex flex-col items-center px-0 mx-auto text-sm sm:flex-row max-w-7xl ">      
+            <button @click="component = 'HomeContainer', activeTab = 1" class="block py-6 bg-brand-red-light focus:outline-none text-brand-gray-dark-1 border-brand-gray-light button-width " :class="{'is-active': activeTab === 1}">			
                 OVERVIEW 
-            </li>  
+            </button>  
 
-            <li @click="component = 'TwentyOne', activeTab = 2"  class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 2}">						
+            <button @click="component = 'TwentyOne', activeTab = 2"  class="block py-4 text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 2}">						
                 2021 <br> (10,000 interns)        
-            </li>
+            </button>
 
-            <li @click="component = 'Twenty', activeTab = 3" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 3}">					
+            <button @click="component = 'Twenty', activeTab = 3" class="block py-4 text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 3}">					
                 2020 <br> (10,000 interns)        
-            </li>
+            </button>
 
-            <li @click="component = 'Nineteen', activeTab = 4" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 4}">					
+            <button @click="component = 'Nineteen', activeTab = 4" class="block py-4 text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 4}">					
                 2019 <br> (10,000 interns)         
-            </li>
+            </button>
 
-            <li @click="component = 'Eighteen', activeTab = 5" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 5}">						
+            <button @click="component = 'Eighteen', activeTab = 5" class="block py-4 text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 5}">						
                 2018 <br> (10,000 interns)        
-            </li>  
-            </ul>         
+            </button>          
         </nav>
 
             <component :is="component"> </component>
@@ -62,6 +60,10 @@ export default {
 
 .is-active {
     background-color: #F7F3F2;
+}
+
+.button-width{
+    width: 15.5%;
 }
 
 </style>
