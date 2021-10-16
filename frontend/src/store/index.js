@@ -12,16 +12,17 @@ export default createStore({
       about: '',
       employed: '',
       // image: ''
-  }
+    },
+    formTwo:{
+
+    }
+
   },
   mutations: {
     toggleProfileEditModal: state => {
       state.profileModalActive =! state.profileModalActive
     },
     setStack(state, payload) { state.intern = payload },
-    // setData(state, payload){
-    //   state.myData = payload
-    // }
     updateField,
 
   },
