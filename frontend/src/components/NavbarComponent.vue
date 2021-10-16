@@ -13,7 +13,8 @@
         </div>
         <!--mobile button-->
         <div class="flex items-center md:hidden">
-           <button class="mobile-menu-button"><img src="../assets/hamburgerIcon.png" class="h-5 w-7" color="brand-gray-dark-1" v-on:click="menu()"></button>
+            <button class="mobile-menu-button"><img src="../assets/hamburgerIcon.png" class="h-5 w-7" color="brand-gray-dark-1" v-on:click="menu()">
+        </button>
         </div>
 
 
