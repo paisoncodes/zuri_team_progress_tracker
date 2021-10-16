@@ -4,7 +4,12 @@ from rest_framework import response
 from rest_framework.views import APIView
 from rest_framework.generics import UpdateAPIView
 from rest_framework.response import Response
-from .serializers import UserSerializer, UserUpdateSerializer, JobSerializer, InternUpdateSerializer
+from .serializers import (
+    UserSerializer,
+    UserUpdateSerializer,
+    JobSerializer,
+    InternUpdateSerializer,
+)
 from .models import User, Intern, Jobs, NewsLetter
 from .serializers import *
 from django.http import Http404
@@ -275,26 +280,41 @@ class InternUpdate(UpdateAPIView):
         """
         Updates an intern
         """
+        try:
+            image = request.FILES["image"]
+            instance = Intern.objects.get(pk=intern_id)
+            data = {
+                "username": instance.username,
+                "full_name": request.data.get("full_name"),
+                "stack": instance.stack,
+                "gender": instance.gender,
+                "about": request.data.get("about"),
+                "state": instance.state,
+                "batch": instance.batch,
+                "is_employed": request.data.get("is_employed"),
+                "current_salary": request.data.get("current_salary"),
+                "picture": upload_image(image),
+            }
+            instance.save()
+
+            serializer = InternSerializer(instance, data=data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_update(serializer)
+
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        except Exception as e:
+            return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
+
+    def patch(self, request, intern_id):
         image = request.FILES["image"]
-        instance = Intern.objects.get(pk=intern_id)
-        data = {
-            "username": instance.username,
-            "full_name": request.data.get("full_name"),
-            "stack": instance.stack,
-            "gender": instance.gender,
-            "about": request.data.get("about"),
-            "state": instance.state,
-            "batch": instance.batch,
-            "is_employed": request.data.get("is_employed"),
-            "current_salary": request.data.get("current_salary"),
-            "picture": upload_image(image),
-        }
+        try:
+            instance = Intern.objects.get(pk=intern_id)
+        except Intern.DoesNotExist:
+            data = {"error": "no user with such id"}
+            return Response(data, status=status.HTTP_404_NOT_FOUND)
+        instance.picture = upload_image(image)
         instance.save()
-
-        serializer = InternSerializer(instance, data=data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-
+        serializer = InternSerializer(instance)
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
 
@@ -386,13 +406,13 @@ def all_stats(request):
 
 
 @api_view(["GET"])
-def total_salary(request):
-    interns = Intern.objects.all()
+def total_salary(request, batch):
+    interns = Intern.objects.filter(batch=batch)
     salary = 0
     try:
         for intern in interns:
             salary = salary + intern.current_salary
-        return Response({"Total salary": f"{salary}"}, status=status.HTTP_200_OK)
+        return Response({"total_salary": f"{salary}"}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
 
@@ -415,3 +435,18 @@ def get_interns_by_year_and_stack(request, batch, stack):
         return Response(serializer.data, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
+
+
+class GetStacksPerBatch(APIView):
+    def get(self, request, batch):
+        try:
+            year = Intern.objects.filter(batch=batch)
+            serializer = InternSerializer(year, many=True)
+            stacks = []
+            for intern in serializer.data:
+                if intern["stack"] not in stacks:
+                    stacks.append(intern["stack"])
+            data = {"stacks": stacks}
+            return Response(data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"Message": f"{e}"}, status.HTTP_400_BAD_REQUEST)

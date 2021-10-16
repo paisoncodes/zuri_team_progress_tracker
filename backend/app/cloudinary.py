@@ -16,5 +16,4 @@ cloudinary.config(
 
 def upload_image(image):
     upload_data = cloudinary.uploader.upload(image)
-    print(upload_data)
     return upload_data["url"]

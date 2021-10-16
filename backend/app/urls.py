@@ -33,7 +33,7 @@ urlpatterns = [
     ),
     path("interns/", InternsView.as_view(), name="intern_list"),
     path("interns/stack/<str:stack>/", InternStackList.as_view(), name="intern_stack"),
-    path("interns/total_salary/", total_salary, name="total_salary"),
+    path("interns/batch/<int:batch>/total_salary/", total_salary, name="total_salary"),
     path(
         "interns/batch/<int:batch>",
         BatchList.as_view(),
@@ -43,6 +43,9 @@ urlpatterns = [
         "interns/batch/<int:batch>/stack/<str:stack>/",
         views.get_interns_by_year_and_stack,
         name="list_of_stacks_per_year",
+    ),
+    path(
+        "stacks/batch/<int:batch>/", views.GetStacksPerBatch.as_view(), name="get_stats"
     ),
     path("subscribers/", NewsLetterSubscribersView.as_view(), name="subscribers"),
     path("subscribers/subscribe/", NewsLetterSubscribeView.as_view(), name="subscribe"),
