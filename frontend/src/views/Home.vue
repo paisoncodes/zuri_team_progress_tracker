@@ -1,44 +1,52 @@
 <template>
   <div>
     <div class="bg-white text-center flex flex-col">
-      <NavbarComponent/>
-      <Subscribe/>
-      <TestContainer class="padTop"/>
-        <LoginModal v-if="showLogin"/>
+      <div v-show="this.$store.state.profileModalActive">
+        <ProfileCard class="fixed" />
+      </div>
+      <NavbarComponent />
+      <Subscribe />
+      <TabContainer class="padTop" />
+      <LoginModal v-if="showLogin" />
     </div>
     <Footer />
   </div>
-</template>
+</template> 
 
 <script>
-import NavbarComponent from '../components/NavbarComponent.vue'
-import Subscribe from "../components/Subscribe.vue"
-import TestContainer from '../components/TabContainer.vue'
-import Footer from '../components/Footer.vue'
-import LoginModal from '@/components/LoginModal.vue'
+import ProfileCard from "../components/ProfileCard.vue";
+import NavbarComponent from "../components/NavbarComponent.vue";
+import Subscribe from "../components/Subscribe.vue";
+import TabContainer from "../components/TabContainer.vue";
+import Footer from "../components/Footer.vue";
+import LoginModal from "@/components/LoginModal.vue";
 export default {
-  
-  data(){
-    return{
-      showLogin:false
-    }
+  components: {
+    ProfileCard,
+    NavbarComponent,
+    Subscribe,
+    TabContainer,
+    LoginModal,
+    Footer,
   },
-  components: { NavbarComponent, Subscribe, TestContainer, LoginModal, Footer },
-  name: 'Home',
-  
-    mounted (){
-    this.eventBus.on('toggleLoginModal', (data) => {
+  name: "Home",
+  data() {
+    return {
+      displayCard: this.$store.state.profileModalActive,
+      showLogin: false,
+    };
+  },
+  mounted() {
+    this.eventBus.on("toggleLoginModal", (data) => {
       this.showLogin = data;
-    })
-  }
-}
+    });
+  },
+};
 </script>
 
 
 <style>
-
-.padTop{
-  margin: 4rem 0 0 0
+.padTop {
+  margin: 4rem 0 0 0;
 }
-
 </style>

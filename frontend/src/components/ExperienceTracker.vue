@@ -137,6 +137,7 @@ methods:{
   showLogin(){
     this.eventBus.emit('toggleLoginModal', true);
   }
+
 }
 }
 </script>
