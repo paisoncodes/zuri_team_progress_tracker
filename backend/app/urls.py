@@ -44,6 +44,9 @@ urlpatterns = [
         views.get_interns_by_year_and_stack,
         name="list_of_stacks_per_year",
     ),
+    path(
+        "stacks/batch/<int:batch>/", views.GetStacksPerBatch.as_view(), name="get_stats"
+    ),
     path("subscribers/", NewsLetterSubscribersView.as_view(), name="subscribers"),
     path("subscribers/subscribe/", NewsLetterSubscribeView.as_view(), name="subscribe"),
     path("statistics/batch/<int:batch>/", StatisticView.as_view()),
