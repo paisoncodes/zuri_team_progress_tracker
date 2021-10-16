@@ -268,7 +268,7 @@ class InternUpdate(UpdateAPIView):
         JSONParser,
     )
     queryset = Intern.objects.all()
-    serializer_class = InternUpdateSerializer
+    serializer_class = InternSerializer
     permission_classes = (permissions.AllowAny,)
 
     def put(self, request, intern_id):
