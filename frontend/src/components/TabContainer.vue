@@ -4,7 +4,7 @@
         <div class="pt-0">
 
         <nav class="flex flex-col text-sm sm:flex-row mx-auto px-0 max-w-7xl items-center ">      
-            <button @click="component = 'HomeContainer', activeTab = 1" class="block py-6 bg-brand-red-light focus:outline-none text-brand-gray-dark-1 border-brand-gray-light w-36 " :class="{'is-active': activeTab === 1}">			
+            <button @click="component = 'HomeContainer', activeTab = 1" class="block py-6 bg-brand-red-light focus:outline-none text-brand-gray-dark-1 border-brand-gray-light button-width " :class="{'is-active': activeTab === 1}">			
                 OVERVIEW 
             </button>  
 
@@ -60,6 +60,10 @@ export default {
 
 .is-active {
     background-color: #F7F3F2;
+}
+
+.button-width{
+    width: 15.5%;
 }
 
 </style>

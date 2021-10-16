@@ -54,7 +54,7 @@
 
         </div>
         </div>
-        <p class="float-right text-blue-500 cursor-pointer mb-3">Edit</p>
+        <p @click="toggleModal()" class="float-right text-blue-500 cursor-pointer mb-3">Edit</p>
       </div>
       </div>
       </div>
@@ -93,7 +93,13 @@ export default {
         },
       ]
     }
+  },
+  methods:{
+    toggleModal() {
+      this.$store.commit('toggleProfileEditModal');
+    },
   }
+
 }
 </script>
 
