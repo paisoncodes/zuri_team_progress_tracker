@@ -143,8 +143,9 @@ export default {
       this.eventBus.emit("toggleLoginModal", false);
     },
     toggleModal() {
-      this.showLogin()
-        
+      // this.showLogin()
+      this.eventBus.emit("toggleLoginModal", false);
+      this.$store.commit('toggleProfileEditModal');
     },
     login(){
       
