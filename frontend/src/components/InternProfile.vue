@@ -32,7 +32,7 @@ export default {
   },
   created () {
     axios
-     .get ('https://zuri-progress-tracker.herokuapp.com/api/v1/interns/')
+     .get ('https://zuri-progress-tracker.herokuapp.com/api/v1/interns/10/')
       .then(res => {
         this.profiles = res.data.slice(0,1);
       })
