@@ -86,14 +86,23 @@ class JobSerializer(serializers.ModelSerializer):
         ]
 
 
-class UpdateInternSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=100)
-
-
 class NewsLetterSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsLetter
         fields = "__all__"
+
+class InternUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Intern
+        fields = [
+            "full_name",
+            "state",
+            "about",
+            "batch",
+            "current_salary",
+            "is_employed",
+            "picture",
+        ]
 
 
 class StatisticSerializer(serializers.ModelSerializer):
