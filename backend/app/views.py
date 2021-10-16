@@ -4,7 +4,12 @@ from rest_framework import response
 from rest_framework.views import APIView
 from rest_framework.generics import UpdateAPIView
 from rest_framework.response import Response
-from .serializers import UserSerializer, UserUpdateSerializer, JobSerializer, InternUpdateSerializer
+from .serializers import (
+    UserSerializer,
+    UserUpdateSerializer,
+    JobSerializer,
+    InternUpdateSerializer,
+)
 from .models import User, Intern, Jobs, NewsLetter
 from .serializers import *
 from django.http import Http404
@@ -275,36 +280,37 @@ class InternUpdate(UpdateAPIView):
         """
         Updates an intern
         """
-        image = request.FILES["image"]
-        instance = Intern.objects.get(pk=intern_id)
-        data = {
-            "username": instance.username,
-            "full_name": request.data.get("full_name"),
-            "stack": instance.stack,
-            "gender": instance.gender,
-            "about": request.data.get("about"),
-            "state": instance.state,
-            "batch": instance.batch,
-            "is_employed": request.data.get("is_employed"),
-            "current_salary": request.data.get("current_salary"),
-            "picture": upload_image(image),
-        }
-        instance.save()
+        try:
+            image = request.FILES["image"]
+            instance = Intern.objects.get(pk=intern_id)
+            data = {
+                "username": instance.username,
+                "full_name": request.data.get("full_name"),
+                "stack": instance.stack,
+                "gender": instance.gender,
+                "about": request.data.get("about"),
+                "state": instance.state,
+                "batch": instance.batch,
+                "is_employed": request.data.get("is_employed"),
+                "current_salary": request.data.get("current_salary"),
+                "picture": upload_image(image),
+            }
+            instance.save()
 
-        serializer = InternSerializer(instance, data=data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
+            serializer = InternSerializer(instance, data=data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_update(serializer)
 
-        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        except Exception as e:
+            return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 
     def patch(self, request, intern_id):
         image = request.FILES["image"]
         try:
             instance = Intern.objects.get(pk=intern_id)
         except Intern.DoesNotExist:
-            data = {
-                "error": "no user with such id"
-            }
+            data = {"error": "no user with such id"}
             return Response(data, status=status.HTTP_404_NOT_FOUND)
         instance.picture = upload_image(image)
         instance.save()
@@ -400,8 +406,8 @@ def all_stats(request):
 
 
 @api_view(["GET"])
-def total_salary(request):
-    interns = Intern.objects.all()
+def total_salary(request, batch):
+    interns = Intern.objects.filter(batch=batch)
     salary = 0
     try:
         for intern in interns:
