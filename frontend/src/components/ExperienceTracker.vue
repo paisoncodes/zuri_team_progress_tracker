@@ -138,13 +138,13 @@ export default {
   },
  computed: {
         ...mapGetters({
-             getAllInterns: 'allInterns',
+             getAllInterns: 'getAllStack',
              userJob:'allUserjobs'
         })
     },
 methods:{
     ...mapActions({
-      interns: 'getAllInterns',
+      interns: 'getAllStack',
       internJob: 'getUserJob'
     }),
   showLogin(intern_id){
