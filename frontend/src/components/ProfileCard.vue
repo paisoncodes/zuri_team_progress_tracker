@@ -14,14 +14,13 @@
                     <button @click.prevent="" type="submit" class="py-3 px-12 bg-brand-gray-dark-1 text-white border border-brand-gray-dark-1">Save</button>
                 </div>
             </form>
-            
         </div>
     </div>
 </template>
 
 <script>
-import FormOne from './ProfileFormOne.vue';
-import FormTwo from './ProfileFormTwo.vue';
+import FormOne from '@/components/ProfileFormOne.vue';
+import FormTwo from '@/components/ProfileFormTwo.vue';
 export default {
     components: {
         FormOne,
