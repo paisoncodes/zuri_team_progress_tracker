@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import ContributionServices from '@/services/http-client'
+import { getField, updateField } from 'vuex-map-fields';
 
 export default createStore({
   state: {
@@ -9,7 +10,18 @@ export default createStore({
     stats19: [],
     stats18: [],
     allInterns:[],
-    internJob:[]
+    internJob:[],
+    formOne : {
+      fullName : '',
+      currentSalary : '',
+      about: '',
+      employed: '',
+      // image: ''
+    },
+    formTwo:{
+
+    }
+
   },
   mutations: {
     toggleProfileEditModal: state => {
@@ -28,6 +40,7 @@ export default createStore({
     allInterns(state, payload) { state.allInterns = payload },
     userJob(state, payload) { state.internJob.push(payload) },
 
+    updateField,
   },
   actions: {
     async getStack({commit}, payload) {
@@ -70,7 +83,14 @@ export default createStore({
       await ContributionServices.getStatistics(payload).then(res => {
         commit("setStats18", res.data)
       })
-    }
+    },
+    
+    async editIntern({state}){
+        console.log(state.formOne)
+        // await ContributionServices.editIntern().then(response => {
+        //   console.log(respnose)
+        // })
+      },
 
   },
   getters:{
@@ -79,8 +99,9 @@ export default createStore({
     },
     allUserjobs (state){
       return state.internJob
-    }
+    },
+    getField,
   },
   modules: {
-  }
+  },
 })
