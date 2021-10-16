@@ -36,7 +36,7 @@ import Eighteen from '@/components/Eighteen.vue'
 import Nineteen from '@/components/Nineteen.vue'
 import Twenty from '@/components/Twenty.vue'
 import TwentyOne from '@/components/TwentyOne.vue'
-import { mapActions } from 'vuex'
+
 export default {
     components: {
         Eighteen,
