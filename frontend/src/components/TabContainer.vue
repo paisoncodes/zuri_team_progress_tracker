@@ -9,16 +9,16 @@
                         OVERVIEW
                     </li>  
                     <li @click="component = 'TwentyOne', activeTab = 2"  class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 2}">                      
-                        2021 <br> (10,000 interns)        
+                        2021 <br> (41,000 interns)        
                     </li>
                     <li @click="component = 'Twenty', activeTab = 3" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 3}">                  
-                        2020 <br> ({{ stats20.participants }} interns)        
+                        2020 <br> (25490 interns)        
                     </li>
                     <li @click="component = 'Nineteen', activeTab = 4" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 4}">                    
-                        2019 <br> ({{ stats19.participants }} interns)        
+                        2019 <br> (23300 interns)        
                     </li>
                     <li @click="component = 'Eighteen', activeTab = 5" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 5}">                        
-                        2018 <br> ({{ stats.participants }} interns)        
+                        2018 <br> (3098 interns)        
                     </li>  
                 </ul>        
             </nav>
@@ -31,7 +31,6 @@
 
 
 <script>
-import { mapActions } from 'vuex'
 import HomeContainer from '@/components/HomeContainer.vue'
 import Eighteen from '@/components/Eighteen.vue'
 import Nineteen from '@/components/Nineteen.vue'
@@ -52,27 +51,6 @@ export default {
             activeTab: 1
         }
     },
-    computed: {
-        stats() {
-            return this.$store.state.stats18
-        },
-        stats19(){
-            return this.$store.state.stats19
-        },
-        stats20(){
-            return this.$store.state.stats20
-        }
-
-    },
-    methods: {
-        ...mapActions(['getStatistics18, getStatistics19, getStatistics20']),
-
-    },
-    async created() {
-        this.getStatistics18('2018')
-        this.getStatistics18('2019')
-        this.getStatistics18('2020')
-    }
 }
 </script>
 

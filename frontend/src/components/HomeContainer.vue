@@ -5,7 +5,7 @@
     <div class="bg-brand-red-light-1" v-for="(this_year, i) in progresStat" :key="i">
         <div class="flex">
             <div class="flex overview-width flex-col justify-center w-32">
-                <p>2020</p>
+                <p>{{this_year.year}}</p>
             </div>
 
             <div class="w-full">
@@ -14,35 +14,12 @@
                     :femaleParticipants="this_year.female"
                     :maleParticipants="this_year.male" 
                 />
-                <CurrentJobPlacement 
+                <CurrentJobPlacement class="mb-6"
                     :total_finalist="this_year.finalists" 
-                    :total_employed="this_year.finalists" 
+                    :total_employed="this_year.employed_finalists" 
                 />
             </div>
-        </div>
-
-        <div class="flex">
-            <div class="flex overview-width flex-col justify-center w-32">
-                <p>2019</p>
-            </div>
-
-            <div class="w-full">
-                <Stats19/>
-                <CurrentJobPlacement/>
-            </div>
-        </div>
-
-        <div class="flex">
-            <div class="flex overview-width flex-col justify-center w-32">
-                <p>2018</p>
-            </div>
-
-            <div class="w-full">
-                <Stats18/>
-                <CurrentJobPlacement class="mb-5"/>
-            </div>
-        </div>
-        
+        </div>        
     </div>
 
     
@@ -65,13 +42,13 @@
         },
         methods: {
             ...mapActions(['getProgresStat']),
-
         },
         computed: {
             ...mapGetters(["progresStat"])
         },
         mounted() {
             this.getProgresStat()
+            
         }
     }
 </script>
