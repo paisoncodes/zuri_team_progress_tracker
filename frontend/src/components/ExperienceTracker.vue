@@ -69,8 +69,10 @@
 </template>
 
 <script>
-
+import { mapGetters } from "vuex";
+import { mapActions } from 'vuex'
 export default {
+  
   data(){
     return {
       internTraker:[
@@ -131,15 +133,36 @@ export default {
            about: 'An exceptional product designer with years of experience understanding the users thinking pattern and this helps in creating user centered product.'
         },
       ],
-      displayCard: this.$store.state.profileModalActive
+      internjobs:[]
     }
   },
-
+ computed: {
+        ...mapGetters({
+             getAllInterns: 'allInterns',
+             userJob:'allUserjobs'
+        })
+    },
 methods:{
+    ...mapActions({
+      interns: 'getAllInterns',
+      internJob: 'getUserJob'
+    }),
   showLogin(){
     this.eventBus.emit('toggleLoginModal', true);
-  }
 
+  },
+internsJobs(){
+  this.getAllInterns.forEach(element => {
+   this.internJob(element.id)
+  });
+  console.log(this.userJob)
+},
+
+},
+async created() {
+ await this.interns().then(()=>{
+   this.internsJobs()
+ })
 }
 }
 </script>
