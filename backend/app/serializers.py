@@ -18,15 +18,16 @@ class UserSerializer(serializers.Serializer):
         return User.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
-        instance.email = validated_data.get('email', instance.email)
-        instance.address = validated_data.get('address', instance.address)
-        instance.city = validated_data.get('city', instance.city)
-        instance.state = validated_data.get('state', instance.state)
+        instance.first_name = validated_data.get("first_name", instance.first_name)
+        instance.last_name = validated_data.get("last_name", instance.last_name)
+        instance.email = validated_data.get("email", instance.email)
+        instance.address = validated_data.get("address", instance.address)
+        instance.city = validated_data.get("city", instance.city)
+        instance.state = validated_data.get("state", instance.state)
 
         instance.save()
         return instance
+
 
 class UserUpdateSerializer(serializers.Serializer):
     id = serializers.IntegerField(required=False)
@@ -42,32 +43,52 @@ class UserUpdateSerializer(serializers.Serializer):
         return User.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
-        instance.email = validated_data.get('email', instance.email)
-        instance.address = validated_data.get('address', instance.address)
-        instance.city = validated_data.get('city', instance.city)
-        instance.state = validated_data.get('state', instance.state)
+        instance.first_name = validated_data.get("first_name", instance.first_name)
+        instance.last_name = validated_data.get("last_name", instance.last_name)
+        instance.email = validated_data.get("email", instance.email)
+        instance.address = validated_data.get("address", instance.address)
+        instance.city = validated_data.get("city", instance.city)
+        instance.state = validated_data.get("state", instance.state)
 
         instance.save()
         return instance
-    
+
 
 class InternSerializer(serializers.ModelSerializer):
-    
     class Meta:
-        model= Intern
-        fields = ['username', 'full_name', 'stack', 'state', 'about', 'batch', 'is_employed']
+        model = Intern
+        fields = [
+            "id",
+            "username",
+            "full_name",
+            "stack",
+            "state",
+            "gender",
+            "about",
+            "batch",
+            "current_salary",
+            "is_employed",
+            "picture",
+        ]
+
 
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jobs
-        fields = ['id', 'job_title', 'company_name','gotten_at', 'last_updated_at', 'job_description', 'currently_active']
-
+        fields = [
+            "id",
+            "job_title",
+            "company_name",
+            "gotten_at",
+            "job_description",
+            "currently_active",
+            "job_logo",
+        ]
 
 
 class UpdateInternSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=100)
+
 
 class NewsLetterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -78,5 +99,4 @@ class NewsLetterSerializer(serializers.ModelSerializer):
 class StatisticSerializer(serializers.ModelSerializer):
     class Meta:
         model = Statistic
-        fields =["year","male", "female", "finalist", "participant"]
-
+        fields = ["year", "male", "female", "finalist", "participant"]
