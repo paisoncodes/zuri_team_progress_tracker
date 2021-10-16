@@ -1,5 +1,5 @@
 <template>
-<div class="text-left mx-auto w-80 md:w-full">
+<div class="text-left mx-auto md:w-full">
   <div class="grid  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-for="(intern, index) in internTraker" :key="index" >
      <div class="icon w-full h-full ">
          <img class="object-cover object-center  h-full w-full" :src="intern.picture"/>
