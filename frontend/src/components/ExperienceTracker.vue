@@ -1,6 +1,6 @@
 <template>
 <div class="text-left mx-auto md:w-full">
-  <div class="grid  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-for="(intern, index) in internTraker" :key="index" >
+  <div class="grid  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-for="(intern, index) in getAllInterns" :key="index" >
      <div class="icon w-full h-full ">
          <img class="object-cover object-center  h-full w-full" :src="intern.picture"/>
      </div>
@@ -144,7 +144,7 @@ export default {
     },
 methods:{
     ...mapActions({
-      interns: 'getAllInterns',
+      interns: 'getAllStack',
       internJob: 'getUserJob'
     }),
   showLogin(){
@@ -152,10 +152,10 @@ methods:{
 
   },
 internsJobs(){
-  this.getAllInterns.forEach(element => {
-   this.internJob(element.id)
-  });
-  console.log(this.userJob)
+ // this.getAllInterns.forEach(element => {
+ //  this.internJob(element.id)
+ // });
+ // console.log(this.userJob)
 },
 
 },

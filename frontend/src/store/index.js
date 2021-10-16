@@ -19,20 +19,19 @@ export default createStore({
     setYear(state, payload) {state.year = payload},
     allInterns(state, payload) { state.allInterns = payload },
     userJob(state, payload) { state.internJob.push(payload) },
-
   },
   actions: {
     async getAllStack({commit, getters}) {
       const year = getters.year
       await ContributionServices.getAllStack(year).then(response => {
-        commit("setStack", response.data.data)
+        commit("allInterns", response.data)
         console.log(response.data)
       })
     },
     async getStack({commit, getters}, payload) {
       const year = getters.year
       await ContributionServices.getStack(payload, year).then(response => {
-        commit("setStack", response.data.data)
+        commit("allInterns", response.data)
         console.log(response.data)
       })
     },
@@ -73,9 +72,7 @@ export default createStore({
     },
     allUserjobs (state){
       return state.internJob
-    }
-  },
-  getters: {
+    },
     stacks(state) {
       return state.stacks
     },
