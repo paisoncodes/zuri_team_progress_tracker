@@ -43,8 +43,6 @@ export default createStore({
 
     setStackYear(state, payload) {state.stacks = payload},
     setYear(state, payload) {state.year = payload},
-    allInterns(state, payload) { state.allInterns = payload },
-    userJob(state, payload) { state.internJob.push(payload) },
     setStats20(state, payload) {
       state.stats20 = payload
     },
@@ -84,24 +82,12 @@ export default createStore({
         console.log(response.data.stacks)
       })
     },
-    async getStack({commit}, payload) {
-      await ContributionServices.getStack(payload).then(response => {
-        commit("setStack", response.data.data)
-        console.log(response.data.data)
-      })
-    },
     async getTotalSalary({ commit }) {
       await ContributionServices.getTotalSalary().then(response => {
         commit('setTotalSalary', response.data.total_salary)
         console.log(response.data)
       })
-    },
-   async getTotalSalary() {
-      await ContributionServices.getTotalSalary().then(response => {
-        response
-        // console.log(response)
-      }) 
-    },
+    }, 
     async getAllInterns({commit}){
       await ContributionServices.getIntern().then(response =>{
         commit('allInterns', response.data)
