@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto md:max-w-full lg:py-10 ">
     <div class="grid lg:grid-cols-4 md:grid-cols-2 md:gap-6">
-    <div v-for="intern in interns" v-bind:key="intern.id"  class="w-full mx-auto overflow-hidden text-left transition-shadow duration-300 rounded-sm">
+    <div v-for="intern in interns" v-bind:key="intern.id"  class="w-full py-4 mx-auto overflow-hidden text-left transition-shadow duration-300 rounded-sm">
         <a href="/" aria-label=""><img class="object-cover w-full h-60" v-bind:src="intern.picture" v-bind:alt="intern.alt" /></a>
         <div  class="py-4">
          
@@ -40,7 +40,7 @@ export default {
     axios
      .get ('https://zuri-progress-tracker.herokuapp.com/api/v1/interns/')
       .then(res => {
-        this.interns = res.data.slice(0,12);
+        this.interns = res.data.slice(0,4);
       })
          
         .catch(error => {
