@@ -8,7 +8,6 @@ from .views import (
     UserCreateView,
     UserUpdateView,
     UserDetailView,
-    InternCreateUpdateView,
     InternUpdate,
     InternsView,
     InternDetailView,
