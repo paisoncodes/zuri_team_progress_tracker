@@ -63,7 +63,7 @@ export default {
   },
   computed: {
     totalSalary() {
-      return this.store.state.totalSalary
+      return this.$store.state.totalSalary
     }
   }
 }

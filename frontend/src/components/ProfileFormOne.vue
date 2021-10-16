@@ -25,7 +25,8 @@
                 </div>
                 <div>
                     <h1>UPDATE PICTURE</h1>
-                    <img class="w-16 h-16 cursor-pointer" src="../assets/carbon_image.png" alt="">
+                    <img :src="item.imageUrl ? item.imageUrl : require('../assets/carbon_image.png') " class="w-16 h-16 cursor-pointer"  alt="">
+                    <input type="file" accept="image/*" @change="uploadImage">
                 </div>
         </form>
     </div>
@@ -35,8 +36,23 @@
 export default {
     data(){
         return{
-
+            item: {
+                image: null,
+                imageUrl: null
+            }
+        }
+    },
+    methods: {
+        uploadImage(e){
+            const image = e.target.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(image);
+            reader.onload = e =>{
+                this.item.imageUrl = e.target.result;
+                console.log(this.item.imageUrl);
+            };
         }
     }
 }
 </script>
+

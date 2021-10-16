@@ -5,7 +5,7 @@ export default createStore({
   state: {
     profileModalActive: false,
     intern: [],
-    totalSalary: ''
+    totalSalary: '',
   },
   mutations: {
     toggleProfileEditModal: state => {
