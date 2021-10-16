@@ -3,7 +3,7 @@
 
         <div class="pt-0">
 
-        <nav class="flex flex-col text-sm sm:flex-row mx-auto px-0 max-w-7xl items-center ">      
+        <nav class="flex flex-col items-center px-0 mx-auto text-sm sm:flex-row max-w-7xl ">      
             <button @click="component = 'HomeContainer', activeTab = 1" class="block py-6 bg-brand-red-light focus:outline-none text-brand-gray-dark-1 border-brand-gray-light button-width " :class="{'is-active': activeTab === 1}">			
                 OVERVIEW 
             </button>  
