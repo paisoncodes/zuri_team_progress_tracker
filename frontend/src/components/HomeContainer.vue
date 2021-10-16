@@ -16,7 +16,7 @@
                 />
                 <CurrentJobPlacement 
                     :total_finalist="this_year.finalists" 
-                    :total_employed="this_year.employed_finalists" 
+                    :total_employed="this_year.finalists" 
                 />
             </div>
         </div>
