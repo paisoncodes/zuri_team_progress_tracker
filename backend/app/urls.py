@@ -33,7 +33,7 @@ urlpatterns = [
     ),
     path("interns/", InternsView.as_view(), name="intern_list"),
     path("interns/stack/<str:stack>/", InternStackList.as_view(), name="intern_stack"),
-    path("interns/total_salary/", total_salary, name="total_salary"),
+    path("interns/batch/<int:batch>/total_salary/", total_salary, name="total_salary"),
     path(
         "interns/batch/<int:batch>",
         BatchList.as_view(),

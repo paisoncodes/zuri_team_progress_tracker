@@ -6,6 +6,9 @@ export default createStore({
   state: {
     profileModalActive: false,
     intern: [],
+    stats20: [],
+    stats19: [],
+    stats18: [],
     allInterns:[],
     internJob:[],
     formOne : {
@@ -30,6 +33,18 @@ export default createStore({
       state.profileModalActive =! state.profileModalActive
     },
     setStack(state, payload) { state.intern = payload },
+    setStats20(state, payload) {
+      state.stats20 = payload
+    },
+    setStats19(state, payload) {
+      state.stats19 = payload
+    },
+    setStats18(state, payload) {
+      state.stats18 = payload
+    },
+    allInterns(state, payload) { state.allInterns = payload },
+    userJob(state, payload) { state.internJob.push(payload) },
+
     updateField,
   },
   actions: {
@@ -57,6 +72,21 @@ export default createStore({
              commit ('userJob', response.data)
       }).catch((error)=>{
         console.log(error)
+      })
+    },
+    async getStatistics20({commit}, payload) {
+      await ContributionServices.getStatistics(payload).then(res => {
+        commit("setStats20", res.data)
+      })
+    },
+    async getStatistics19({commit}, payload) {
+      await ContributionServices.getStatistics(payload).then(res => {
+        commit("setStats19", res.data)
+      })
+    },
+    async getStatistics18({commit}, payload) {
+      await ContributionServices.getStatistics(payload).then(res => {
+        commit("setStats18", res.data)
       })
     },
     
