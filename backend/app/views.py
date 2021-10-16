@@ -180,35 +180,37 @@ class InternDetailView(APIView):
 
 class InternsView(APIView):
     """
-        endpoint to create an intern or get a list of interns
-        create:
-            request body:
-                {
-                "username": "user",
-                "full_name": "fullname",
-                "stack": "Backend",
-                "state": "Oyo",
-                "gender": "M",
-                "about": "Random text",
-                "batch": "2020",
-                "current_salary": "3000",
-                "is_employed": "True",
-                "picture": "https://ocdn.eu/pulscms-transforms/1/9zVk9kuTURBXy84MTcxYmNmNy0zMmIwLTQ1MzAtOTE0MS1iMWU1Y2Y1MTNjN2MuanBlZ5GTBc0DFs0BroGhMAU"
-                }
-        """
+    endpoint to create an intern or get a list of interns
+    create:
+        request body:
+            {
+            "username": "user",
+            "full_name": "fullname",
+            "stack": "Backend",
+            "state": "Oyo",
+            "gender": "M",
+            "about": "Random text",
+            "batch": "2020",
+            "current_salary": "3000",
+            "is_employed": "True",
+            "picture": "https://ocdn.eu/pulscms-transforms/1/9zVk9kuTURBXy84MTcxYmNmNy0zMmIwLTQ1MzAtOTE0MS1iMWU1Y2Y1MTNjN2MuanBlZ5GTBc0DFs0BroGhMAU"
+            }
+    """
+
     def get(self, request, format=None):
         interns = Intern.objects.all()
         serializer = InternSerializer(interns, many=True)
-        return Response(serializer.data, status= status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        
+
         serializer = InternSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status= status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class InternUpdateView(APIView):
     """
@@ -244,7 +246,6 @@ class InternUpdateView(APIView):
                     "picture": "https://ocdn.eu/pulscms-transforms/1/9zVk9kuTURBXy84MTcxYmNmNy0zMmIwLTQ1MzAtOTE0MS1iMWU1Y2Y1MTNjN2MuanBlZ5GTBc0DFs0BroGhMAU"
                     }}
     """
-
 
     def put(self, request):
         intern_id = request.data.pop("intern_id")
@@ -297,12 +298,12 @@ class InternUpdate(UpdateAPIView):
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
 
-
 ## NewsLetter views
 class NewsLetterSubscribeView(APIView):
     """
     Creates Subscribers For NewsLetters
     """
+
     queryset = NewsLetter.objects.all()
     serializer_class = NewsLetterSerializer
 
@@ -318,11 +319,11 @@ class NewsLetterSubscribersView(APIView):
     """
     Lists all the NewsLetter Subscribers
     """
+
     def get(self, request, *args, **kwargs):
         subscriber = NewsLetter.objects.all()
         serializer = NewsLetterSerializer(subscriber, many=True)
         return Response(serializer.data)
-
 
 
 class InternStackList(APIView):
@@ -338,22 +339,50 @@ class StatisticView(APIView):
     """
 
     def get(self, request, batch, format=None):
-        statistic = Statistic.objects.get(year=batch)
-        serializer = StatisticSerializer(statistic)
-        data = serializer.data
-        all_interns = Intern.objects.filter(batch=batch)
-        employed_interns = Intern.objects.filter(batch=batch, is_employed=True)
-        print(data)
-        response_body = {
-            "year": data["year"],
-            "male": data["male"],
-            "female": data["female"],
-            "participants": data["participant"],
-            "finalists": len(all_interns),
-            "employed_finalists": len(employed_interns),
-        }
+        try:
+            statistic = Statistic.objects.get(year=batch)
+            serializer = StatisticSerializer(statistic)
+            data = serializer.data
+            all_interns = Intern.objects.filter(batch=batch)
+            employed_interns = Intern.objects.filter(batch=batch, is_employed=True)
+            print(data)
+            response_body = {
+                "year": data["year"],
+                "male": data["male"],
+                "female": data["female"],
+                "participants": data["participant"],
+                "finalists": len(all_interns),
+                "employed_finalists": len(employed_interns),
+            }
 
-        return Response(response_body, status=status.HTTP_200_OK)
+            return Response(response_body, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(["GET"])
+def all_stats(request):
+    data = []
+
+    try:
+        statistics = Statistic.objects.all()
+        for stat in statistics:
+            all_interns = Intern.objects.filter(batch=stat.year)
+            employed_interns = Intern.objects.filter(batch=stat.year, is_employed=True)
+
+            response_body = {
+                "year": stat.year,
+                "male": stat.male,
+                "female": stat.female,
+                "participants": stat.participant,
+                "finalists": len(all_interns),
+                "employed_finalists": len(employed_interns),
+            }
+
+            data.append(response_body)
+        return Response(data, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(["GET"])
@@ -367,8 +396,22 @@ def total_salary(request):
     except Exception as e:
         return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
 
-class StackList(APIView):
-    def get(self, request, year):
-        year = Intern.objects.filter(batch=year)
-        serializer = InternSerializer(year, many=True)
+
+class BatchList(APIView):
+    def get(self, request, batch):
+        try:
+            interns = Intern.objects.filter(batch=batch)
+            serializer = InternSerializer(interns, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["get"])
+def get_interns_by_year_and_stack(request, batch, stack):
+    try:
+        interns = Intern.objects.filter(batch=batch, stack=stack)
+        serializer = InternSerializer(interns, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
