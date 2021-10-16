@@ -5,7 +5,7 @@
           <button class="bg-brand-red-dark text-white hover:text-brand-red-light-3 font-normal sm:px-6 lg:px-2  py-2 rounded-full text-sm" @Click="AllStack">
             All Stack {{(stacks.length + 1)}}
           </button>
-          <button class="bg-brand-red-light-1 border-solid border-2 hover:bg-brand-red-light-3 border-brand-gray-dark-1 font-normal sm:px-6 lg:px-2  py-2 rounded-full text-sm" @Click="HTML(stack)"
+          <button class="bg-brand-red-light-1 border-solid border-2 hover:bg-brand-red-dark hover:text-white hover:border-white border-brand-gray-dark-1 font-normal sm:px-6 lg:px-2  py-2 rounded-full text-sm" @Click="HTML(stack)"
             v-for="(stack, index) in stacks"
             :key="index"
             :value="stack"
