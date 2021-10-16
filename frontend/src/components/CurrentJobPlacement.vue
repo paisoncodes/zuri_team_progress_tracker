@@ -14,7 +14,7 @@
         </div>
         <p class="emp-status mt-5 text-left text-xs">{{total_employed}} / {{total_finalist}} Employed</p>
         <div class="mt-10 mb-8 text-brand-gray-blue text-left">
-            <h2 class="text-xs"><a href="#">VIEW COMPLETE PROGRESS{{progress_percent}} {{'\xa0'}}≻</a></h2>
+            <h2 class="text-xs"><a href="#">VIEW COMPLETE PROGRESS {{'\xa0'}}≻</a></h2>
         </div>
     </div>
 </template>
