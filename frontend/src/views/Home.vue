@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="bg-white text-center flex flex-col">
-      <HeaderNavbar/>
+      <NavbarComponent/>
+      <Subscribe/>
       <TestContainer class="padTop"/>
         <LoginModal v-if="showLogin"/>
     </div>
@@ -10,9 +11,8 @@
 </template>
 
 <script>
-// import NavbarComponent from '../components/NavbarComponent.vue'
-import HeaderNavbar from '../components/HeaderNavComponent.vue'
-// import Subscribe from "../components/Subscribe.vue"
+import NavbarComponent from '../components/NavbarComponent.vue'
+import Subscribe from "../components/Subscribe.vue"
 import TestContainer from '../components/TabContainer.vue'
 import Footer from '../components/Footer.vue'
 import LoginModal from '@/components/LoginModal.vue'
@@ -23,7 +23,7 @@ export default {
       showLogin:false
     }
   },
-  components: { HeaderNavbar, TestContainer, Footer, LoginModal },
+  components: { NavbarComponent, Subscribe, TestContainer, LoginModal, Footer },
   name: 'Home',
   
     mounted (){

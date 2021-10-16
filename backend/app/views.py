@@ -10,7 +10,9 @@ from .serializers import *
 from django.http import Http404
 from django.core import serializers
 from rest_framework.pagination import PageNumberPagination
-
+from rest_framework.decorators import api_view
+from rest_framework.parsers import MultiPartParser, JSONParser
+from .cloudinary import upload_image
 
 # Create your views here.
 class UserCreateView(APIView):
@@ -79,16 +81,23 @@ class UserDetailView(APIView):
 
 
 class JobView(APIView):
-    def post(self, request, username):
+    parser_classes = (
+        MultiPartParser,
+        JSONParser,
+    )
+
+    def post(self, request, intern_id):
         """
         Creates a new job for a particular intern
         """
         try:
-            intern = Intern.objects.get(username=username)
+            intern = Intern.objects.get(pk=intern_id)
+            image = request.FILES["image"]
 
             serializer = JobSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.validated_data["intern"] = intern
+                serializer.validated_data["job_logo"] = upload_image(image)
                 serializer.save()
 
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -96,16 +105,15 @@ class JobView(APIView):
         except Exception as e:
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 
-    def get(self, request, username):
+    def get(self, request, intern_id):
         """
         Retrieves and list the job details of an intern
         """
         try:
-            intern = Intern.objects.get(username=username)
+            intern = Intern.objects.get(pk=intern_id)
             jobsList_objects = Jobs.objects.filter(intern=intern)
             if len(jobsList_objects) > 0:
                 serializer = JobSerializer(jobsList_objects, many=True)
-                print(serializer.data)
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response("Unemployed", status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
@@ -117,11 +125,11 @@ class JobUpdateView(UpdateAPIView):
     serializer_class = JobSerializer
     permission_classes = (permissions.AllowAny,)
 
-    def put(self, request, username, pk):
+    def put(self, request, intern_id, pk):
         """
         Updates a job model
         """
-        intern = Intern.objects.get(username=username)
+        intern = Intern.objects.get(pk=intern_id)
         instance = Jobs.objects.get(intern=intern, pk=pk)
         data = {
             "job_title": request.data.get("job_title"),
@@ -139,11 +147,11 @@ class JobUpdateView(UpdateAPIView):
 
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
-    def get(self, request, username, pk):
+    def get(self, request, intern_id, pk):
         """
         Gets a particular job detail
         """
-        intern = Intern.objects.get(username=username)
+        intern = Intern.objects.get(pk=intern_id)
         job = Jobs.objects.get(pk=pk, intern=intern)
         serializer = JobSerializer(job)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -201,6 +209,42 @@ class InternCreateUpdateView(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+class InternUpdate(UpdateAPIView):
+    parser_classes = (
+        MultiPartParser,
+        JSONParser,
+    )
+    queryset = Intern.objects.all()
+    serializer_class = InternSerializer
+    permission_classes = (permissions.AllowAny,)
+
+    def put(self, request, intern_id):
+        """
+        Updates an intern
+        """
+        image = request.FILES["image"]
+        instance = Intern.objects.get(pk=intern_id)
+        data = {
+            "username": instance.username,
+            "full_name": request.data.get("full_name"),
+            "stack": instance.stack,
+            "gender": instance.gender,
+            "about": request.data.get("about"),
+            "state": instance.state,
+            "batch": instance.batch,
+            "is_employed": request.data.get("is_employed"),
+            "current_salary": request.data.get("current_salary"),
+            "picture": upload_image(image),
+        }
+        instance.save()
+
+        serializer = InternSerializer(instance, data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+
 class NewsLetterSubscribeView(APIView):
     """
     Creates Subscribers For NewsLetters
@@ -246,7 +290,20 @@ class StatisticView(APIView):
     """
     Intern Statistics
     """
+
     def get(self, request, format=None):
         queryset = Statistic.objects.all()
         serializer = StatisticSerializer(queryset, many=True)
         return Response(serializer.data)
+
+
+@api_view(["GET"])
+def total_salary(request):
+    interns = Intern.objects.all()
+    salary = 0
+    try:
+        for intern in interns:
+            salary = salary + intern.current_salary
+        return Response({"Total salary": f"{salary}"}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
