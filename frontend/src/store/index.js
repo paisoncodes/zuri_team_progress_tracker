@@ -17,7 +17,7 @@ export default createStore({
     progresStat:[],
     currentUserID:null,
     formOne : {
-      fullName : '',
+      full_name : '',
       currentSalary : '',
       about: '',
       employed: '',
@@ -44,8 +44,6 @@ export default createStore({
 
     setStackYear(state, payload) {state.stacks = payload},
     setYear(state, payload) {state.year = payload},
-    allInterns(state, payload) { state.allInterns = payload },
-    userJob(state, payload) { state.internJob.push(payload) },
     setStats20(state, payload) {
       state.stats20 = payload
     },
@@ -55,9 +53,12 @@ export default createStore({
     setStats18(state, payload) {
       state.stats18 = payload
     },
-
+    allInterns(state, payload) { state.allInterns = payload },
+    userJob(state, payload) { state.internJob.push(payload) },
     currentUserId(state, payload){state.currentUserID = payload},
-
+    setProgresStat(state, payload) {
+      state.progresStat = payload
+    },
 
     updateField,
   },
@@ -83,14 +84,14 @@ export default createStore({
     async getStackYear({commit}, payload) {
       await ContributionServices.getStackYear(payload).then(response => {
         commit("setStackYear", response.data.stacks)
-        console.log(response.data.stacks)
-      })},
-   async getTotalSalary() {
-      await ContributionServices.getTotalSalary().then(response => {
-        response
-        // console.log(response)
-      }) 
+      })
     },
+    async getTotalSalary({ commit }) {
+      await ContributionServices.getTotalSalary().then(response => {
+        commit('setTotalSalary', response.data.total_salary)
+        console.log(response.data)
+      })
+    }, 
     async getAllInterns({commit}){
       await ContributionServices.getIntern().then(response =>{
         commit('allInterns', response.data)
@@ -98,9 +99,9 @@ export default createStore({
     },
 
     async getUserJob({commit}, user_id){
-           await ContributionServices.getJobs(user_id).then(response => {
-             console.log(response)
-             commit ('userJob', response.data)
+      await ContributionServices.getJobs(user_id).then(response => {
+        console.log(response)
+        commit ('userJob', response.data)
       }).catch((error)=>{
         console.log(error)
       })
@@ -122,11 +123,11 @@ export default createStore({
     },
     
     async editIntern({state}){
-        console.log(state.formOne)
-        await ContributionServices.editIntern().then(response => {
-          console.log(response)
-        })
-      },
+      console.log(state.formOne)
+      await ContributionServices.editIntern().then(response => {
+        console.log(response)
+      })
+    },
 
     async postJob({state}){
       console.log(state.formTwo)
@@ -154,6 +155,9 @@ export default createStore({
     },
     year(state) {
       return state.year
+    },
+    progresStat(state){
+      return state.progresStat
     },
     getField,
   },

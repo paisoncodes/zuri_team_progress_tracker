@@ -20,7 +20,7 @@ class ContributionServices {
         return axiosConfig.get("/api/v1/interns/total_salary")
     }
     getStatistics(year) {
-        return axiosConfig.get(`/api/v1/statistics/batch/${ year }`)
+        return axiosConfig.get(`/api/v1/statistics/batch/${year}`)
     }
     getJobs(user_id) {
         return axiosConfig.get(`/api/v1/interns/${user_id}/jobs/`)
@@ -31,7 +31,9 @@ class ContributionServices {
     postJob(id){
         return axiosConfig.post(`/api/v1/interns/${id}/jobs/`)
     }
-
+    getProgresStat() {
+        return axiosConfig.get("/api/v1/statistics/")
+    }
     
 }
 

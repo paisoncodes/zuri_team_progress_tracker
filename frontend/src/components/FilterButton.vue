@@ -46,7 +46,6 @@ export default {
           })
         },
     async created () {
-        this.getTotalSalary()
         this.getAllStack()
     }
 }
