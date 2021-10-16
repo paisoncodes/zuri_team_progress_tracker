@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    profileModalActive: false
+    profileModalActive: false,
   },
   mutations: {
     toggleProfileEditModal: state => {
