@@ -153,17 +153,10 @@ methods:{
 
   },
 internsJobs(){
-<<<<<<< HEAD
- // this.getAllInterns.forEach(element => {
- //  this.internJob(element.id)
- // });
- // console.log(this.userJob)
-=======
   this.getAllInterns.forEach(element => {
    this.internJob(element.id)
   });
   // console.log(this.userJob)
->>>>>>> 7017dea542dc0f95e7a3bbffea91e81e6fb84ba0
 },
 
 },
