@@ -1,9 +1,9 @@
 import axiosConfig from "./axiosConfig"
 
 class ContributionServices {
-    exampleFunc(){
-        return axiosConfig.get('/sample')
-    }
+    // exampleFunc(){
+    //     return axiosConfig.get('/sample')
+    // }
     getIntern(){
         return axiosConfig.get("/api/v1/interns/")
     }
@@ -20,7 +20,10 @@ class ContributionServices {
         return axiosConfig.get(`/api/v1/interns/${user_id}/jobs/`)
       }
     editIntern(id){
-        return axiosConfig.put(`/api/v1/interns/${id}/update`)
+        return axiosConfig.put(`/api/v1/interns/${id}/update/`)
+    }
+    postJob(id){
+        return axiosConfig.post(`/api/v1/interns/${id}/jobs/`)
     }
 
     
