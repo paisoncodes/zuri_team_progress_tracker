@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="bg-white text-center flex flex-col">
-      <HeaderNavbar/>
+      <NavbarComponent/>
+      <Subscribe/>
       <TestContainer class="padTop"/>
     </div>
     <Footer />
@@ -9,14 +10,13 @@
 </template>
 
 <script>
-// import NavbarComponent from '../components/NavbarComponent.vue'
-import HeaderNavbar from '../components/HeaderNavComponent.vue'
-// import Subscribe from "../components/Subscribe.vue"
+import NavbarComponent from '../components/NavbarComponent.vue'
+import Subscribe from "../components/Subscribe.vue"
 import TestContainer from '../components/TabContainer.vue'
 import Footer from '../components/Footer.vue'
 
 export default {
-  components: { HeaderNavbar, TestContainer, Footer },
+  components: { NavbarComponent, Subscribe, TestContainer, Footer },
   name: 'Home',
 }
 </script>
