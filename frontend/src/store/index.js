@@ -9,20 +9,22 @@ export default createStore({
     allInterns:[],
     internJob:[],
     formOne : {
-        fullName : '',
-        currentSalary : '',
-        about: '',
-        employed: '',
-        // image: ''
+      fullName : '',
+      currentSalary : '',
+      about: '',
+      employed: '',
+      // image: ''
+    },
+    formTwo:{
+
     }
+
   },
   mutations: {
     toggleProfileEditModal: state => {
       state.profileModalActive =! state.profileModalActive
     },
     setStack(state, payload) { state.intern = payload },
-    allInterns(state, payload) { state.allInterns = payload },
-    userJob(state, payload) { state.internJob.push(payload) },
     updateField,
   },
   actions: {

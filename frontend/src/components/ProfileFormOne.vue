@@ -58,24 +58,6 @@ export default {
         ...mapMutations([
             'setData'
         ]),
-       /*  async editIntern(){
-            try{
-                
-                // this.editIntern(myData)
-            }catch(error){
-                console(error)
-            }
-        },
-        setDataMethod(){
-            let myData = {
-                    full_name : this.fullName,
-                    current_salary : this.currentSalary,
-                    about: this.about,
-                    is_employed: this.employed,
-                    image: this.imageURL
-                }
-            this.setData(myData)
-        } */
     },
 }
 </script>
