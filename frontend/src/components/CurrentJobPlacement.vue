@@ -34,7 +34,7 @@
             get_progress_percent(){
                 this.new_total_employed = this.total_employed
                 this.new_total_finalist = this.total_finalist
-                console.log(this.new_total_employed, this.new_total_finalist)
+                //console.log(this.new_total_employed, this.new_total_finalist)
                 return (this.new_total_employed/this.new_total_finalist)*100
             }
         },

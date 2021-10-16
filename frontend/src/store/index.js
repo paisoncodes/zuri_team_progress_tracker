@@ -14,6 +14,7 @@ export default createStore({
     stats18: [],
     allInterns:[],
     internJob:[],
+    progresStat:[],
     currentUserID:null,
     formOne : {
       full_name : '',
@@ -55,6 +56,9 @@ export default createStore({
     allInterns(state, payload) { state.allInterns = payload },
     userJob(state, payload) { state.internJob.push(payload) },
     currentUserId(state, payload){state.currentUserID = payload},
+    setProgresStat(state, payload) {
+      state.progresStat = payload
+    },
 
     updateField,
   },
@@ -149,6 +153,12 @@ export default createStore({
         console.log(error)
       }
     },
+    async getProgresStat({commit}, payload) {
+      await ContributionServices.getProgresStat(payload).then(res => {
+        commit("setProgresStat", res.data.slice(1,4));
+        console.log(res.data.slice(1,4))
+      })
+    },
 
   },
   getters:{
@@ -157,6 +167,9 @@ export default createStore({
     },
     allUserjobs (state){
       return state.internJob
+    },
+    progresStat(state){
+      return state.progresStat
     },
     getField,
   },

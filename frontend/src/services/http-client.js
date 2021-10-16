@@ -25,6 +25,9 @@ class ContributionServices {
     postJob(intern_id, id,data){
         return axiosConfig.put(`/api/v1/interns/${intern_id}/jobs/${id}`, data)
     }
+    getProgresStat() {
+        return axiosConfig.get("/api/v1/statistics/")
+    }
 
     
 }
