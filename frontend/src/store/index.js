@@ -79,8 +79,6 @@ export default createStore({
         commit("setStackYear", response.data.stacks)
         console.log(response.data.stacks)
       })},
-    
-  
    async getTotalSalary() {
       await ContributionServices.getTotalSalary().then(response => {
         response
