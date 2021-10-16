@@ -149,7 +149,7 @@ export default {
     },
 methods:{
     ...mapActions({
-      interns: 'getAllInterns',
+      interns: 'getAllStack',
       internJob: 'getUserJob'
     }),
   showLogin(intern_id){
