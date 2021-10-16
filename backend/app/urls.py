@@ -11,9 +11,12 @@ from .views import (
     NewsLetterSubscribeView,
     NewsLetterSubscribersView,
     StatisticView,
-    StackList,
-    total_salary
+    BatchList,
+    all_stats,
+    get_interns_by_year_and_stack,
+    total_salary,
 )
+from app import views
 
 
 urlpatterns = [
@@ -29,10 +32,23 @@ urlpatterns = [
         "interns/<int:intern_id>/update", InternUpdate.as_view(), name="intern_update"
     ),
     path("interns/", InternsView.as_view(), name="intern_list"),
-    path("interns/stacks/<int:year>/", StackList.as_view(), name="list_of_stacks_per_year"),
     path("interns/stack/<str:stack>/", InternStackList.as_view(), name="intern_stack"),
     path("interns/total_salary/", total_salary, name="total_salary"),
+    path(
+        "interns/batch/<int:batch>",
+        BatchList.as_view(),
+        name="list_of_interns_per_batch",
+    ),
+    path(
+        "interns/batch/<int:batch>/stack/<str:stack>/",
+        views.get_interns_by_year_and_stack,
+        name="list_of_stacks_per_year",
+    ),
+    path(
+        "stacks/batch/<int:batch>/", views.GetStacksPerBatch.as_view(), name="get_stats"
+    ),
     path("subscribers/", NewsLetterSubscribersView.as_view(), name="subscribers"),
     path("subscribers/subscribe/", NewsLetterSubscribeView.as_view(), name="subscribe"),
     path("statistics/batch/<int:batch>/", StatisticView.as_view()),
+    path("statistics/", views.all_stats, name="all_stats"),
 ]
