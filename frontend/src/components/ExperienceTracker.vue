@@ -138,7 +138,7 @@ export default {
   },
  computed: {
         ...mapGetters({
-             getAllInterns: 'allInterns',
+             getAllInterns: 'getAllStack',
              userJob:'allUserjobs'
         })
     },
