@@ -93,14 +93,14 @@ export default createStore({
     async editIntern({state}){
         console.log(state.formOne)
         await ContributionServices.editIntern().then(response => {
-          console.log(respnose)
+          console.log(response)
         })
       },
 
       async postJob({state}){
         console.log(state.formTwo)
         await ContributionServices.postJob().then(response => {
-          console.log(respnose)
+          console.log(response)
         })
       },
 
