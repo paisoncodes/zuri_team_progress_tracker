@@ -29,7 +29,7 @@ urlpatterns = [
         "interns/<int:intern_id>/update", InternUpdate.as_view(), name="intern_update"
     ),
     path("interns/", InternsView.as_view(), name="intern_list"),
-    path("interns/stack/<str:year>/", StackList.as_view(), name="list_of_stacks_per_year"),
+    path("interns/stacks/<int:year>/", StackList.as_view(), name="list_of_stacks_per_year"),
     path("interns/stack/<str:stack>/", InternStackList.as_view(), name="intern_stack"),
     path("interns/total_salary/", total_salary, name="total_salary"),
     path("subscribers/", NewsLetterSubscribersView.as_view(), name="subscribers"),
