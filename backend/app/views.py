@@ -297,6 +297,20 @@ class InternUpdate(UpdateAPIView):
 
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
+    def patch(self, request, intern_id):
+        image = request.FILES["image"]
+        try:
+            instance = Intern.objects.get(pk=intern_id)
+        except Intern.DoesNotExist:
+            data = {
+                "error": "no user with such id"
+            }
+            return Response(data, status=status.HTTP_404_NOT_FOUND)
+        instance.picture = upload_image(image)
+        instance.save()
+        serializer = InternSerializer(instance, many= True)
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
 
 ## NewsLetter views
 class NewsLetterSubscribeView(APIView):
