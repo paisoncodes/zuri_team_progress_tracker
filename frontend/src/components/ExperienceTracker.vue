@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="text-left mx-auto w-80 md:w-full">
   <div class="grid  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-for="(intern, index) in internTraker" :key="index" >
      <div class="icon w-full h-full ">
          <img class="object-cover object-center  h-full w-full" :src="intern.picture"/>
@@ -18,38 +18,38 @@
       <div >
         <h3  class="my-4 text-brand-gray-dark-2">EXPERIENCE TRACKER</h3>
         
-        <div class="tracker_overflow" > 
-        <div  class="tracker    ml-5 my-10 h-3 flex justify-between items-center text-brand-gray-dark-2 bg-brand-gray-dark-3">
-          <div class="h-10 grid justify-items-center tracker-jobless">
-            <div class="h-10 w-10 mb-1  rounded-full bg-brand-gray-dark-3"> </div>
-              <div >JOBLESS</div>
+        <div class="tracker_overflow py-3" > 
+        <div  class="tracker    ml-10 my-10 h-3 flex justify-between items-center text-brand-gray-dark-2 bg-brand-gray-dark-3">
+          <div class="h-10 w-10 relative grid justify-items-center tracker-jobless">
+            <div class="h-10 w-10  rounded-full bg-brand-gray-dark-3"> </div>
+              <div class="absolute top-11">JOBLESS</div>
            
             </div>
               <div  class="relative  bottom-4">2016</div>
             
 
-            <div class="h-12  grid justify-items-center">
+            <div class="h-12 w-12 relative grid justify-items-center ">
               <img src="@/assets/paypal.png" class="border-solid border-2 border-brand-gray-dark-3 h-12 w-12  rounded-full" alt="">
-                <div>PAYPAL</div>
+                <div class="absolute top-12">PAYPAL</div>
             </div>
             <div  class="relative bottom-4" >2017</div>
 
             
 
-            <div class="h-12  grid justify-items-center  ">
+            <div class="h-12 w-12 relative  grid justify-items-center ">
               <img src="@/assets/flutterwave.png" class="h-12 w-12 border-solid border-2 border-brand-gray-dark-3 rounded-full" alt="">
-                <div>FLUTTERWAVE</div>
+                <div class="absolute top-12">FLUTTERWAVE</div>
             </div>
              <div  class="relative bottom-4" >2018</div>
 
 
-            <div class="h-12 grid justify-items-center ">
+            <div class="h-12 w-12 relative grid justify-items-center">
               <img src="@/assets/paystack.png" class="h-12 w-12 border-solid border-2 border-brand-gray-dark-3  rounded-full" alt="">
-                <div class="relative">PAYSTACK</div>
+                <div class="absolute top-12">PAYSTACK</div>
             </div>
             <div  class="relative bottom-4 " >2019</div>
 
-              <div class="h-20 grid justify-items-center relative rounded-full">
+              <div class="h-20 w-20 grid justify-items-center relative">
               <img src="@/assets/hotels.png" class="h-20 w-20 border-solid border-2 border-brand-gray-dark-1  rounded-full" alt="">
             </div>
 
@@ -76,7 +76,10 @@ export default {
           name:"Soji Aminu",
           role: 'Senior Digital Product Designer @andela',
            picture: require('../assets/soji.png'),
-           about: 'An exceptional product designer with years of experience understanding the users thinking pattern and this helps in creating user centered product.'
+           about: 'An exceptional product designer with years of experience understanding the users thinking pattern and this helps in creating user centered product.',
+           experience:{
+                
+           }
         }, 
         {
           name:"Soji Aminu",
@@ -109,7 +112,7 @@ export default {
   .tracker_overflow{
 
   min-width: 100%;
-  width:6rem;
+  width:1rem;
   overflow-x: scroll;
   overflow-y: hidden;
   }
@@ -121,12 +124,13 @@ export default {
 /* custom scrollbar */
 /* width */
 ::-webkit-scrollbar {
-  width: 1px;
+  width: 16px;
+  height: 5px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #514949; 
+  background: #898989; 
   border-radius: 10px;
   scrollbar-width: thin;
 }
@@ -137,7 +141,9 @@ export default {
 /* } */
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #898989; 
+  background: #514949; 
+transition:all 4s;
+
 }
 
 

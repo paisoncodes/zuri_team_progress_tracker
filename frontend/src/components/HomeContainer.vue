@@ -35,9 +35,7 @@
                 <CurrentJobPlacement class="mb-5"/>
             </div>
         </div>
-        <div class="text-left">
-    <ExperienceTracker/>
-    </div>
+        
     </div>
 
     
@@ -47,14 +45,12 @@
 <script>
 import CurrentJobPlacement from '@/components/CurrentJobPlacement'
 import OverallStats from '@/components/OverallStats'
-import ExperienceTracker from '@/components/ExperienceTracker'
 
 export default {
 name: "HomeContainer",
 components:{
     CurrentJobPlacement,
     OverallStats,
-    ExperienceTracker
 },
 data(){
     return{
