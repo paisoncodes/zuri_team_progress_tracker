@@ -9,4 +9,4 @@ const axiosClient = Axios.create({
     },
 });
 
-export default new axiosClient
+export default axiosClient
