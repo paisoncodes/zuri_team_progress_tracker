@@ -55,7 +55,7 @@
 
         </div>
         </div>
-        <p class="float-right text-blue-500 cursor-pointer w-100 flex mb-3"  >
+        <p @click="showLogin" class="float-right text-blue-500 cursor-pointer w-100 flex mb-3"  >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M14 1L19 6L6 19H1V14L14 1Z" stroke="#4774E8" stroke-width="1.22693" stroke-linecap="round" stroke-linejoin="round"/>
           </svg> <span class="ml-3">Edit</span>
@@ -64,6 +64,7 @@
       </div>
       </div>
   </div>
+
   </div>
 </template>
 
@@ -77,9 +78,38 @@ export default {
           role: 'Senior Digital Product Designer @andela',
            picture: require('../assets/soji.png'),
            about: 'An exceptional product designer with years of experience understanding the users thinking pattern and this helps in creating user centered product.',
-           experience:{
-                
-           }
+           experience:[
+             {
+               year:'2016',
+               state:'0',
+               companyName:'JOBLESS',
+               companyIcon:'',
+             },
+             {
+               year:'2017',
+               state:'1',
+               companyName:'PAYPAL',
+               companyIcon:require('../assets/hotels.png'),
+             },
+             {
+               year:'2018',
+               state:'0',
+               companyName:'FLUTTERWAVE',
+               companyIcon:require('../assets/flutterwave.png'),
+             },
+              {
+               year:'2019',
+               state:'0',
+               companyName:'FLUTTERWAVE',
+               companyIcon:require('../assets/flutterwave.png'),
+             },
+             {
+               year:'2020',
+               state:'0',
+               companyName:'HOTELS',
+               companyIcon:require('../assets/flutterwave.png'),
+             }
+           ]
         }, 
         {
           name:"Soji Aminu",
@@ -101,7 +131,13 @@ export default {
         },
       ]
     }
+  },
+
+methods:{
+  showLogin(){
+    this.eventBus.emit('toggleLoginModal', true);
   }
+}
 }
 </script>
 
