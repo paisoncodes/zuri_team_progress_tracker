@@ -1,9 +1,14 @@
 <template>
 <div class="text-left mx-auto md:w-full">
-  <div class="grid max-h-25  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-for="(intern, index) in getAllInterns" :key="index" >
-     <div class="icon h-10 w-full h-full ">
-         <img class="object-contain object-center  h-full w-full" :src="intern.picture"/>
+  <div class="grid  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-for="(intern, index) in getAllInterns" :key="index" >
+     <!-- <div class="icon" style=" width:inherit; height:100%;">
+         <img class="object-contain object-center  h-full w-full" style="width:inherit; height:100%;" :src="intern.picture"/>
+     </div> -->
+
+      <div class="icon h-72" :style="{ backgroundImage: `url('${intern.picture}')` }">
+         <!-- <img class="object-contain object-center  h-full w-full"/> -->
      </div>
+
      <div class="md:col-span-3 ">
       <div class="mx-5 mt-5"  >
           <div class="grid md:grid-cols-2  gap-4" >
@@ -169,6 +174,12 @@ async created() {
 </script>
 
 <style  scoped>
+.icon{
+  background-repeat: no-repeat;  
+  background-size:cover; 
+  background-position: center;
+  /* height:30; */
+}
   .tracker{
     width:600px;
   }
