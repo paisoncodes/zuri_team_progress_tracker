@@ -5,22 +5,11 @@
     <div class="bg-brand-red-light-1">
         <div class="flex">
             <div class="flex overview-width flex-col justify-center w-1/6">
-                <p>2021</p>
-            </div>
-
-            <div class="w-full">
-                <OverallStats/>
-                <CurrentJobPlacement/>
-            </div>
-        </div>
-
-        <div class="flex">
-            <div class="flex overview-width flex-col justify-center w-1/6">
                 <p>2020</p>
             </div>
 
             <div class="w-full">
-                <OverallStats/>
+                <Stats20/>
                 <CurrentJobPlacement/>
             </div>
         </div>
@@ -31,7 +20,18 @@
             </div>
 
             <div class="w-full">
-                <OverallStats/>
+                <Stats19/>
+                <CurrentJobPlacement/>
+            </div>
+        </div>
+
+        <div class="flex">
+            <div class="flex overview-width flex-col justify-center w-1/6">
+                <p>2018</p>
+            </div>
+
+            <div class="w-full">
+                <Stats18/>
                 <CurrentJobPlacement class="mb-5"/>
             </div>
         </div>
@@ -44,13 +44,20 @@
 
 <script>
 import CurrentJobPlacement from '@/components/CurrentJobPlacement'
-import OverallStats from '@/components/OverallStats'
+// import OverallStats from '@/components/OverallStats'
+import Stats20 from '@/components/StatisticsTwenty'
+import Stats19 from '@/components/StatisticsNineteen'
+import Stats18 from '@/components/StatisticsEighteen'
+
 
 export default {
 name: "HomeContainer",
 components:{
     CurrentJobPlacement,
-    OverallStats,
+    // OverallStats,
+    Stats20,
+    Stats19,
+    Stats18
 },
 data(){
     return{
