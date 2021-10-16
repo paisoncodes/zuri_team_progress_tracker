@@ -1,20 +1,31 @@
 <template>
   <div>
-    <div class="bg-white flex flex-col">
-      <NavbarComponent/>
-      <HomeContainer />
+    <div class="bg-white text-center flex flex-col">
+      <HeaderNavbar/>
+      <TestContainer class="padTop"/>
     </div>
     <Footer />
   </div>
 </template>
 
 <script>
-import HomeContainer from '../components/HomeContainer.vue'
+// import NavbarComponent from '../components/NavbarComponent.vue'
+import HeaderNavbar from '../components/HeaderNavComponent.vue'
+// import Subscribe from "../components/Subscribe.vue"
+import TestContainer from '../components/TabContainer.vue'
 import Footer from '../components/Footer.vue'
-import NavbarComponent from '../components/NavbarComponent.vue'
 
 export default {
-  components: { NavbarComponent, HomeContainer, Footer },
+  components: { HeaderNavbar, TestContainer, Footer },
   name: 'Home',
 }
 </script>
+
+
+<style>
+
+.padTop{
+  margin: 4rem 0 0 0
+}
+
+</style>

@@ -53,32 +53,16 @@ class UserUpdateSerializer(serializers.Serializer):
         return instance
     
 
-class InternSerializer(serializers.Serializer):
+class InternSerializer(serializers.ModelSerializer):
     
-    name = serializers.CharField(max_length=100,required=False)
-    stack = serializers.CharField(max_length = 100,required=False)
-    job = serializers.CharField(max_length=100,required=False)
-    batch = serializers.IntegerField(required=False)
-
-    
-
-    def create(self, validated_data):
-        return Intern.objects.create(**validated_data)
-    
-    def update(self, instance, validated_data):
-
-        instance.name = validated_data.get('name', instance.name)
-        instance.stack = validated_data.get('stack', instance.stack)
-        instance.job = validated_data.get('job', instance.job)
-        instance.batch = validated_data.get('batch', instance.batch)
-
-        instance.save()
-        return instance
+    class Meta:
+        model= Intern
+        fields = ['username', 'full_name', 'stack', 'state', 'about', 'batch', 'is_employed']
 
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jobs
-        fields = ['job_title', 'company_name','gotten_at', 'last_updated_at', 'job_description', 'currently_active']
+        fields = ['id', 'job_title', 'company_name','gotten_at', 'last_updated_at', 'job_description', 'currently_active']
 
 
 
@@ -89,4 +73,10 @@ class NewsLetterSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsLetter
         fields = "__all__"
+
+
+class StatisticSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Statistic
+        fields =["year","male", "female", "finalist", "participant"]
 
