@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-// import ContributionServices from '@/services/http-client'
+import ContributionServices from '@/services/http-client'
 
 export default createStore({
   state: {
@@ -9,8 +9,12 @@ export default createStore({
     toggleProfileEditModal: state => {
       state.profileModalActive =! state.profileModalActive
     },
+    
   },
   actions: {
+    async getTotalSalary() {
+      await ContributionServices.getTotalSalary().then(response => { console.log(response)})
+    },
   },
   modules: {
   }

@@ -48,12 +48,18 @@
 </template>
 
 <script>
+import { mapActions } from "vuex"
 export default {
   name: 'MeetOurIntern',
   data(){
     return {
     }
   },
-  
+  method: {
+    ...mapActions([ 'getTotalSalary'])
+  },
+  // created() {
+  //   this.getTotalSalary()
+  // }
 }
 </script>
