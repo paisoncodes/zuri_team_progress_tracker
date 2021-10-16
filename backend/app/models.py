@@ -63,6 +63,8 @@ class Intern(models.Model):
     state = models.CharField(max_length=200)
     batch = models.IntegerField(verbose_name="Year")
     is_employed = models.BooleanField(default=False)
+    current_salary = models.IntegerField(default=0)
+    picture = models.URLField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -74,11 +76,10 @@ class Jobs(models.Model):
     job_title = models.CharField(max_length=255)
     gotten_at = models.DateTimeField()
     company_name = models.CharField(max_length=255, verbose_name="Organization name")
-    last_updated_at = models.DateTimeField()
     job_description = models.CharField(max_length=255)
     currently_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    job_logo = models.URLField()
+    job_logo = models.URLField(default="https://www.seekpng.com/ima/u2y3q8t4t4o0a9a9/")
 
     def __str__(self):
         return self.company_name
@@ -88,12 +89,11 @@ class NewsLetter(models.Model):
     subscriber_email = models.EmailField(max_length=200, blank=False)
 
 
-
 class Statistic(models.Model):
-    male        = models.IntegerField()
-    female      = models.IntegerField()
-    year        = models.IntegerField()
-    finalist    = models.IntegerField()
+    male = models.IntegerField()
+    female = models.IntegerField()
+    year = models.IntegerField()
+    finalist = models.IntegerField()
 
     def __str__(self):
         return str(self.year)
