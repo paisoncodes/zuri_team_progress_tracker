@@ -42,7 +42,7 @@
                 <input type="email" placeholder="Enter your email address here" class="py-2 px-4 lg:w-4/6 md:w-4/6 w-5/6 bg-brand-red-light-1 border-solid border border-brand-gray-dark-1" name="subscriber_email"  v-model="subscriber_email">
                 <button class="bg-brand-gray-dark-1 hover:bg-opacity-75 text-white font-normal lg:py-3 lg:px-6 md:py-3 md:px-6 mt-3 py-3 px-6 text-sm" v-on:click="onSubscribe()">Subscribe</button>
                 <div class="flex justify-center">
-                    <button id="hideMe" class="lg:w-3/6 md:w-3/6 w-11/12 rounded-md bg-green-200 text-green-800 font-semibold lg:py-3 lg:px-6 md:py-3 md:px-6 mt-3 py-3 px-3 text-center" v-if="isSubscribed"> Subscribed to ZURI.TEAM newsletter</button>
+                    <button id="hideMe" class="lg:w-3/6 md:w-3/6 w-11/12 rounded-md bg-brand-gray-dark-1 text-white font-semibold lg:py-3 lg:px-6 md:py-3 md:px-6 mt-3 py-3 px-3 text-center" v-if="isSubscribed"> Subscribed to ZURI.TEAM newsletter</button>
                 </div>
             </div>
         </div>
