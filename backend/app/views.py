@@ -180,16 +180,39 @@ class InternDetailView(APIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class InternList(APIView):
+class InternsView(APIView):
+    """
+        endpointto create an intern or get a list of interns
+        create:
+            request body:
+                {
+                "username": "user",
+                "full_name": "fullname",
+                "stack": "Backend",
+                "state": "Oyo",
+                "gender": "M",
+                "about": "Random text",
+                "batch": "2020",
+                "current_salary": "3000",
+                "is_employed": "True",
+                "picture": "https://ocdn.eu/pulscms-transforms/1/9zVk9kuTURBXy84MTcxYmNmNy0zMmIwLTQ1MzAtOTE0MS1iMWU1Y2Y1MTNjN2MuanBlZ5GTBc0DFs0BroGhMAU"
+                }
+        """
     def get(self, request, format=None):
         interns = Intern.objects.all()
         serializer = InternSerializer(interns, many=True)
         return Response(serializer.data)
 
+    def post(self, request):
+        serializer = InternSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
-class InternCreateUpdateView(APIView):
+
+class InternUpdateView(APIView):
     """
-    endpointto create or update an intern 
+    endpointto create or update an intern
     create:
         request body:
             {
@@ -222,12 +245,6 @@ class InternCreateUpdateView(APIView):
                     }}
     """
 
-
-    def post(self, request):
-        serializer = InternSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
 
     def put(self, request):
         intern_id = request.data.pop("intern_id")
