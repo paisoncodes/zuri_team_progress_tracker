@@ -59,12 +59,25 @@
               aria-hidden="true"
             ></i>
           </div>
-          <form class="m-8" @submit.prevent="toggleModal()">
+          <form class="m-8" @submit.prevent="login()">
             <!-- CONTENT -->
             <div class="sm:text-left">
               <h1 class="mb-6 text-2xl text-gray-dark-1">LOGIN</h1>
-              <p class="mb-3 text-sm text-gray-dark-1">PASSWORD</p>
+              <div class="flex items-center mb-3">
+              <p class=" text-sm text-gray-dark-1 mr-3">PASSWORD</p>
+               <!-- <div  @click="this.showAlert = false;" >
+                 <i  class="fa fa-times"  aria-hidden="true" ></i>
+            </div> -->
+               <div class="w-full bg-red-100 border border-red-400 text-red-700  relative" v-if="showAlert" role="alert">
+                  <span class="m-4">Invalid Password</span>
+                  <div  @click="showAlert = false;" class="absolute  bottom-0 right-2 top-1 cursor-pointer  text-red-500 hover:text-brand-gray-light">
+                 <i class="fa fa-times" aria-hidden="true" ></i>
+            </div>
+                </div>
+              </div>
               <input
+                required
+                v-model="password"
                 type="text"
                 name=""
                 id=""
@@ -119,6 +132,12 @@
 <script>
 import ProfileCard from '../components/ProfileCard.vue'
 export default {
+  data(){
+    return{
+      password:'',
+      showAlert:false
+    }
+  },
   methods: {
     showLogin() {
       this.eventBus.emit("toggleLoginModal", false);
@@ -127,6 +146,21 @@ export default {
       this.showLogin()
       this.$store.commit('toggleProfileEditModal');
     },
+    login(){
+      
+      if(this.password == 'admin'){
+        this.toggleModal()
+      }else{
+        this.showAlert = true;
+        this.closeAlert()
+      }
+    },
+    closeAlert(){
+  
+     setTimeout(function(){
+      this.showAlert = false;
+    }, 3000);
+    }
   },
   components:{
     ProfileCard
