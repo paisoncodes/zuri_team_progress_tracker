@@ -6,7 +6,8 @@ export default createStore({
     profileModalActive: false,
     intern: [],
     allInterns:[],
-    internJob:[]
+    internJob:[],
+    currentUserID:null
   },
   mutations: {
     toggleProfileEditModal: state => {
@@ -15,9 +16,13 @@ export default createStore({
     setStack(state, payload) { state.intern = payload },
     allInterns(state, payload) { state.allInterns = payload },
     userJob(state, payload) { state.internJob.push(payload) },
+      currentUserId(state, payload){state.currentUserID = payload
+      console.log(state.currentUserID)
+      }
 
   },
   actions: {
+    
     async getStack({commit}, payload) {
       await ContributionServices.getStack(payload).then(response => {
         commit("setStack", response.data.data)
@@ -43,7 +48,7 @@ export default createStore({
       }).catch((error)=>{
         console.log(error)
       })
-    }
+    },
 
   },
   getters:{
