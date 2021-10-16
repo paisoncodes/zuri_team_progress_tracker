@@ -9,16 +9,16 @@
                         OVERVIEW
                     </li>  
                     <li @click="component = 'TwentyOne', activeTab = 2"  class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 2}">                      
-                        2021 <br> (10,000 interns)        
+                        2021 <br> (41,000 interns)        
                     </li>
                     <li @click="component = 'Twenty', activeTab = 3" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 3}">                  
-                        2020 <br> (10,000 interns)        
+                        2020 <br> (25490 interns)        
                     </li>
                     <li @click="component = 'Nineteen', activeTab = 4" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 4}">                    
-                        2019 <br> (10,000 interns)        
+                        2019 <br> (23300 interns)        
                     </li>
                     <li @click="component = 'Eighteen', activeTab = 5" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 5}">                        
-                        2018 <br> (10,000 interns)        
+                        2018 <br> (3098 interns)        
                     </li>  
                 </ul>        
             </nav>
@@ -50,7 +50,7 @@ export default {
             component: 'HomeContainer',
             activeTab: 1
         }
-    }
+    },
 }
 </script>
 

@@ -4,7 +4,7 @@
 
     <div class="bg-brand-red-light-1" v-for="(this_year, i) in progresStat" :key="i">
         <div class="flex">
-            <div class="flex overview-width flex-col justify-center w-1/6">
+            <div class="flex overview-width flex-col justify-center w-32">
                 <p>{{this_year.year}}</p>
             </div>
 
@@ -14,7 +14,7 @@
                     :femaleParticipants="this_year.female"
                     :maleParticipants="this_year.male" 
                 />
-                <CurrentJobPlacement 
+                <CurrentJobPlacement class="mb-6"
                     :total_finalist="this_year.finalists" 
                     :total_employed="this_year.employed_finalists" 
                 />
@@ -42,13 +42,13 @@
         },
         methods: {
             ...mapActions(['getProgresStat']),
-
         },
         computed: {
             ...mapGetters(["progresStat"])
         },
         mounted() {
             this.getProgresStat()
+            
         }
     }
 </script>
