@@ -26,29 +26,34 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
     name: 'FilterButton',
     data(){
 
     },
     methods: {
+        ...mapActions([
+            'getStack',
+            
+        ]),
         AllStack() {
-           
-        },
+           this.getStack('allStack');
+        },  
         HTML() {
-
+            this.getStack('html')
         },
         CSS() {
-
+            this.getStack('css')
         },
         Javascript() {
-
+            this.getStack('Javascript')
         },
         UiUx() {
-
+            this.getStack('uiux')
         },
         Java() {
-
+            this.getStack('java')
         }
     },
     async created () {
