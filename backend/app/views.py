@@ -369,9 +369,9 @@ def total_salary(request):
 
 class StackList(APIView):
     def get(self, request, year):
-        year = Intern.objects.filter(year=year)
-        # serializer = InternSerializer(year, many=True)
-        stack = year.data["stack"]
+        year = Intern.objects.filter(batch=year)
+        serializer = InternSerializer(year, many=True)
+        stack = year.get("stack")
         data = Counter(stack)
-        data = data.json()
+        # data = data.json()
         return Response(data, status=status.HTTP_200_OK)
