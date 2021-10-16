@@ -33,6 +33,7 @@ urlpatterns = [
     path(
         "interns/<int:intern_id>/update", InternUpdate.as_view(), name="intern_update"
     ),
+    path('intern/create/', InternCreateUpdateView.as_view(), name="intern_create_update"),
     path("interns/", InternList.as_view(), name="intern_list"),
     path("interns/stack/<str:stack>/", InternStackList.as_view(), name="intern_stack"),
     path("interns/total_salary", views.total_salary, name="totalsal"),

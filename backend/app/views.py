@@ -188,6 +188,41 @@ class InternList(APIView):
 
 
 class InternCreateUpdateView(APIView):
+    """
+    endpointto create or update an intern 
+    create:
+        request body:
+            {
+            "username": "user",
+            "full_name": "fullname",
+            "stack": "Backend",
+            "state": "Oyo",
+            "gender": "M",
+            "about": "Random text",
+            "batch": "2020",
+            "current_salary": "3000",
+            "is_employed": "True",
+            "picture": "https://ocdn.eu/pulscms-transforms/1/9zVk9kuTURBXy84MTcxYmNmNy0zMmIwLTQ1MzAtOTE0MS1iMWU1Y2Y1MTNjN2MuanBlZ5GTBc0DFs0BroGhMAU"
+            }
+
+     update:
+        request_body:
+            {   "intern_id":1,
+                "data":
+                    {"username": "user",
+                    "full_name": "fullname",
+                    "stack": "Backend",
+                    "state": "Oyo",
+                    "gender": "M",
+                    "about": "Random text",
+                    "batch": "2020",
+                    "current_salary": "3000",
+                    "is_employed": "True",
+                    "picture": "https://ocdn.eu/pulscms-transforms/1/9zVk9kuTURBXy84MTcxYmNmNy0zMmIwLTQ1MzAtOTE0MS1iMWU1Y2Y1MTNjN2MuanBlZ5GTBc0DFs0BroGhMAU"
+                    }}
+    """
+
+
     def post(self, request):
         serializer = InternSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -203,7 +238,7 @@ class InternCreateUpdateView(APIView):
                 {"message": "This intern does not exist"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        serializer = InternSerializer(data=request, instance=intern)
+        serializer = InternSerializer(intern, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
