@@ -6,8 +6,6 @@ export default createStore({
   state: {
     profileModalActive: false,
     intern: [],
-    stacks: [],
-    year: [],
     stats20: [],
     stats19: [],
     stats18: [],
@@ -15,7 +13,7 @@ export default createStore({
     internJob:[],
     currentUserID:null,
     formOne : {
-      fullName : '',
+      full_name : '',
       currentSalary : '',
       about: '',
       employed: '',
@@ -36,10 +34,6 @@ export default createStore({
       state.profileModalActive =! state.profileModalActive
     },
     setStack(state, payload) { state.intern = payload },
-    setStackYear(state, payload) {state.stacks = payload},
-    setYear(state, payload) {state.year = payload},
-    allInterns(state, payload) { state.allInterns = payload },
-    userJob(state, payload) { state.internJob.push(payload) },
     setStats20(state, payload) {
       state.stats20 = payload
     },
@@ -49,9 +43,9 @@ export default createStore({
     setStats18(state, payload) {
       state.stats18 = payload
     },
-
+    allInterns(state, payload) { state.allInterns = payload },
+    userJob(state, payload) { state.internJob.push(payload) },
     currentUserId(state, payload){state.currentUserID = payload},
-
 
     updateField,
   },
@@ -138,12 +132,6 @@ export default createStore({
     },
     allUserjobs (state){
       return state.internJob
-    },
-    stacks(state) {
-      return state.stacks
-    },
-    year(state) {
-      return state.year
     },
     getField,
   },
