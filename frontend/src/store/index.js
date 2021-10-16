@@ -16,6 +16,11 @@ export default createStore({
       // image: ''
     },
     formTwo:{
+      position : '',
+      company : '',
+      dateGotten: '',
+      jobDescription: '',
+      // image: ''
 
     }
 
@@ -57,9 +62,16 @@ export default createStore({
     
     async editIntern({state}){
         console.log(state.formOne)
-        // await ContributionServices.editIntern().then(response => {
-        //   console.log(respnose)
-        // })
+        await ContributionServices.editIntern().then(response => {
+          console.log(respnose)
+        })
+      },
+
+      async postJob({state}){
+        console.log(state.formTwo)
+        await ContributionServices.postJob().then(response => {
+          console.log(respnose)
+        })
       },
 
   },
