@@ -63,6 +63,7 @@ export default createStore({
     updateField,
   },
   actions: {
+
     async getAllStack({commit, getters}) {
       const year = getters.year
       await ContributionServices.getAllStack(year).then(response => {
@@ -83,7 +84,6 @@ export default createStore({
     async getStackYear({commit}, payload) {
       await ContributionServices.getStackYear(payload).then(response => {
         commit("setStackYear", response.data.stacks)
-        console.log(response.data.stacks)
       })
     },
     async getTotalSalary({ commit }) {
@@ -167,6 +167,12 @@ export default createStore({
     },
     allUserjobs (state){
       return state.internJob
+    },
+    stacks(state) {
+      return state.stacks
+    },
+    year(state) {
+      return state.year
     },
     progresStat(state){
       return state.progresStat
