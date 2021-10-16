@@ -50,13 +50,31 @@ export default createStore({
     updateField,
   },
   actions: {
-    
-    async getStack({commit}, payload) {
-      await ContributionServices.getStack(payload).then(response => {
-        commit("setStack", response.data.data)
-        console.log(response.data.data)
+
+    async getAllStack({commit, getters}) {
+      const year = getters.year
+      await ContributionServices.getAllStack(year).then(response => {
+        commit("allInterns", response.data)
+        console.log(response.data)
       })
     },
+    async getStack({commit, getters}, payload) {
+      const year = getters.year
+      await ContributionServices.getStack(payload, year).then(response => {
+        commit("allInterns", response.data)
+        console.log(response.data)
+      })
+    },
+    async getYear({commit}, payload) {
+      commit("setYear", payload)
+    },
+    async getStackYear({commit}, payload) {
+      await ContributionServices.getStackYear(payload).then(response => {
+        commit("setStackYear", response.data.stacks)
+        console.log(response.data.stacks)
+      })},
+    
+  
    async getTotalSalary() {
       await ContributionServices.getTotalSalary().then(response => {
         response
