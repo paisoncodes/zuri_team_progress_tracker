@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
 const axiosClient = Axios.create({
-    baseURL: 'https://zuri-progress-tracker.herokuapp.com/api/v1',
+    baseURL: 'https://zuri-progress-tracker.herokuapp.com/',
     withCredentials: false,
     headers: {
         Accept: 'application/json',
@@ -9,4 +9,4 @@ const axiosClient = Axios.create({
     },
 });
 
-export default new axiosClient()
+export default new axiosClient

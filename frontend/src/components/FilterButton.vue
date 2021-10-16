@@ -35,10 +35,10 @@ export default {
     methods: {
         ...mapActions([
             'getStack',
-            
+            'getTotalSalary'
         ]),
         AllStack() {
-           this.getStack('allStack');
+           this.getStack();
         },  
         HTML() {
             this.getStack('html')
@@ -57,7 +57,7 @@ export default {
         }
     },
     async created () {
-
+        this.getTotalSalary()
     }
 }
 </script>
