@@ -1,5 +1,10 @@
 <template>
   <div class="text-left">
+    <div class="relative">
+  <div v-show="this.$store.state.profileModalActive" class="absolute">
+        <ProfileCard/>
+      </div>
+      </div>
     <div
       class="fixed z-10 inset-0 overflow-y-auto"
       aria-labelledby="modal-title"
@@ -112,6 +117,7 @@
 </template>
 
 <script>
+import ProfileCard from '../components/ProfileCard.vue'
 export default {
   methods: {
     showLogin() {
@@ -122,6 +128,9 @@ export default {
       this.$store.commit('toggleProfileEditModal');
     },
   },
+  components:{
+    ProfileCard
+  }
 };
 </script>
 
