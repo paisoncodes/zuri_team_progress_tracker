@@ -137,8 +137,9 @@ export default createStore({
     },
     async getProgresStat({commit}, payload) {
       await ContributionServices.getProgresStat(payload).then(res => {
-        commit("setProgresStat", res.data.slice(1,4));
-        console.log(res.data.slice(1,4))
+        commit("setProgresStat", res.data.sort((a, b) => b.year - a.year ).slice(0,3));
+        // console.log(res.data);
+        console.log(res.data.sort((a, b) => b.year - a.year ).slice(0,3))
       })
     },
 
