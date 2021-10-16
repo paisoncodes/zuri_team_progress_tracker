@@ -392,7 +392,7 @@ def total_salary(request):
     try:
         for intern in interns:
             salary = salary + intern.current_salary
-        return Response({"Total salary": f"{salary}"}, status=status.HTTP_200_OK)
+        return Response({"total_salary": f"{salary}"}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
 
@@ -415,3 +415,18 @@ def get_interns_by_year_and_stack(request, batch, stack):
         return Response(serializer.data, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
+
+
+class GetStacksPerBatch(APIView):
+    def get(self, request, batch):
+        try:
+            year = Intern.objects.filter(batch=batch)
+            serializer = InternSerializer(year, many=True)
+            stacks = []
+            for intern in serializer.data:
+                if intern["stack"] not in stacks:
+                    stacks.append(intern["stack"])
+            data = {"stacks": stacks}
+            return Response(data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"Message": f"{e}"}, status.HTTP_400_BAD_REQUEST)
