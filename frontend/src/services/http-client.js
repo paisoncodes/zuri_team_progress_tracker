@@ -7,14 +7,8 @@ class ContributionServices {
     getIntern(){
         return axiosConfig.get("/api/v1/interns/")
     }
-    getStackYear(year) {
-        return axiosConfig.get(`/api/v1/stacks/batch/${year}/`)
-    }
-    getAllStack(year){
-        return axiosConfig.get(`/api/v1/interns/batch/${year}`)
-    }
-    getStack(stack, year){
-        return axiosConfig.get(`/api/v1/interns/batch/${year}/stack/${stack}/`)
+    getStack(stack){
+        return axiosConfig.get(`/api/v1/interns/stack/${stack}/`)
     }
     getTotalSalary() {
         return axiosConfig.get("/api/v1/interns/total_salary")
