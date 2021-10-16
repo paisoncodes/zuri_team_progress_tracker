@@ -13,6 +13,10 @@ class ContributionServices {
     getTotalSalary() {
         return axiosConfig.get("/api/v1/interns/total_salary")
     }
+
+    getJobs(user_id) {
+        return axiosConfig.get(`/api/v1/interns/${user_id}/jobs/`)
+    }
 }
 
 export default new ContributionServices();
