@@ -1,15 +1,15 @@
 <template>
 <div class="text-left mx-auto md:w-full">
-  <div class="grid  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-for="(intern, index) in internTraker" :key="index" >
-     <div class="icon w-full h-full ">
-         <img class="object-cover object-center  h-full w-full" :src="intern.picture"/>
+  <div class="grid max-h-25  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-for="(intern, index) in getAllInterns" :key="index" >
+     <div class="icon h-10 w-full h-full ">
+         <img class="object-contain object-center  h-full w-full" :src="intern.picture"/>
      </div>
      <div class="md:col-span-3 ">
       <div class="mx-5 mt-5"  >
           <div class="grid md:grid-cols-2  gap-4" >
           <div class="w-full text-brand-gray-dark-1 font-normal">
-            <p class="text-xl">{{intern.name}}</p>
-            <p class="text-base">{{intern.role}}</p>
+            <p class="text-xl">{{intern.full_name}}</p>
+            <p class="text-base">{{intern.stack}}</p>
           </div>
           <div class="w-full">
             <p class="leading-tight text-brand-gray-dark-2">{{intern.about}}</p>
@@ -55,7 +55,7 @@
 
         </div>
         </div>
-        <p @click="showLogin" class="float-right text-blue-500 cursor-pointer w-100 flex mb-3"  >
+        <p @click="showLogin(intern.id)" class="float-right text-blue-500 cursor-pointer w-100 flex mb-3"  >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M14 1L19 6L6 19H1V14L14 1Z" stroke="#4774E8" stroke-width="1.22693" stroke-linecap="round" stroke-linejoin="round"/>
           </svg> <span class="ml-3">Edit</span>
@@ -147,7 +147,8 @@ methods:{
       interns: 'getAllInterns',
       internJob: 'getUserJob'
     }),
-  showLogin(){
+  showLogin(intern_id){
+    this.$store.commit('currentUserId',intern_id);
     this.eventBus.emit('toggleLoginModal', true);
 
   },
@@ -155,7 +156,7 @@ internsJobs(){
   this.getAllInterns.forEach(element => {
    this.internJob(element.id)
   });
-  console.log(this.userJob)
+  // console.log(this.userJob)
 },
 
 },

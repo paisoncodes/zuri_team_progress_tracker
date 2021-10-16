@@ -11,6 +11,7 @@ export default createStore({
     stats18: [],
     allInterns:[],
     internJob:[],
+    currentUserID:null,
     formOne : {
       fullName : '',
       currentSalary : '',
@@ -44,10 +45,12 @@ export default createStore({
     },
     allInterns(state, payload) { state.allInterns = payload },
     userJob(state, payload) { state.internJob.push(payload) },
+    currentUserId(state, payload){state.currentUserID = payload},
 
     updateField,
   },
   actions: {
+    
     async getStack({commit}, payload) {
       await ContributionServices.getStack(payload).then(response => {
         commit("setStack", response.data.data)

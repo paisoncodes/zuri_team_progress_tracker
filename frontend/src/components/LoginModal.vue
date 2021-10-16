@@ -144,7 +144,7 @@ export default {
     },
     toggleModal() {
       this.showLogin()
-      this.$store.commit('toggleProfileEditModal');
+        
     },
     login(){
       
