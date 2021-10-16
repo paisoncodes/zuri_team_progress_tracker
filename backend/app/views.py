@@ -4,7 +4,7 @@ from rest_framework import response
 from rest_framework.views import APIView
 from rest_framework.generics import UpdateAPIView
 from rest_framework.response import Response
-from .serializers import UserSerializer, UserUpdateSerializer, JobSerializer
+from .serializers import UserSerializer, UserUpdateSerializer, JobSerializer, InternUpdateSerializer
 from .models import User, Intern, Jobs, NewsLetter
 from .serializers import *
 from django.http import Http404
