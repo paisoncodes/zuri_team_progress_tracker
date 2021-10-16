@@ -13,7 +13,7 @@ export default createStore({
     internJob:[],
     currentUserID:null,
     formOne : {
-      fullName : '',
+      full_name : '',
       currentSalary : '',
       about: '',
       employed: '',
