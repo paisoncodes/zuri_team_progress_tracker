@@ -179,7 +179,7 @@ class InternDetailView(APIView):
 
 class InternsView(APIView):
     """
-        endpointto create an intern or get a list of interns
+        endpoint to create an intern or get a list of interns
         create:
             request body:
                 {
@@ -198,18 +198,20 @@ class InternsView(APIView):
     def get(self, request, format=None):
         interns = Intern.objects.all()
         serializer = InternSerializer(interns, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status= status.HTTP_200_OK)
 
     def post(self, request):
+        
         serializer = InternSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
-
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status= status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class InternUpdateView(APIView):
     """
-    endpointto create or update an intern
+    endpoint to create or update an intern
     create:
         request body:
             {
@@ -308,7 +310,6 @@ class NewsLetterSubscribeView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
