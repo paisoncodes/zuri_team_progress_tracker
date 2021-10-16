@@ -1,16 +1,9 @@
 from django.urls import path
 
-# from django.conf import settings
-# from django.conf.urls.static import static
-# from rest_framework import
-from . import views
 from .views import (
-    UserCreateView,
-    UserUpdateView,
     UserDetailView,
-    InternCreateUpdateView,
     InternUpdate,
-    InternList,
+    InternsView,
     InternDetailView,
     InternStackList,
     JobView,
@@ -18,6 +11,8 @@ from .views import (
     NewsLetterSubscribeView,
     NewsLetterSubscribersView,
     StatisticView,
+    StackList,
+    total_salary
 )
 
 
@@ -33,10 +28,11 @@ urlpatterns = [
     path(
         "interns/<int:intern_id>/update", InternUpdate.as_view(), name="intern_update"
     ),
-    path("interns/", InternList.as_view(), name="intern_list"),
+    path("interns/", InternsView.as_view(), name="intern_list"),
+    path("interns/stacks/<str:year>/", StackList.as_view(), name="list_of_stacks_per_year"),
     path("interns/stack/<str:stack>/", InternStackList.as_view(), name="intern_stack"),
-    path("interns/total_salary", views.total_salary, name="totalsal"),
+    path("interns/total_salary/", total_salary, name="total_salary"),
     path("subscribers/", NewsLetterSubscribersView.as_view(), name="subscribers"),
     path("subscribers/subscribe/", NewsLetterSubscribeView.as_view(), name="subscribe"),
-    path("statistics/", StatisticView.as_view()),
+    path("statistics/batch/<int:batch>/", StatisticView.as_view()),
 ]

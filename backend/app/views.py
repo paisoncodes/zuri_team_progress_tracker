@@ -1,5 +1,5 @@
 from django.db.models.query import QuerySet
-from rest_framework import status, views, permissions
+from rest_framework import status, permissions
 from rest_framework import response
 from rest_framework.views import APIView
 from rest_framework.generics import UpdateAPIView
@@ -8,11 +8,10 @@ from .serializers import UserSerializer, UserUpdateSerializer, JobSerializer
 from .models import User, Intern, Jobs, NewsLetter
 from .serializers import *
 from django.http import Http404
-from django.core import serializers
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.decorators import api_view
 from rest_framework.parsers import MultiPartParser, JSONParser
 from .cloudinary import upload_image
+from collections import Counter
 
 # Create your views here.
 class UserCreateView(APIView):
@@ -20,12 +19,8 @@ class UserCreateView(APIView):
     Create Users View
     """
 
+    queryset = User.objects.all()
     serializer_class = UserSerializer
-
-    def get(self, request, *args, **kwargs):
-        user = User.objects.all()
-        serializer = UserSerializer(user, many=True)
-        return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
         serializer = UserSerializer(data=request.data)
@@ -41,6 +36,7 @@ class UserUpdateView(APIView):
     """
 
     serializer_class = UserUpdateSerializer
+    queryset = User.objects.all()
 
     def put(self, request, user_id, *args, **kwargs):
         user = User.objects.get(pk=user_id)
@@ -94,6 +90,7 @@ class JobView(APIView):
             intern = Intern.objects.get(pk=intern_id)
             image = request.FILES["image"]
 
+            queryset = Intern.objects.all()
             serializer = JobSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.validated_data["intern"] = intern
@@ -180,19 +177,73 @@ class InternDetailView(APIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class InternList(APIView):
+class InternsView(APIView):
+    """
+        endpoint to create an intern or get a list of interns
+        create:
+            request body:
+                {
+                "username": "user",
+                "full_name": "fullname",
+                "stack": "Backend",
+                "state": "Oyo",
+                "gender": "M",
+                "about": "Random text",
+                "batch": "2020",
+                "current_salary": "3000",
+                "is_employed": "True",
+                "picture": "https://ocdn.eu/pulscms-transforms/1/9zVk9kuTURBXy84MTcxYmNmNy0zMmIwLTQ1MzAtOTE0MS1iMWU1Y2Y1MTNjN2MuanBlZ5GTBc0DFs0BroGhMAU"
+                }
+        """
     def get(self, request, format=None):
         interns = Intern.objects.all()
         serializer = InternSerializer(interns, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status= status.HTTP_200_OK)
 
-
-class InternCreateUpdateView(APIView):
     def post(self, request):
+        
         serializer = InternSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status= status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class InternUpdateView(APIView):
+    """
+    endpoint to create or update an intern
+    create:
+        request body:
+            {
+            "username": "user",
+            "full_name": "fullname",
+            "stack": "Backend",
+            "state": "Oyo",
+            "gender": "M",
+            "about": "Random text",
+            "batch": "2020",
+            "current_salary": "3000",
+            "is_employed": "True",
+            "picture": "https://ocdn.eu/pulscms-transforms/1/9zVk9kuTURBXy84MTcxYmNmNy0zMmIwLTQ1MzAtOTE0MS1iMWU1Y2Y1MTNjN2MuanBlZ5GTBc0DFs0BroGhMAU"
+            }
+
+     update:
+        request_body:
+            {   "intern_id":1,
+                "data":
+                    {"username": "user",
+                    "full_name": "fullname",
+                    "stack": "Backend",
+                    "state": "Oyo",
+                    "gender": "M",
+                    "about": "Random text",
+                    "batch": "2020",
+                    "current_salary": "3000",
+                    "is_employed": "True",
+                    "picture": "https://ocdn.eu/pulscms-transforms/1/9zVk9kuTURBXy84MTcxYmNmNy0zMmIwLTQ1MzAtOTE0MS1iMWU1Y2Y1MTNjN2MuanBlZ5GTBc0DFs0BroGhMAU"
+                    }}
+    """
+
 
     def put(self, request):
         intern_id = request.data.pop("intern_id")
@@ -203,7 +254,7 @@ class InternCreateUpdateView(APIView):
                 {"message": "This intern does not exist"},
                 status=status.HTTP_404_NOT_FOUND,
             )
-        serializer = InternSerializer(data=request, instance=intern)
+        serializer = InternSerializer(intern, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -245,11 +296,13 @@ class InternUpdate(UpdateAPIView):
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
 
+
+## NewsLetter views
 class NewsLetterSubscribeView(APIView):
     """
     Creates Subscribers For NewsLetters
     """
-
+    queryset = NewsLetter.objects.all()
     serializer_class = NewsLetterSerializer
 
     def post(self, request, *args, **kwargs):
@@ -257,7 +310,6 @@ class NewsLetterSubscribeView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -265,18 +317,11 @@ class NewsLetterSubscribersView(APIView):
     """
     Lists all the NewsLetter Subscribers
     """
-
-    serializer_class = NewsLetterSerializer
-
     def get(self, request, *args, **kwargs):
         subscriber = NewsLetter.objects.all()
         serializer = NewsLetterSerializer(subscriber, many=True)
         return Response(serializer.data)
 
-
-# {
-# "subscriber_email" : "noor@gmail.com"
-# }
 
 
 class InternStackList(APIView):
@@ -291,10 +336,23 @@ class StatisticView(APIView):
     Intern Statistics
     """
 
-    def get(self, request, format=None):
-        queryset = Statistic.objects.all()
-        serializer = StatisticSerializer(queryset, many=True)
-        return Response(serializer.data)
+    def get(self, request, batch, format=None):
+        statistic = Statistic.objects.get(year=batch)
+        serializer = StatisticSerializer(statistic)
+        data = serializer.data
+        all_interns = Intern.objects.filter(batch=batch)
+        employed_interns = Intern.objects.filter(batch=batch, is_employed=True)
+        print(data)
+        response_body = {
+            "year": data["year"],
+            "male": data["male"],
+            "female": data["female"],
+            "participants": data["participant"],
+            "finalists": len(all_interns),
+            "employed_finalists": len(employed_interns),
+        }
+
+        return Response(response_body, status=status.HTTP_200_OK)
 
 
 @api_view(["GET"])
@@ -307,3 +365,10 @@ def total_salary(request):
         return Response({"Total salary": f"{salary}"}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
+
+class StackList(APIView):
+    def get(self, request, year):
+        year = Intern.objects.filter(year=year)
+        stack = year.get("stack")
+        data = Counter(stack)
+        return Response(data, status=status.HTTP_200_OK)

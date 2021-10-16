@@ -35,7 +35,7 @@
                 <CurrentJobPlacement class="mb-5"/>
             </div>
         </div>
-
+        
     </div>
 
     
@@ -50,7 +50,7 @@ export default {
 name: "HomeContainer",
 components:{
     CurrentJobPlacement,
-    OverallStats
+    OverallStats,
 },
 data(){
     return{

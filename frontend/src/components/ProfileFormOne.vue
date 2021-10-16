@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="">
+        <form class="">
                 <div class="block xs:flex justify-between items-center mb-4 xs:mb-10">
                     <h1 class="text-2xl">SOJI AMINU'S PROFILE</h1>
                     <p class="text-2xl text-brand-gray-light">1/2</p>
@@ -42,12 +42,16 @@
                     <p class="">Add more organisation</p>
                     <!-- Icon goes here -->
                 </div>
-        </div>
+        </form>
     </div>
 </template>
 
 <script>
 export default {
-    
+    data(){
+        return{
+
+        }
+    }
 }
 </script>

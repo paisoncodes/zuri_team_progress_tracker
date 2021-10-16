@@ -1,7 +1,7 @@
 <template>
-    <div class="">
-        <div class="absolute static inset-y-0 inset-x-4  flex justify-center items-center">
-            <form class="w-full max-w-2xl p-4 sm:p-7  text-brand-gray-dark-1 bg-white">
+    <div class="mx-auto z-50">
+        <div @click="toggleModal()" class="fixed inset-y-0 inset-x-0  flex justify-center items-center bg-black bg-opacity-50">
+            <form @click.stop="" class="w-full max-w-2xl p-4 sm:p-7 z-10 text-brand-gray-dark-1 bg-white">
                 <keep-alive>
                     <component :is="component"></component>
                 </keep-alive>
