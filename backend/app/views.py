@@ -22,10 +22,11 @@ class UserCreateView(APIView):
 
     serializer_class = UserSerializer
 
-    def get(self, request, *args, **kwargs):
-        user = User.objects.all()
-        serializer = UserSerializer(user, many=True)
-        return Response(serializer.data)
+   
+  # def get(self, request, *args, **kwargs):
+       # user = User.objects.all()
+       # serializer = UserSerializer(user, many=True)
+       # return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
         serializer = UserSerializer(data=request.data)
