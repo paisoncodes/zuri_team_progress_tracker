@@ -308,7 +308,7 @@ class InternUpdate(UpdateAPIView):
             return Response(data, status=status.HTTP_404_NOT_FOUND)
         instance.picture = upload_image(image)
         instance.save()
-        serializer = InternSerializer(instance, many= True)
+        serializer = InternSerializer(instance)
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
 
