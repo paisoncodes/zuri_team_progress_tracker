@@ -344,10 +344,23 @@ class StatisticView(APIView):
     Intern Statistics
     """
 
-    def get(self, request, format=None):
-        queryset = Statistic.objects.all()
-        serializer = StatisticSerializer(queryset, many=True)
-        return Response(serializer.data)
+    def get(self, request, batch, format=None):
+        statistic = Statistic.objects.get(year=batch)
+        serializer = StatisticSerializer(statistic)
+        data = serializer.data
+        all_interns = Intern.objects.filter(batch=batch)
+        employed_interns = Intern.objects.filter(batch=batch, is_employed=True)
+        print(data)
+        response_body = {
+            "year": data["year"],
+            "male": data["male"],
+            "female": data["female"],
+            "participants": data["participant"],
+            "finalists": len(all_interns),
+            "employed_finalists": len(employed_interns),
+        }
+
+        return Response(response_body, status=status.HTTP_200_OK)
 
 
 @api_view(["GET"])

@@ -8,7 +8,6 @@ from .views import (
     UserCreateView,
     UserUpdateView,
     UserDetailView,
-    InternCreateUpdateView,
     InternUpdate,
     InternsView,
     InternDetailView,
@@ -38,5 +37,5 @@ urlpatterns = [
     path("interns/total_salary", views.total_salary, name="totalsal"),
     path("subscribers/", NewsLetterSubscribersView.as_view(), name="subscribers"),
     path("subscribers/subscribe/", NewsLetterSubscribeView.as_view(), name="subscribe"),
-    path("statistics/", StatisticView.as_view()),
+    path("statistics/batch/<int:batch>/", StatisticView.as_view()),
 ]
