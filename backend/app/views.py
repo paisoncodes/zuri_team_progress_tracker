@@ -12,6 +12,7 @@ from rest_framework.decorators import api_view
 from rest_framework.parsers import MultiPartParser, JSONParser
 from .cloudinary import upload_image
 from collections import Counter
+import json
 
 # Create your views here.
 class UserCreateView(APIView):
@@ -369,7 +370,8 @@ def total_salary(request):
 class StackList(APIView):
     def get(self, request, year):
         year = Intern.objects.filter(year=year)
-        serializer = InternSerializer(year, many=True)
-        stack = serializer.data["stack"]
+        # serializer = InternSerializer(year, many=True)
+        stack = year.data["stack"]
         data = Counter(stack)
+        data = data.json()
         return Response(data, status=status.HTTP_200_OK)
