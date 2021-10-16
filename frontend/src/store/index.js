@@ -6,7 +6,9 @@ export default createStore({
     profileModalActive: false,
     intern: [],
     stacks: [],
-    year: []
+    year: [],
+    allInterns:[],
+    internJob:[]
   },
   mutations: {
     toggleProfileEditModal: state => {
@@ -15,6 +17,9 @@ export default createStore({
     setStack(state, payload) { state.intern = payload },
     setStackYear(state, payload) {state.stacks = payload},
     setYear(state, payload) {state.year = payload},
+    allInterns(state, payload) { state.allInterns = payload },
+    userJob(state, payload) { state.internJob.push(payload) },
+
   },
   actions: {
     async getAllStack({commit, getters}) {
@@ -40,10 +45,34 @@ export default createStore({
         console.log(response.data.stacks)
       })
     },
-    async getTotalSalary() {
+   async getTotalSalary() {
       await ContributionServices.getTotalSalary().then(response => {
-        console.log(response)
+        response
+        // console.log(response)
+      }) 
+    },
+    async getAllInterns({commit}){
+      await ContributionServices.getIntern().then(response =>{
+        commit('allInterns', response.data)
       })
+    },
+
+    async getUserJob({commit}, user_id){
+           await ContributionServices.getJobs(user_id).then(response => {
+             console.log(response)
+             commit ('userJob', response.data)
+      }).catch((error)=>{
+        console.log(error)
+      })
+    }
+
+  },
+  getters:{
+    allInterns(state){
+      return state.allInterns
+    },
+    allUserjobs (state){
+      return state.internJob
     }
   },
   getters: {
