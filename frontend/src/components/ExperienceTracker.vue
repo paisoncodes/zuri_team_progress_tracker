@@ -69,6 +69,7 @@
 </template>
 
 <script>
+
 export default {
   data(){
     return {
@@ -129,7 +130,8 @@ export default {
            picture: require('../assets/soji.png'),
            about: 'An exceptional product designer with years of experience understanding the users thinking pattern and this helps in creating user centered product.'
         },
-      ]
+      ],
+      displayCard: this.$store.state.profileModalActive
     }
   },
 
