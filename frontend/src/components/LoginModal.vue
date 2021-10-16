@@ -54,7 +54,7 @@
               aria-hidden="true"
             ></i>
           </div>
-          <form class="m-8">
+          <form class="m-8" @submit.prevent="toggleModal()">
             <!-- CONTENT -->
             <div class="sm:text-left">
               <h1 class="mb-6 text-2xl text-gray-dark-1">LOGIN</h1>
@@ -72,6 +72,7 @@
             <div class="mb-8 mt-5 sm:flex sm:flex-row-reverse">
               
               <button
+              type="submit"
                 class="
                   px-8
                   py-2
@@ -115,6 +116,10 @@ export default {
   methods: {
     showLogin() {
       this.eventBus.emit("toggleLoginModal", false);
+    },
+    toggleModal() {
+      this.showLogin()
+      this.$store.commit('toggleProfileEditModal');
     },
   },
 };
