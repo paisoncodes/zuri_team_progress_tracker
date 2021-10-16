@@ -49,17 +49,14 @@ export default createStore({
     setStats18(state, payload) {
       state.stats18 = payload
     },
-<<<<<<< HEAD
-=======
-    allInterns(state, payload) { state.allInterns = payload },
-    userJob(state, payload) { state.internJob.push(payload) },
+
     currentUserId(state, payload){state.currentUserID = payload},
->>>>>>> 7017dea542dc0f95e7a3bbffea91e81e6fb84ba0
+
 
     updateField,
   },
   actions: {
-<<<<<<< HEAD
+
     async getAllStack({commit, getters}) {
       const year = getters.year
       await ContributionServices.getAllStack(year).then(response => {
@@ -81,15 +78,9 @@ export default createStore({
       await ContributionServices.getStackYear(payload).then(response => {
         commit("setStackYear", response.data.stacks)
         console.log(response.data.stacks)
-=======
+      })},
     
-    async getStack({commit}, payload) {
-      await ContributionServices.getStack(payload).then(response => {
-        commit("setStack", response.data.data)
-        console.log(response.data.data)
->>>>>>> 7017dea542dc0f95e7a3bbffea91e81e6fb84ba0
-      })
-    },
+  
    async getTotalSalary() {
       await ContributionServices.getTotalSalary().then(response => {
         response
