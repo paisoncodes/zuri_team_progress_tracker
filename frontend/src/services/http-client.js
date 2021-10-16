@@ -18,12 +18,12 @@ class ContributionServices {
     }
     getJobs(user_id) {
         return axiosConfig.get(`/api/v1/interns/${user_id}/jobs/`)
-      }
-    editIntern(id){
-        return axiosConfig.put(`/api/v1/interns/${id}/update/`)
     }
-    postJob(id){
-        return axiosConfig.post(`/api/v1/interns/${id}/jobs/`)
+    editIntern(id, data){
+        return axiosConfig.put(`/api/v1/interns/${id}/update/`, data)
+    }
+    postJob(intern_id, id,data){
+        return axiosConfig.put(`/api/v1/interns/${intern_id}/jobs/${id}`, data)
     }
 
     

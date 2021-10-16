@@ -119,17 +119,35 @@ export default createStore({
     },
     
     async editIntern({state}){
-      console.log(state.formOne)
-      await ContributionServices.editIntern().then(response => {
-        console.log(response)
-      })
+      let formData = new FormData();
+      formData.append('full_name', state.formOne.full_name)
+      formData.append('current_Salary', state.formOne.currentSalary)
+      formData.append('about', state.formOne.about)
+      formData.append('is_employed', state.formOne.employed)
+
+      try {
+        await ContributionServices.editIntern(state.currentUserID, formData).then(response => {
+          console.log(response)
+        })
+      } catch (error) {
+        console.log(error)
+      }
     },
 
     async postJob({state}){
-      console.log(state.formTwo)
-      await ContributionServices.postJob().then(response => {
-        console.log(response)
-      })
+      let formData = new FormData();
+      formData.append('job_title', state.formOne.position)
+      formData.append('company_name', state.formOne.company)
+      formData.append('job_description', state.formOne.about)
+      formData.append('gotten_at', state.formOne.dateGotten)
+
+      try {
+        await ContributionServices.postJob(state.currentUserID, formData).then(response => {
+          console.log(response)
+        })
+      } catch (error) {
+        console.log(error)
+      }
     },
 
   },
