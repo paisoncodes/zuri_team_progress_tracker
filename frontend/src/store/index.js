@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import ContributionServices from '@/services/http-client'
+import { getField, updateField } from 'vuex-map-fields';
 
 export default createStore({
   state: {
@@ -7,8 +8,27 @@ export default createStore({
     intern: [],
     stacks: [],
     year: [],
+    stats20: [],
+    stats19: [],
+    stats18: [],
     allInterns:[],
-    internJob:[]
+    internJob:[],
+    formOne : {
+      fullName : '',
+      currentSalary : '',
+      about: '',
+      employed: '',
+      // image: ''
+    },
+    formTwo:{
+      position : '',
+      company : '',
+      dateGotten: '',
+      jobDescription: '',
+      // image: ''
+
+    }
+
   },
   mutations: {
     toggleProfileEditModal: state => {
@@ -19,6 +39,17 @@ export default createStore({
     setYear(state, payload) {state.year = payload},
     allInterns(state, payload) { state.allInterns = payload },
     userJob(state, payload) { state.internJob.push(payload) },
+    setStats20(state, payload) {
+      state.stats20 = payload
+    },
+    setStats19(state, payload) {
+      state.stats19 = payload
+    },
+    setStats18(state, payload) {
+      state.stats18 = payload
+    },
+
+    updateField,
   },
   actions: {
     async getAllStack({commit, getters}) {
@@ -63,7 +94,36 @@ export default createStore({
       }).catch((error)=>{
         console.log(error)
       })
-    }
+    },
+    async getStatistics20({commit}, payload) {
+      await ContributionServices.getStatistics(payload).then(res => {
+        commit("setStats20", res.data)
+      })
+    },
+    async getStatistics19({commit}, payload) {
+      await ContributionServices.getStatistics(payload).then(res => {
+        commit("setStats19", res.data)
+      })
+    },
+    async getStatistics18({commit}, payload) {
+      await ContributionServices.getStatistics(payload).then(res => {
+        commit("setStats18", res.data)
+      })
+    },
+    
+    async editIntern({state}){
+        console.log(state.formOne)
+        await ContributionServices.editIntern().then(response => {
+          console.log(response)
+        })
+      },
+
+      async postJob({state}){
+        console.log(state.formTwo)
+        await ContributionServices.postJob().then(response => {
+          console.log(response)
+        })
+      },
 
   },
   getters:{
@@ -78,8 +138,9 @@ export default createStore({
     },
     year(state) {
       return state.year
-    }
+    },
+    getField,
   },
   modules: {
-  }
+  },
 })
