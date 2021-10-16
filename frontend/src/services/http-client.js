@@ -1,9 +1,9 @@
 import axiosConfig from "./axiosConfig"
 
 class ContributionServices {
-    exampleFunc(){
-        return axiosConfig.get('/sample')
-    }
+    // exampleFunc(){
+    //     return axiosConfig.get('/sample')
+    // }
     getIntern(){
         return axiosConfig.get("/api/v1/interns/")
     }
