@@ -16,6 +16,9 @@ class ContributionServices {
     getStatistics(year) {
         return axiosConfig.get(`/api/v1/statistics/batch/${ year }`)
     }
+    getJobs(user_id) {
+        return axiosConfig.get(`/api/v1/interns/${user_id}/jobs/`)
+    }
 }
 
 export default new ContributionServices();
