@@ -1,6 +1,6 @@
 <template>
 <div class="w-full min-h-pth bg-brand-red-light-1 py-2">
-    <div class="flex justify-between items-center py-14 max-w-6xl mx-auto px-7">
+    <div class="flex items-center justify-between py-6 px-6 mx-auto max-w-7xl ">
 
         <div class="text-base font-normal text-brand-gray-dark-1 font-mulish">ZURI.TEAM</div>
 
