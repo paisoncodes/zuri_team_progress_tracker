@@ -5,26 +5,39 @@ export default createStore({
   state: {
     profileModalActive: false,
     intern: [],
-    stacks: []
+    stacks: [],
+    year: []
   },
   mutations: {
     toggleProfileEditModal: state => {
       state.profileModalActive =! state.profileModalActive
     },
     setStack(state, payload) { state.intern = payload },
-    setStackYear(state, payload) {state.stacks = payload}
+    setStackYear(state, payload) {state.stacks = payload},
+    setYear(state, payload) {state.year = payload},
   },
   actions: {
-    async getStack({commit}, payload) {
-      await ContributionServices.getStack(payload).then(response => {
+    async getAllStack({commit, getters}) {
+      const year = getters.year
+      await ContributionServices.getAllStack(year).then(response => {
         commit("setStack", response.data.data)
-        console.log(response.data.data)
+        console.log(response.data)
       })
+    },
+    async getStack({commit, getters}, payload) {
+      const year = getters.year
+      await ContributionServices.getStack(payload, year).then(response => {
+        commit("setStack", response.data.data)
+        console.log(response.data)
+      })
+    },
+    async getYear({commit}, payload) {
+      commit("setYear", payload)
     },
     async getStackYear({commit}, payload) {
       await ContributionServices.getStackYear(payload).then(response => {
-        commit("setStackYear", payload)
-        console.log(response.data.data)
+        commit("setStackYear", response.data.stacks)
+        console.log(response.data.stacks)
       })
     },
     async getTotalSalary() {
@@ -36,6 +49,9 @@ export default createStore({
   getters: {
     stacks(state) {
       return state.stacks
+    },
+    year(state) {
+      return state.year
     }
   },
   modules: {

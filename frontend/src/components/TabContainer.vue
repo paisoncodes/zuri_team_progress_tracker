@@ -53,10 +53,12 @@ export default {
     },
     methods: {
          ...mapActions([
-            'getStackYear'
+            'getStackYear',
+            'getYear'
         ]),
         changeYear(year) {
             this.getStackYear(year)
+            this.getYear(year)
         }
     }
 }
