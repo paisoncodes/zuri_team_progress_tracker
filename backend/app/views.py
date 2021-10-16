@@ -36,7 +36,7 @@ class UserUpdateView(APIView):
     """
 
     serializer_class = UserUpdateSerializer
-    queryset = User.object.all()
+    queryset = User.objects.all()
 
     def put(self, request, user_id, *args, **kwargs):
         user = User.objects.get(pk=user_id)
