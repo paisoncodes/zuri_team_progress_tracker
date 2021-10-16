@@ -1,5 +1,8 @@
 <template>
-<div>
+<div class="relative">
+  <div v-show="this.$store.state.profileModalActive" class="absolute">
+        <ProfileCard/>
+      </div>
   <div class="grid  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-for="(intern, index) in internTraker" :key="index" >
      <div class="icon w-full h-full ">
          <img class="object-cover object-center  h-full w-full" :src="intern.picture"/>
@@ -63,6 +66,9 @@
 </template>
 
 <script>
+
+import ProfileCard from '../components/ProfileCard.vue'
+
 export default {
   data(){
     return {
@@ -91,13 +97,17 @@ export default {
            picture: require('../assets/soji.png'),
            about: 'An exceptional product designer with years of experience understanding the users thinking pattern and this helps in creating user centered product.'
         },
-      ]
+      ],
+      displayCard: this.$store.state.profileModalActive
     }
   },
   methods:{
     toggleModal() {
       this.$store.commit('toggleProfileEditModal');
     },
+  },
+  components:{
+    ProfileCard
   }
 
 }

@@ -1,6 +1,6 @@
 <template>
-    <div class="">
-        <div class="absolute static inset-y-0 inset-x-4  flex justify-center items-center">
+    <div class="mx-auto">
+        <div class="absolute inset-y-0 inset-x-4  flex justify-center items-center">
             <form class="w-full max-w-2xl p-4 sm:p-7  text-brand-gray-dark-1 bg-white">
                 <keep-alive>
                     <component :is="component"></component>
