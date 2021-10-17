@@ -131,7 +131,9 @@ export default {
       showLoder:true
     }
   },
-  props:['batch'],
+  props:{batch:{
+    type:[Number]
+  }},
   components: {
     CustomLoader
   },
