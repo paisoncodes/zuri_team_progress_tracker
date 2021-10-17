@@ -9,7 +9,7 @@
                         OVERVIEW
                     </li>  
                     <li @click="component = 'TwentyOne', activeTab = 2; changeYear(2021)"  class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 2}">                      
-                        2021 <br> (10,000 interns)        
+                        2021 <br> (5,797 interns)        
                     </li>
                     <li @click="component = 'Twenty', activeTab = 3; changeYear(2020)" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 3}">                  
                         2020 <br> (34,300 interns)        
