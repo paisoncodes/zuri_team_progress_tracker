@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 import ContributionServices from '@/services/http-client'
 import { getField, updateField } from 'vuex-map-fields';
 import Axios from 'axios';
+Axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 
 export default createStore({
   state: {
@@ -141,10 +142,6 @@ export default createStore({
       
       formData.append('image', state.imageOne)
 
-    for(var pair of formData.entries()){
-        console.log(pair[0], pair[1]);
-    } 
-
       try {
         const response = await Axios.put(`https://zuri-progress-tracker.herokuapp.com/api/v1/interns/${state.currentUserID}/update`, formData, {
     headers: {
@@ -173,11 +170,10 @@ export default createStore({
     } 
 
       try {
-        const response = await Axios.post(`http://zuri-progress-tracker.herokuapp.com/api/v1/interns/${state.currentUserID}/jobs`, formData, {
+        const response = await Axios.post(`https://zuri-progress-tracker.herokuapp.com/api/v1/interns/${state.currentUserID}/jobs/`, formData, {
     headers: {
       "Content-Type": "multipart/form-data; boundary {}",
-      "Access-Control-Allow-Origin": "*"
-      
+      "Access-Control-Allow-Origin": "*",
     },
     
     })
