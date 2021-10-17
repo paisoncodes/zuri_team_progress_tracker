@@ -2,7 +2,7 @@
   <div class="flex flex-col w-full text-center bg-white">
     <div class="pt-0">
       <div class="px-6 py-10 mx-auto max-w-7xl bg-brand-red-light-1">
-        <MeetOurIntern :finalists="finalists" :totalCombinedSalary="totalCombinedSalary" />
+        <MeetOurIntern :finalists="finalists" :totalCombinedSalary="totalCombinedSalary" :finalistDescription="finalistDescription" />
         <InternProfile />
         <Interns />
         <FilterButton />
@@ -34,7 +34,8 @@ export default {
       finalists: 0,
       isFetchingFinalist: false,
       totalCombinedSalary: 0,
-      isFetchingTotalCombinedSalary: false
+      isFetchingTotalCombinedSalary: false,
+      finalistDescription: "I am a web developer with the objective to ensure that your project goals are not only met but exceeded. I am very passionate about tech. Any idea big or small can be brought to life. I pride myself on the ability to take projects right from the concept,development stage through to the final production."
     }
   },
   methods: {
