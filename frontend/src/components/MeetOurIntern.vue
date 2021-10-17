@@ -11,16 +11,7 @@
             <div class="flex-col text-left">
               <h3 class=" text-brand-gray-light leading-tight py-4 mb-2">HIGHLIGHTS</h3>
               <p class="text-brand-gray-dark-1 text-justify">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Integer elit dictumst mauris aenean id vitae ut augue 
-                aliquam. Aliquam diam, id diam egestas. A est fringilla 
-                amet malesuada gravida id. Sed fringilla morbi vitae 
-                nunc ultrices diam bibendum quisque. Elit aliquet 
-                tristique neque, amet urna, ultrices at. Ullamcorper 
-                ultricies ante at lorem tincidunt. Turpis arcu, iaculis 
-                at nisi sit. Fermentum feugiat ut euismod imperdiet sed 
-                porta netus nulla. Lectus amet mollis dui eget pretium 
-                semper dictumst netus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.            
+                A key player in his field. He proved himself to be dedicated and focused in all his endeavours. Having mastered the art of programming, he came out in flying colors as one of our best performing interns. With daily activites such coding and test programming for software and mobile apps, he is defining his space in the tech industry. He is proficient in several languagues such as Javascript, Python and PHP. He also has great communication skills and he has proven himself to be a true leader amongst his peers.       
               </p>
             </div>
         </div>
