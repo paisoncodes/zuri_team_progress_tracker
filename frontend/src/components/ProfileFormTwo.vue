@@ -6,7 +6,7 @@
         </div>
         <div class="mb-3 sm:mb-5">
             <label>JOB TITLE</label><br>
-            <input type="text" v-model="position" placeholder="Enter your job title here" class="w-full text-brand-gray-light p-2 mt-1 sm:mt-3  border focus:outline-none border-black">
+            <input type="text" v-model="position" placeholder="Enter your job title here" class="w-full text-brand-gray-light p-2 mt-1 sm:mt-3  border focus:outline-none border-black" >
         </div>
         <div class="block sm:flex justify-between gap-8">
             <div class="w-full mb-3 sm:mb-5">
@@ -15,22 +15,47 @@
             </div>
             <div class="w-full mb-3">
                 <label class="">DATE GOTTEN</label><br>
-                <input type="text" v-model="position" placeholder="Enter your current pay here" class="w-full text-brand-gray-light p-2 mt-1 sm:mt-3  border focus:outline-none border-black">
+                <input type="text" v-model="dateGotten" placeholder="Enter your current pay here" class="w-full text-brand-gray-light p-2 mt-1 sm:mt-3  border focus:outline-none border-black">
             </div>
         </div>
         <div class="w-full mb-3 sm:mb-5 sm:mr-12">
             <label class="">JOB DESCRIPTION</label><br>
-            <textarea v-model="about" placeholder="Tell us about your current job" class="w-full h-24 resize-none text-brand-gray-light p-2 mt-1 sm:mt-3 border border-black focus:outline-none"></textarea>
+            <textarea v-model="jobDescription" placeholder="Tell us about your current job" class="w-full h-24 resize-none text-brand-gray-light p-2 mt-1 sm:mt-3 border border-black focus:outline-none"></textarea>
         </div>
         <div>
             <h1>COMPANY LOGO</h1>
             <img class="w-16 h-16 cursor-pointer" src="../assets/carbon_image.png" alt="">
+            <input type="file" name="companylogo" id="companylogo">
         </div>
     </div>
 </template>
 
 <script>
+import {mapActions, mapMutations} from 'vuex'
+import { mapFields } from 'vuex-map-fields';
+
 export default {
-    
+
+    data(){
+        return{
+        }
+    },
+    computed:{
+        ...mapFields([
+            'formTwo.position',
+            'formTwo.company',
+            'formTwo.dateGotten',
+            'formTwo.jobDescription',
+        ])
+    },
+    methods:{
+        ...mapActions([
+            'editIntern'
+        ]),
+        ...mapMutations([
+            'setData'
+        ]),
+    },
+
 }
 </script>

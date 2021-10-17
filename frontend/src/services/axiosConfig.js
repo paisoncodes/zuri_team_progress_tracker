@@ -9,4 +9,12 @@ const axiosClient = Axios.create({
     },
 });
 
+// const axiosClientForm = Axios.create({
+//     baseURL: 'https://zuri-progress-tracker.herokuapp.com/',
+//     withCredentials: false,
+//     headers: {
+//         'Content-Type': 'multipart/form-data'
+//     },
+// });
+
 export default axiosClient

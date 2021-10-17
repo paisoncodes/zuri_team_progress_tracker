@@ -35,7 +35,7 @@
                 <span class="uppercase text-brand-gray-light leading-tight text-base">Finalists</span>
               </div>
               <div class="flex flex-wrap lg:flex-row items-center space-x-2">
-                <h1 class="text-3xl font-medium leading-loose text-brand-gray-dark-1 tracker-wide">$ 13,056,789</h1>
+                <h1 class="text-3xl font-medium leading-loose text-brand-gray-dark-1 tracker-wide">$ 3,500, 450</h1>
                 <span class="uppercase text-brand-gray-light leading-tight text-base">In Montly Income</span>
               </div>
             </div>
@@ -48,12 +48,23 @@
 </template>
 
 <script>
+import { mapActions } from "vuex"
 export default {
   name: 'MeetOurIntern',
   data(){
     return {
     }
   },
-  
+  methods: {
+    ...mapActions([ 'getTotalSalary'])
+  },
+  async created () {
+    this.getTotalSalary()
+  },
+  computed: {
+    totalSalary() {
+      return this.$store.state.totalSalary
+    }
+  }
 }
 </script>
