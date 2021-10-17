@@ -31,11 +31,11 @@
           <div class="flex flex-1 items-center">
             <div>
               <div class="flex flex-wrap lg:flex-row items-center space-x-2">
-                <h1 class="text-3xl font-medium leading-loose text-brand-gray-dark-1 tracker-wide">2,056,789</h1>
+                <h1 class="text-3xl font-medium leading-loose text-brand-gray-dark-1 tracker-wide">{{ finalists }}</h1>
                 <span class="uppercase text-brand-gray-light leading-tight text-base">Finalists</span>
               </div>
               <div class="flex flex-wrap lg:flex-row items-center space-x-2">
-                <h1 class="text-3xl font-medium leading-loose text-brand-gray-dark-1 tracker-wide">$ 3,500, 450</h1>
+                <h1 class="text-3xl font-medium leading-loose text-brand-gray-dark-1 tracker-wide">$ {{ totalCombinedSalary }}</h1>
                 <span class="uppercase text-brand-gray-light leading-tight text-base">In Montly Income</span>
               </div>
             </div>
@@ -50,6 +50,16 @@
 <script>
 import { mapActions } from "vuex"
 export default {
+  props: {
+    finalists: {
+      type: Number,
+      default: 0
+    },
+    totalCombinedSalary: {
+      type: Number,
+      default: 0
+    }
+  },
   name: 'MeetOurIntern',
   data(){
     return {

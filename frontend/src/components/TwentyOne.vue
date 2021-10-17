@@ -5,7 +5,7 @@
 
     <div class="pt-0">
       <div class="px-6 py-10 mx-auto max-w-7xl bg-brand-red-light-1">
-        <MeetOurIntern />
+        <MeetOurIntern :finalists="finalists" :totalCombinedSalary="totalCombinedSalary"/>
         <InternProfile />
         <Interns />
         <FilterButton />
@@ -22,6 +22,7 @@ import InternProfile from "@/components/InternProfile.vue";
 import Interns from "@/components/Interns.vue";
 import FilterButton from "@/components/FilterButton.vue";
 import ExperienceTracker from "@/components/ExperienceTracker.vue";
+import axios from "axios";
 
 export default {
   components: {
@@ -32,6 +33,39 @@ export default {
     ExperienceTracker,
   },
   name: "TwentyOne",
+  data() {
+    return {
+      finalists: 0,
+      isFetchingFinalist: false,
+      totalCombinedSalary: 0,
+      isFetchingTotalCombinedSalary: false
+    }
+  },
+  methods: {
+    getFinalists() {
+      this.isFetchingFinalist = true;
+      axios.get('https://zuri-progress-tracker.herokuapp.com/api/v1/statistics/batch/2021/').then(response => {
+        this.finalists = response.data.finalists
+        this.isFetchingFinalist = false;
+      }).catch(() => {
+        this.isFetchingFinalist = false;
+      })
+    },
+    getTotalCombinedSalary() {
+      this.isFetchingTotalCombinedSalary = true;
+      axios.get('https://zuri-progress-tracker.herokuapp.com/api/v1/interns/batch/2021/total_salary/').then(response => {
+        this.totalCombinedSalary = response.data.total_salary
+        this.isFetchingTotalCombinedSalary = false;
+        console.log(this.totalCombinedSalary);
+      }).catch(() => {
+        this.isFetchingTotalCombinedSalary = false;
+      })
+    }
+  },
+  mounted() {
+    this.getFinalists();
+    this.getTotalCombinedSalary();
+  },
 };
 </script>
 
