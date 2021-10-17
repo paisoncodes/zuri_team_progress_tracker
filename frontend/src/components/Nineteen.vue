@@ -35,7 +35,7 @@ export default {
       isFetchingFinalist: false,
       totalCombinedSalary: 0,
       isFetchingTotalCombinedSalary: false,
-      finalistDescription: "I learned to observe and collaborate. I enjoy team work. I also know how to work remotely without difficulties. I give my best to any job i do. I am always interested in new and exciting projects. I am always ready to learn a new skill be it a new programming language or framework."
+      finalistDescription: "Technology leads, society follows. The move towards increasing inclusivity and diversity in the industry through representation is of importance to me. I learned to observe and collaborate. I enjoy team work. I also know how to work remotely without difficulties. I give my best to any job i do. I am always interested in new and exciting projects. I am always ready to learn a new skill be it a new programming language or framework. I am determined to continue building beautiful user experiences and fighting for simplicity over complexity."
     }
   },
   methods: {
