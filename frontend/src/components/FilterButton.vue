@@ -1,6 +1,6 @@
 <template>
     <div class="bg-brand-red-light-1">
-      <div class="py-6">
+      <div class="py-6 mb-20">
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
           <button class="bg-brand-red-dark hover:bg-white text-white hover:text-brand-red-dark font-normal sm:px-6 lg:px-2  py-2 rounded-full text-sm" @Click="AllStack">
             All Stack (27,095)

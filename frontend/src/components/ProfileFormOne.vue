@@ -69,12 +69,12 @@
       </div>
       <div>
         <label>UPDATE PICTURE</label>
-        <img
+        <img 
           class="w-16 h-16 cursor-pointer"
-          src="../assets/carbon_image.png"
-          alt=""
+          :src="item.imageUrl ? item.imageUrl : require('../assets/carbon_image.png')"
+          alt="Uploaded image"
         />
-        <input type="file" name="image" id="image" />
+        <input @change="uploadImage" type="file" accept="image/*" id="image" />
       </div>
     </form>
   </div>
@@ -86,7 +86,12 @@ import { mapFields } from "vuex-map-fields";
 
 export default {
   data() {
-    return {};
+    return {
+      item: {
+        image: null,
+        imageUrl: null,
+      }
+    };
   },
   computed: {
     ...mapFields([
@@ -99,6 +104,15 @@ export default {
   methods: {
     ...mapActions(["editIntern"]),
     ...mapMutations(["setData"]),
+    uploadImage(e) {
+      const image = e.target.file[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.onload = e => {
+        this.item.imageUrl = e.target.result;
+        console.log(this.item.imageUrl);
+      }
+    }
   },
 };
 </script>
