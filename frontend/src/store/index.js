@@ -21,14 +21,14 @@ export default createStore({
       currentSalary : '',
       about: '',
       employed: '',
-      // image: ''
+      image: ''
     },
     formTwo:{
       position : '',
       company : '',
       dateGotten: '',
       jobDescription: '',
-      // image: ''
+      image: ''
 
     }
 
@@ -168,6 +168,12 @@ export default createStore({
     },
     allUserjobs (state){
       return state.internJob
+    },
+    stacks(state) {
+      return state.stacks
+    },
+    year(state) {
+      return state.year
     },
     progresStat(state){
       return state.progresStat
