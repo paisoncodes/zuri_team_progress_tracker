@@ -157,6 +157,7 @@ export default createStore({
       } catch (error) {
         console.log(error)
       }
+
     },
 
     async postJob({state}){
@@ -167,11 +168,17 @@ export default createStore({
       formData.append('gotten_at', state.formTwo.dateGotten)
       formData.append('image', state.imageTwo)
 
+      for(var pair of formData.entries()){
+        console.log(pair[0], pair[1]);
+    } 
+
       try {
-        const response = await Axios.post(`https://zuri-progress-tracker.herokuapp.com/api/v1/interns/${state.currentUserID}/jobs`, formData, {
+        const response = await Axios.post(`http://zuri-progress-tracker.herokuapp.com/api/v1/interns/${state.currentUserID}/jobs`, formData, {
     headers: {
-      "Content-Type": "multipart/form-data; boundary {}"
-    }
+      "Content-Type": "multipart/form-data; boundary {}",
+      "Access-Control-Allow-Origin": "*"
+      
+    },
     
     })
     console.log(response);
