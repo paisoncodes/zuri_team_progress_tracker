@@ -12,7 +12,7 @@
                         2021 <br> (41,000 interns)        
                     </li>
                     <li @click="component = 'Twenty', activeTab = 3" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 3}">                  
-                        2020 <br> (25490 interns)        
+                        2020 <br> (34300 interns)        
                     </li>
                     <li @click="component = 'Nineteen', activeTab = 4" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 4}">                    
                         2019 <br> (23300 interns)        

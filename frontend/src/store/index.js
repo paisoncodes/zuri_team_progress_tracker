@@ -21,14 +21,14 @@ export default createStore({
       currentSalary : '',
       about: '',
       employed: '',
-      // image: ''
+      image: ''
     },
     formTwo:{
       position : '',
       company : '',
       dateGotten: '',
       jobDescription: '',
-      // image: ''
+      image: ''
 
     }
 
