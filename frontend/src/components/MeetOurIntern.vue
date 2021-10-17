@@ -11,7 +11,7 @@
             <div class="flex-col text-left">
               <h3 class=" text-brand-gray-light leading-tight py-4 mb-2">HIGHLIGHTS</h3>
               <p class="text-brand-gray-dark-1 text-justify">
-                A key player in his field. He proved himself to be dedicated and focused in all his endeavours. Having mastered the art of programming, he came out in flying colors as one of our best performing interns. With daily activites such coding and test programming for software and mobile apps, he is defining his space in the tech industry. He is proficient in several languagues such as Javascript, Python and PHP. He also has great communication skills and he has proven himself to be a true leader amongst his peers.       
+                {{finalistDescription}}       
               </p>
             </div>
         </div>
@@ -49,11 +49,16 @@ export default {
     totalCombinedSalary: {
       type: Number,
       default: 0
+    },
+    finalistDescription: {
+      type: String,
+      default: ""
     }
   },
   name: 'MeetOurIntern',
   data(){
     return {
+      
     }
   },
   methods: {

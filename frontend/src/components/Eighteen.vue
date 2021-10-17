@@ -2,7 +2,7 @@
   <div class="flex flex-col w-full text-center bg-white">
     <div class="pt-0">
       <div class="px-6 pt-10 mx-auto max-w-7xl bg-brand-red-light-1">
-        <MeetOurIntern :finalists="finalists" :totalCombinedSalary="totalCombinedSalary"/>
+        <MeetOurIntern :finalists="finalists" :totalCombinedSalary="totalCombinedSalary" :finalistDescription="finalistDescription"/>
         <InternProfile />
         <Interns />
         <FilterButton />
@@ -34,7 +34,8 @@ export default {
       finalists: 0,
       isFetchingFinalist: false,
       totalCombinedSalary: 0,
-      isFetchingTotalCombinedSalary: false
+      isFetchingTotalCombinedSalary: false,
+      finalistDescription: "HNG was a life changing experience. It thought me not just how to code but also collaboration and adaptation to impromptu situations. Proficient in several languagues such as Javascript, Python and PHP. He also has great communication skills and he has proven himself to be a true leader amongst his peers.I pride myself on the ability to take projects right from the concept,development stage through to the final production. "
     }
   },
   methods: {
