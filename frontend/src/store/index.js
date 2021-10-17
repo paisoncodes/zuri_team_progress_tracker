@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import ContributionServices from '@/services/http-client'
 import { getField, updateField } from 'vuex-map-fields';
+import Axios from 'axios';
 
 export default createStore({
   state: {
@@ -21,14 +22,15 @@ export default createStore({
       currentSalary : '',
       about: '',
       employed: '',
-      // image: ''
     },
+    imageOne: '',
+    imageTwo: '',
     formTwo:{
       position : '',
       company : '',
       dateGotten: '',
       jobDescription: '',
-      // image: ''
+      image: ''
 
     }
 
@@ -59,8 +61,16 @@ export default createStore({
     setProgresStat(state, payload) {
       state.progresStat = payload
     },
-
     updateField,
+    setImageOne(state, payload){
+      state.imageOne = payload
+      console.log(state.imageOne)
+    },
+    setImageTwo(state, payload){
+      state.imageTwo = payload
+      console.log(state.imageTwo)
+    }
+
   },
   actions: {
     async getAllStack({commit, getters}) {
@@ -125,14 +135,25 @@ export default createStore({
     async editIntern({state}){
       let formData = new FormData();
       formData.append('full_name', state.formOne.full_name)
-      formData.append('current_Salary', state.formOne.currentSalary)
+      formData.append('current_salary', state.formOne.currentSalary)
       formData.append('about', state.formOne.about)
       formData.append('is_employed', state.formOne.employed)
+      
+      formData.append('image', state.imageOne)
+
+    for(var pair of formData.entries()){
+        console.log(pair[0], pair[1]);
+    } 
 
       try {
-        await ContributionServices.editIntern(state.currentUserID, formData).then(response => {
-          console.log(response)
-        })
+        const response = await Axios.put(`https://zuri-progress-tracker.herokuapp.com/api/v1/interns/${state.currentUserID}/update`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data; boundary {}"
+    }
+    
+    })
+    console.log(response);
+    console.log(response.data)
       } catch (error) {
         console.log(error)
       }
@@ -140,15 +161,21 @@ export default createStore({
 
     async postJob({state}){
       let formData = new FormData();
-      formData.append('job_title', state.formOne.position)
-      formData.append('company_name', state.formOne.company)
-      formData.append('job_description', state.formOne.about)
-      formData.append('gotten_at', state.formOne.dateGotten)
+      formData.append('job_title', state.formTwo.position)
+      formData.append('company_name', state.formTwo.company)
+      formData.append('job_description', state.formTwo.about)
+      formData.append('gotten_at', state.formTwo.dateGotten)
+      formData.append('image', state.imageTwo)
 
       try {
-        await ContributionServices.postJob(state.currentUserID, formData).then(response => {
-          console.log(response)
-        })
+        const response = await Axios.post(`https://zuri-progress-tracker.herokuapp.com/api/v1/interns/${state.currentUserID}/jobs`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data; boundary {}"
+    }
+    
+    })
+    console.log(response);
+    console.log(response.data)
       } catch (error) {
         console.log(error)
       }
@@ -156,7 +183,6 @@ export default createStore({
     async getProgresStat({commit}, payload) {
       await ContributionServices.getProgresStat(payload).then(res => {
         commit("setProgresStat", res.data.sort((a, b) => b.year - a.year ).slice(0,3));
-        // console.log(res.data);
         console.log(res.data.sort((a, b) => b.year - a.year ).slice(0,3))
       })
     },
@@ -168,6 +194,12 @@ export default createStore({
     },
     allUserjobs (state){
       return state.internJob
+    },
+    stacks(state) {
+      return state.stacks
+    },
+    year(state) {
+      return state.year
     },
     progresStat(state){
       return state.progresStat

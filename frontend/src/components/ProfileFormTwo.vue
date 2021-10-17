@@ -25,7 +25,7 @@
         <div>
             <h1>COMPANY LOGO</h1>
             <img class="w-16 h-16 cursor-pointer" src="../assets/carbon_image.png" alt="">
-            <input type="file" name="companylogo" id="companylogo">
+            <input @change="uploadImage" type="file" accept="image/*" id="image" />
         </div>
     </div>
 </template>
@@ -38,7 +38,13 @@ export default {
 
     data(){
         return{
-        }
+            item: {
+                image: null,
+                imagesArray: null
+            },
+            imageUrl: null,
+    };
+        
     },
     computed:{
         ...mapFields([
@@ -50,11 +56,33 @@ export default {
     },
     methods:{
         ...mapActions([
-            'editIntern'
+            'editJob'
         ]),
         ...mapMutations([
-            'setData'
+            'setImageTwo'
         ]),
+
+        async uploadImage(e) {
+        let image = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(image);
+        var myimage = await callBack(g)
+
+        var g = "mockVariable"
+        this.imageUrl = myimage
+        this.setImageTwo(this.imageUrl)
+
+        function callBack(g){
+            console.log(g)
+        return new Promise (function(resolve,reject){
+            reader.onload = function(){
+            resolve(reader.result);
+            }
+            reader.onerror = reject;
+        })
+        }
+
+    },
     },
 
 }

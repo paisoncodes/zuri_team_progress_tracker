@@ -281,29 +281,64 @@ class InternUpdate(UpdateAPIView):
         Updates an intern
         """
         try:
-            image = request.FILES["image"]
-            instance = Intern.objects.get(pk=intern_id)
-            data = {
-                "username": instance.username,
-                "full_name": request.data.get("full_name"),
-                "stack": instance.stack,
-                "gender": instance.gender,
-                "about": request.data.get("about"),
-                "state": instance.state,
-                "batch": instance.batch,
-                "is_employed": request.data.get("is_employed"),
-                "current_salary": request.data.get("current_salary"),
-                "picture": upload_image(image),
-            }
-            instance.save()
+            if request.FILES:
+                image = request.FILES["image"]
+                instance = Intern.objects.get(pk=intern_id)
+                if request.data.get("is_employed"):
+                    is_employed = request.data.get("is_employed")
+                else:
+                    is_employed = False
+                data = {
+                    "username": instance.username,
+                    "full_name": request.data.get("full_name"),
+                    "stack": instance.stack,
+                    "gender": instance.gender,
+                    "about": request.data.get("about"),
+                    "state": instance.state,
+                    "batch": instance.batch,
+                    "is_employed": is_employed,
+                    "current_salary": request.data.get("current_salary"),
+                    "picture": upload_image(image),
+                }
+                instance.save()
 
-            serializer = InternSerializer(instance, data=data)
-            serializer.is_valid(raise_exception=True)
-            self.perform_update(serializer)
+                serializer = InternSerializer(instance, data=data)
+                serializer.is_valid(raise_exception=True)
+                self.perform_update(serializer)
 
-            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+                return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+            else:
+                instance = Intern.objects.get(pk=intern_id)
+                if request.data.get("is_employed"):
+                    is_employed = request.data.get("is_employed")
+                else:
+                    is_employed = False
+                data = {
+                    "username": instance.username,
+                    "full_name": request.data.get("full_name"),
+                    "stack": instance.stack,
+                    "gender": instance.gender,
+                    "about": request.data.get("about"),
+                    "state": instance.state,
+                    "batch": instance.batch,
+                    "is_employed": is_employed,
+                    "current_salary": request.data.get("current_salary"),
+                    "picture": instance.picture,
+                }
+                instance.save()
+
+                serializer = InternSerializer(instance, data=data)
+                serializer.is_valid(raise_exception=True)
+                self.perform_update(serializer)
+
+                return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         except Exception as e:
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
+
+    def get(self, request, intern_id):
+        intern = Intern.objects.get(pk=intern_id)
+        serializer = InternSerializer(intern)
+        return Response(serializer.data)
 
     def patch(self, request, intern_id):
         image = request.FILES["image"]
