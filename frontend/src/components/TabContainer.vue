@@ -52,7 +52,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions([
+         ...mapActions([
             'getStackYear',
             'getYear'
         ]),
