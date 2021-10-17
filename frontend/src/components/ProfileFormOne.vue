@@ -89,8 +89,9 @@ export default {
     return {
       item: {
         image: null,
-        imageUrl: null,
-      }
+        imagesArray: null
+      },
+      imageUrl: null,
     };
   },
   computed: {
@@ -103,16 +104,31 @@ export default {
   },
   methods: {
     ...mapActions(["editIntern"]),
-    ...mapMutations(["setData"]),
-    uploadImage(e) {
-      const image = e.target.file[0];
+    ...mapMutations(["setImageOne"]),
+    
+      async uploadImage(e) {
+      let image = e.target.files[0];
       const reader = new FileReader();
       reader.readAsDataURL(image);
-      reader.onload = e => {
-        this.item.imageUrl = e.target.result;
-        console.log(this.item.imageUrl);
+      var myimage = await callBack(g)
+
+      var g = "mockVariable"
+      this.imageUrl = myimage
+      this.setImageOne(this.imageUrl)
+
+      function callBack(g){
+        console.log(g)
+      return new Promise (function(resolve,reject){
+        reader.onload = function(){
+          resolve(reader.result);
+        }
+        reader.onerror = reject;
+      })
       }
-    }
+
+    },
+  
+
   },
 };
 </script>

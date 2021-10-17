@@ -12,13 +12,13 @@
                         2021 <br> (10,000 interns)        
                     </li>
                     <li @click="component = 'Twenty', activeTab = 3; changeYear(2020)" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 3}">                  
-                        2020 <br> (10,000 interns)        
+                        2020 <br> (34,300 interns)        
                     </li>
                     <li @click="component = 'Nineteen', activeTab = 4; changeYear(2019)" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 4}">                    
-                        2019 <br> (10,000 interns)        
+                        2019 <br> (23,300 interns)        
                     </li>
                     <li @click="component = 'Eighteen', activeTab = 5; changeYear(2018)" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 5}">                        
-                        2018 <br> (10,000 interns)        
+                        2018 <br> (3,098 interns)        
                     </li>  
                 </ul>        
             </nav>
