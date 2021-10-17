@@ -6,26 +6,26 @@
         </div>
         <div class="mb-3 sm:mb-5">
             <label>JOB TITLE</label><br>
-            <input type="text" v-model="position" placeholder="Enter your job title here" class="w-full text-brand-gray-light p-2 mt-1 sm:mt-3  border focus:outline-none border-black" >
+            <input autocomplete type="text" v-model="position" placeholder="Enter your job title here" class="w-full text-brand-gray-light p-2 mt-1 sm:mt-3  border focus:outline-none border-black" >
         </div>
         <div class="block sm:flex justify-between gap-8">
             <div class="w-full mb-3 sm:mb-5">
                 <label class="">COMPANY NAME</label><br>
-                <input type="text" v-model="company" placeholder="Enter organisation here" class="w-full text-brand-gray-light p-2 mt-1 sm:mt-3 border focus:outline-none border-black">
+                <input autocomplete type="text" v-model="company" placeholder="Enter organisation here" class="w-full text-brand-gray-light p-2 mt-1 sm:mt-3 border focus:outline-none border-black">
             </div>
             <div class="w-full mb-3">
                 <label class="">DATE GOTTEN</label><br>
-                <input type="text" v-model="dateGotten" placeholder="Enter your current pay here" class="w-full text-brand-gray-light p-2 mt-1 sm:mt-3  border focus:outline-none border-black">
+                <input autocomplete type="text" v-model="dateGotten" placeholder="Enter your current pay here" class="w-full text-brand-gray-light p-2 mt-1 sm:mt-3  border focus:outline-none border-black">
             </div>
         </div>
         <div class="w-full mb-3 sm:mb-5 sm:mr-12">
             <label class="">JOB DESCRIPTION</label><br>
-            <textarea v-model="jobDescription" placeholder="Tell us about your current job" class="w-full h-24 resize-none text-brand-gray-light p-2 mt-1 sm:mt-3 border border-black focus:outline-none"></textarea>
+            <textarea autocomplete v-model="jobDescription" placeholder="Tell us about your current job" class="w-full h-24 resize-none text-brand-gray-light p-2 mt-1 sm:mt-3 border border-black focus:outline-none"></textarea>
         </div>
         <div>
             <h1>COMPANY LOGO</h1>
             <img class="w-16 h-16 cursor-pointer" src="../assets/carbon_image.png" alt="">
-            <input @change="uploadImage" type="file" accept="image/*" id="image" />
+            <input @change="upload" type="file" accept="image/*" id="image" />
         </div>
     </div>
 </template>
@@ -83,6 +83,11 @@ export default {
         }
 
     },
+    upload(e){
+        let image = e.target.files[0];
+        this.item.image = image;
+        this.setImageTwo(this.item.image)
+    }
     },
 
 }

@@ -74,7 +74,7 @@
           :src="item.imageUrl ? item.imageUrl : require('../assets/carbon_image.png')"
           alt="Uploaded image"
         />
-        <input @change="uploadImage" type="file" accept="image/*" id="image" />
+        <input @change="upload" type="file" accept="image/*" id="image" />
       </div>
     </form>
   </div>
@@ -126,7 +126,13 @@ export default {
       })
       }
 
-    },
+    }, 
+
+    upload(e){
+      let image = e.target.files[0];
+      this.item.image = image;
+      this.setImageOne(this.item.image)
+    }
   
 
   },
