@@ -169,6 +169,12 @@ export default createStore({
     allUserjobs (state){
       return state.internJob
     },
+    stacks(state) {
+      return state.stacks
+    },
+    year(state) {
+      return state.year
+    },
     progresStat(state){
       return state.progresStat
     },
