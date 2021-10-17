@@ -1,16 +1,16 @@
 <template>
-<div class="w-4/5 mx-auto">
+<div class="mx-auto max-w-7xl ">
     <!-- component -->
-<div v-for="(profile, i) in profiles" :key="i" class="py-6 mx-auto ">
-  <div class="flex mx-auto overflow-hidden shadow-md bg-brand-red-light-1 sm:max-w-xl md:max-w-full lg:max-w-screen-xl h-60">
-    <div class="bg-cover w-96 h-60" style="background-image: url('./assets/mariam.png')">
-    <img class="object-cover w-64 h-60" v-bind:src="profile.picture" v-bind:alt="profile.alt" />
-    </div> 
-    <div class="px-6 text-left">
-      <h1 class="text-4xl font-normal font-bold leading-loose text-gray-900 text-brand-gray-dark-1">{{profile.name}}</h1>
-      <h3 class="text-brand-gray-dark-1 leading-normal text-xl ">{{profile.role}}</h3>
-      <h4 class="text-brand-gray-light leading-tight text-base py-4">{{profile.stage}}</h4>
-      <p class="text-sm text-gray-600 text-brand-gray-light text-base ">{{profile.about}}</p>
+<div v-for="profile in profiles" v-bind:key="profile.id" class="py-6 mx-auto">
+  <div class="mx-auto shadow-xs md:overflow-hidden sm:flex bg-brand-red-light-2 md:h-full">
+  
+    <img class="object-cover w-full h-60 lg:w-60 " v-bind:src="profile.picture" v-bind:alt="profile.alt" />
+ 
+    <div class="px-6 py-4 text-left">
+      <h1 class="text-4xl font-bold leading-loose text-brand-gray-dark-1">{{profile.full_name}}</h1>
+      <h3 class="py-2 text-xl leading-normal text-brand-gray-dark-1 ">{{profile.stack}}</h3>
+      <h4 class="py-2 text-base leading-tight text-brand-gray-light">{{profile.username}}</h4>
+      <p class="text-base text-brand-gray-light">{{profile.about}}</p>
     </div>
   </div>
 </div>
@@ -18,25 +18,34 @@
 </template>
 
 <script>
+import axios from "axios"
+
+
+
+
 export default {
   name: 'profiles',
-  data(){
+    data(){
     return {
-      profiles:[
-        {
-          name:"John Doe",
-          role: 'Senior Digital Product Designer @andela',
-          stage:  'Zuri Training Finalist',
-           picture: require('../assets/chuks.png'),
-           alt: 'Mariam Danjuma',
-           about: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Accumsan sit amet in morbi dolor nunc, at. At scelerisque sed leo in pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-        },
-        
-      ]
+      profiles:[]
     }
   },
+  created () {
+    axios
+     .get ('https://zuri-progress-tracker.herokuapp.com/api/v1/interns/')
+      .then(res => {
+        this.profiles = res.data.slice(6,7);
+      })
+         
+        .catch(error => {
+          console.log(error.response)
+        })
+      }
+      
+  }
+
   
-}
+
 </script>
 
 <style>
