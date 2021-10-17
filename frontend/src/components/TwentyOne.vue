@@ -9,7 +9,7 @@
         <InternProfile />
         <Interns />
         <FilterButton />
-        <ExperienceTracker />
+        <ExperienceTracker batch='2021' />
         <Footer />
       </div>
     </div>

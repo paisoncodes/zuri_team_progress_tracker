@@ -1,6 +1,10 @@
 <template>
 <div class="text-left mx-auto md:w-full">
-  <div class="grid  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-for="(intern, index) in getAllInterns" :key="index" >
+  <div v-if="showLoder" class="flex justify-center">
+  <CustomLoader />
+  </div>
+  <div v-else class="grid  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-for="(intern, index) in getAllInterns" :key="index" >
+    <div v-if="batch == intern.batch">
      <!-- <div class="icon" style=" width:inherit; height:100%;">
          <img class="object-contain object-center  h-full w-full" style="width:inherit; height:100%;" :src="intern.picture"/>
      </div> -->
@@ -65,6 +69,7 @@
           <path fill-rule="evenodd" clip-rule="evenodd" d="M14 1L19 6L6 19H1V14L14 1Z" stroke="#4774E8" stroke-width="1.22693" stroke-linecap="round" stroke-linejoin="round"/>
           </svg> <span class="ml-3">Edit</span>
           </p>
+          </div>
       </div>
       </div>
       </div>
@@ -76,6 +81,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { mapActions } from 'vuex'
+import CustomLoader from "@/components/CustomLoaderIcon";
 export default {
   
   data(){
@@ -119,27 +125,15 @@ export default {
              }
            ]
         }, 
-        {
-          name:"Soji Aminu",
-          role: 'Senior Digital Product Designer @andela',
-           picture: require('../assets/soji.png'),
-           about: 'An exceptional product designer with years of experience understanding the users thinking pattern and this helps in creating user centered product.'
-        },
-        {
-          name:"Soji Aminu",
-          role: 'Senior Digital Product Designer @andela',
-           picture: require('../assets/soji.png'),
-           about: 'An exceptional product designer with years of experience understanding the users thinking pattern and this helps in creating user centered product.'
-        },
-        {
-          name:"Soji Aminu",
-          role: 'Senior Digital Product Designer @andela',
-           picture: require('../assets/soji.png'),
-           about: 'An exceptional product designer with years of experience understanding the users thinking pattern and this helps in creating user centered product.'
-        },
+     
       ],
-      internjobs:[]
+      internjobs:[],
+      showLoder:true
     }
+  },
+  props:['batch'],
+  components: {
+    CustomLoader
   },
  computed: {
         ...mapGetters({
@@ -160,14 +154,20 @@ methods:{
 internsJobs(){
   this.getAllInterns.forEach(element => {
    this.internJob(element.id)
+  //  this.getAllInterns.job = this.userJob
   });
-  // console.log(this.userJob)
+  console.log(this.getAllInterns)
 },
 
 },
 async created() {
+  this.showLoder = true
  await this.interns().then(()=>{
    this.internsJobs()
+  this.showLoder = false
+
+ }).catch(()=>{
+  this.showLoder = false
  })
 }
 }

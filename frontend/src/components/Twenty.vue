@@ -6,7 +6,7 @@
         <InternProfile />
         <Interns />
         <FilterButton />
-        <ExperienceTracker />
+        <ExperienceTracker batch='2020' />
       </div>
     </div>
   </div>

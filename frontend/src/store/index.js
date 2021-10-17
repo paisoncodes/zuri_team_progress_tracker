@@ -102,8 +102,8 @@ export default createStore({
       await ContributionServices.getJobs(user_id).then(response => {
         console.log(response)
         commit ('userJob', response.data)
-      }).catch((error)=>{
-        console.log(error)
+      }).catch(()=>{
+        // console.log(error)
       })
     },
     async getStatistics20({commit}, payload) {
