@@ -35,7 +35,7 @@ export default {
       isFetchingFinalist: false,
       totalCombinedSalary: 0,
       isFetchingTotalCombinedSalary: false,
-      finalistDescription: "I am a web developer with the objective to ensure that your project goals are not only met but exceeded. I am very passionate about tech. Any idea big or small can be brought to life. I pride myself on the ability to take projects right from the concept,development stage through to the final production."
+      finalistDescription: "I'm obsessed with making things, even more obsessed with making things better. I am a web developer with the objective to ensure that your project goals are not only met but exceeded. I am very passionate about tech. Any idea big or small can be brought to life. I pride myself on the ability to take projects right from the concept,development stage through to the final production. I am excited to make the leap and continue refining my programming skills."
     }
   },
   methods: {
