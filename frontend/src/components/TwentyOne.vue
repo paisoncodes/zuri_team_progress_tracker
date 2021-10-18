@@ -5,7 +5,7 @@
 
     <div class="pt-0">
       <div class="px-6 py-10 mx-auto max-w-7xl bg-brand-red-light-1">
-        <MeetOurIntern :finalists="finalists" :totalCombinedSalary="totalCombinedSalary"/>
+        <MeetOurIntern :finalists="finalists" :totalCombinedSalary="totalCombinedSalary" :finalistDescription="finalistDescription"/>
         <InternProfile />
         <Interns />
         <FilterButton />
@@ -38,7 +38,8 @@ export default {
       finalists: 0,
       isFetchingFinalist: false,
       totalCombinedSalary: 0,
-      isFetchingTotalCombinedSalary: false
+      isFetchingTotalCombinedSalary: false,
+      finalistDescription: "A key player in his field. He proved himself to be dedicated and focused in all his endeavours. Having mastered the art of programming, he came out in flying colors as one of our best performing interns. With daily activites such coding and test programming for software and mobile apps, he is defining his space in the tech industry. He is proficient in several languagues such as Javascript, Python and PHP. He also has great communication skills and he has proven himself to be a true leader amongst his peers."
     }
   },
   methods: {
