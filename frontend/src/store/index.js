@@ -96,13 +96,12 @@ export default createStore({
       await ContributionServices.getTotalSalary().then(response => {
         commit('setTotalSalary', response.data.total_salary)
       })
-    }, 
+    },
     async getAllInterns({commit}){
       await ContributionServices.getIntern().then(response =>{
         commit('allInterns', response.data)
       })
     },
-
     async getUserJob({commit}, user_id){
       await ContributionServices.getJobs(user_id).then(response => {
         commit ('userJob', response.data)
@@ -110,22 +109,6 @@ export default createStore({
         console.log(error)
       })
     },
-    async getStatistics20({commit}, payload) {
-      await ContributionServices.getStatistics(payload).then(res => {
-        commit("setStats20", res.data)
-      })
-    },
-    async getStatistics19({commit}, payload) {
-      await ContributionServices.getStatistics(payload).then(res => {
-        commit("setStats19", res.data)
-      })
-    },
-    async getStatistics18({commit}, payload) {
-      await ContributionServices.getStatistics(payload).then(res => {
-        commit("setStats18", res.data)
-      })
-    },
-
     async editIntern({state}) {
 
       try {
@@ -144,7 +127,6 @@ export default createStore({
         state.formOneConfirmation = !state.formOneConfirmation
       }
     },
-
     async postJob({state}) {
       try {
       let formData = new FormData();
@@ -164,7 +146,6 @@ export default createStore({
         state.formTwoConfirmation = !state.formTwoConfirmation
       }
     },
-
     async getProgresStat({commit}, payload) {
       await ContributionServices.getProgresStat(payload).then(res => {
         commit("setProgresStat", res.data.sort((a, b) => b.year - a.year ).slice(0,3));
