@@ -1,7 +1,6 @@
 import { createStore } from 'vuex'
 import ContributionServices from '@/services/http-client'
 import { getField, updateField } from 'vuex-map-fields';
-import Axios from 'axios';
 
 export default createStore({
   state: {
@@ -33,7 +32,8 @@ export default createStore({
       image: ''
 
     },
-    formConfirmation: false
+    formOneConfirmation: false,
+    formTwoConfirmation: false
 
   },
   mutations: {
@@ -65,11 +65,9 @@ export default createStore({
     updateField,
     setImageOne(state, payload){
       state.imageOne = payload
-      console.log(state.imageOne)
     },
     setImageTwo(state, payload){
       state.imageTwo = payload
-      console.log(state.imageTwo)
     }
 
   },
@@ -78,14 +76,12 @@ export default createStore({
       const year = getters.year
       await ContributionServices.getAllStack(year).then(response => {
         commit("allInterns", response.data)
-        console.log(response.data)
       })
     },
     async getStack({commit, getters}, payload) {
       const year = getters.year
       await ContributionServices.getStack(payload, year).then(response => {
         commit("allInterns", response.data)
-        console.log(response.data)
       })
     },
     async getYear({commit}, payload) {
@@ -94,13 +90,11 @@ export default createStore({
     async getStackYear({commit}, payload) {
       await ContributionServices.getStackYear(payload).then(response => {
         commit("setStackYear", response.data.stacks)
-        console.log(response.data.stacks)
       })
     },
     async getTotalSalary({ commit }) {
       await ContributionServices.getTotalSalary().then(response => {
         commit('setTotalSalary', response.data.total_salary)
-        console.log(response.data)
       })
     }, 
     async getAllInterns({commit}){
@@ -111,7 +105,6 @@ export default createStore({
 
     async getUserJob({commit}, user_id){
       await ContributionServices.getJobs(user_id).then(response => {
-        console.log(response)
         commit ('userJob', response.data)
       }).catch((error)=>{
         console.log(error)
@@ -132,38 +125,28 @@ export default createStore({
         commit("setStats18", res.data)
       })
     },
-    
-    async editIntern({state}){
-      let formData = new FormData();
-      formData.append('full_name', state.formOne.full_name)
-      formData.append('current_salary', state.formOne.currentSalary)
-      formData.append('about', state.formOne.about)
-      formData.append('is_employed', state.formOne.employed)
-      
-      formData.append('image', state.imageOne)
 
-    for(var pair of formData.entries()){
-        console.log(pair[0], pair[1]);
-    } 
+    async editIntern({state}) {
 
       try {
-        const response = await Axios.put(`https://zuri-progress-tracker.herokuapp.com/api/v1/interns/${state.currentUserID}/update`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data; boundary {}"
-    }
-    
-    })
-    console.log(response);
-    console.log(response.data)
+        let formData = new FormData();
+        formData.append('full_name', state.formOne.full_name)
+        formData.append('current_salary', state.formOne.currentSalary)
+        formData.append('about', state.formOne.about)
+        formData.append('is_employed', state.formOne.employed)
+        formData.append('image', state.imageOne)     
+      await ContributionServices.editIntern(state.currentUserID, formData).then(res => {
+        return res
+      })
       } catch (error) {
         console.log(error)
-      } finally{
-        state.formConfirmation =! state.formConfirmation
+      }finally{
+        state.formOneConfirmation = !state.formOneConfirmation
       }
-
     },
 
-    async postJob({state}){
+    async postJob({state}) {
+      try {
       let formData = new FormData();
       formData.append('job_title', state.formTwo.position)
       formData.append('company_name', state.formTwo.company)
@@ -171,29 +154,20 @@ export default createStore({
       formData.append('gotten_at', state.formTwo.dateGotten)
       formData.append('image', state.imageTwo)
 
-      for(var pair of formData.entries()){
-        console.log(pair[0], pair[1]);
-    } 
-
-      try {
-        const response = await Axios.post(`http://zuri-progress-tracker.herokuapp.com/api/v1/interns/${state.currentUserID}/jobs`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data; boundary {}",
-      "Access-Control-Allow-Origin": "*"
-      
-    },
-    
-    })
-    console.log(response);
-    console.log(response.data)
+      await ContributionServices.postJob(state.currentUserID, formData).then(res => {
+        console.log(res)
+      })
       } catch (error) {
         console.log(error)
       }
+      finally{
+        state.formTwoConfirmation = !state.formTwoConfirmation
+      }
     },
+
     async getProgresStat({commit}, payload) {
       await ContributionServices.getProgresStat(payload).then(res => {
         commit("setProgresStat", res.data.sort((a, b) => b.year - a.year ).slice(0,3));
-        console.log(res.data.sort((a, b) => b.year - a.year ).slice(0,3))
       })
     },
 
