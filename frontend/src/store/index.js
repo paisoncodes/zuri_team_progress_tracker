@@ -32,7 +32,8 @@ export default createStore({
       jobDescription: '',
       image: ''
 
-    }
+    },
+    formConfirmation: false
 
   },
   mutations: {
@@ -156,6 +157,8 @@ export default createStore({
     console.log(response.data)
       } catch (error) {
         console.log(error)
+      } finally{
+        state.formConfirmation =! state.formConfirmation
       }
 
     },
