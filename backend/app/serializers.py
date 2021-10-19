@@ -4,6 +4,10 @@ from rest_framework import serializers
 from .models import *
 
 
+
+
+# ==================================================================================================================
+
 class UserSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     first_name = serializers.CharField(max_length=100)
@@ -29,6 +33,8 @@ class UserSerializer(serializers.Serializer):
         return instance
 
 
+# ==================================================================================================================
+
 class UserUpdateSerializer(serializers.Serializer):
     id = serializers.IntegerField(required=False)
     first_name = serializers.CharField(max_length=100, required=False)
@@ -53,6 +59,7 @@ class UserUpdateSerializer(serializers.Serializer):
         instance.save()
         return instance
 
+# ==================================================================================================================
 
 class InternSerializer(serializers.ModelSerializer):
     class Meta:
@@ -71,6 +78,7 @@ class InternSerializer(serializers.ModelSerializer):
             "picture",
         ]
 
+# ==================================================================================================================
 
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
@@ -85,11 +93,14 @@ class JobSerializer(serializers.ModelSerializer):
             "job_logo",
         ]
 
+# ==================================================================================================================
 
 class NewsLetterSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsLetter
         fields = "__all__"
+
+# ==================================================================================================================
 
 class InternUpdateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -104,8 +115,11 @@ class InternUpdateSerializer(serializers.ModelSerializer):
             "picture",
         ]
 
+# ==================================================================================================================
 
 class StatisticSerializer(serializers.ModelSerializer):
     class Meta:
         model = Statistic
         fields = ["year", "male", "female", "finalist", "participant"]
+
+# ==================================================================================================================
