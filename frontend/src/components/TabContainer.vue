@@ -9,16 +9,16 @@
                         OVERVIEW
                     </li>  
                     <li @click="component = 'TwentyOne', activeTab = 2; changeYear(2021)"  class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 2}">                      
-                        2021 <br> ({{filteredIndex[3]}} interns)        
+                        2021 <br> ({{filteredIndex[0]}} interns)        
                     </li>
                     <li @click="component = 'Twenty', activeTab = 3; changeYear(2020)" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 3}">                  
-                        2020 <br> ({{filteredIndex[2]}}  interns)        
+                        2020 <br> ({{filteredIndex[1]}}  interns)        
                     </li>
                     <li @click="component = 'Nineteen', activeTab = 4; changeYear(2019)" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 4}">                    
-                        2019 <br> ({{filteredIndex[1]}}  interns)        
+                        2019 <br> ({{filteredIndex[2]}}  interns)        
                     </li>
                     <li @click="component = 'Eighteen', activeTab = 5; changeYear(2018)" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 5}">                        
-                        2018 <br> ({{filteredIndex[0]}}  interns)        
+                        2018 <br> ({{filteredIndex[3]}}  interns)        
                     </li>  
                 </ul>        
             </nav>
@@ -69,12 +69,15 @@ export default {
         .then(
             res=> this.statIndex = res.data.slice(2)
             )
+        
     },
     computed:{
         filterYear(){
-            this.statIndex.forEach(item => {
-                this.filteredIndex.push(item.year)
+            const yearFilter = this.statIndex.forEach(item => {
+                this.filteredIndex.push(item.participants)
+                
             });
+            return yearFilter
         }
     }
 }
