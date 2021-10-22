@@ -30,11 +30,9 @@ export default createStore({
       dateGotten: '',
       jobDescription: '',
       image: ''
-
     },
     formOneConfirmation: false,
-    formTwoConfirmation: false
-
+    formTwoConfirmation: false,
   },
   mutations: {
     toggleProfileEditModal: state => {
@@ -68,8 +66,7 @@ export default createStore({
     },
     setImageTwo(state, payload){
       state.imageTwo = payload
-    }
-
+    },
   },
   actions: {
     async getAllStack({commit, getters}) {
@@ -148,7 +145,7 @@ export default createStore({
     },
     async getProgresStat({commit}, payload) {
       await ContributionServices.getProgresStat(payload).then(res => {
-        commit("setProgresStat", res.data.sort((a, b) => b.year - a.year ).slice(0,3));
+        commit("setProgresStat", res.data.sort((a, b) => b.year - a.year ).slice(0,4));
       })
     },
 
@@ -170,6 +167,12 @@ export default createStore({
       return state.progresStat
     },
     getField,
+    yearParticipants(state){
+      const yearParticipants =  state.progresStat.map(item=> {
+        return item.participants
+      })
+      return yearParticipants;
+    }
   },
   modules: {
   },
