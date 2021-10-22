@@ -4,7 +4,7 @@ from .manager import UserManager
 
 # Create your models here.
 
-
+# ==================================================================================================================
 class User(AbstractBaseUser):
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=300, null=True)
@@ -52,7 +52,7 @@ class User(AbstractBaseUser):
     def is_active(self):
         return self.active
 
-
+# ==================================================================================================================
 class Intern(models.Model):
     GENDER_CHOICES = (("M", "Male"), ("F", "Female"))
     username = models.CharField(unique=True, max_length=255, verbose_name="Slack name")
@@ -70,6 +70,8 @@ class Intern(models.Model):
     def __str__(self):
         return self.username
 
+# ==================================================================================================================
+
 
 class Jobs(models.Model):
     intern = models.ForeignKey(Intern, on_delete=models.CASCADE, related_name="job")
@@ -84,10 +86,12 @@ class Jobs(models.Model):
     def __str__(self):
         return self.company_name
 
+# ==================================================================================================================
 
 class NewsLetter(models.Model):
     subscriber_email = models.EmailField(max_length=200, blank=False)
 
+# ==================================================================================================================
 
 class Statistic(models.Model):
     male = models.IntegerField()
@@ -101,3 +105,5 @@ class Statistic(models.Model):
     @property
     def participant(self):
         return self.male + self.female
+
+# ==================================================================================================================
