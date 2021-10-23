@@ -15,6 +15,7 @@ from .views import (
     all_stats,
     get_interns_by_year_and_stack,
     total_salary,
+    SponsorView
 )
 from app import views
 
@@ -41,4 +42,7 @@ urlpatterns = [
     path("statistics/batch/<int:batch>/", StatisticView.as_view()),
     path("statistics/", views.all_stats, name="all_stats"),
     # ================================================================================================================
+
+    path("sponsors/", SponsorView.as_view()),
+    path("sponsors/<int:id>/", SponsorView.as_view())
 ]

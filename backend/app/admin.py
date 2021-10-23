@@ -9,6 +9,7 @@ admin.site.register(Jobs)
 # Register your models here.
 admin.site.register(User)
 admin.site.register(Intern)
+admin.site.register(Sponsor)
 admin.site.register(Stack)
 
 

@@ -504,3 +504,66 @@ class GetStacksPerBatch(APIView):
             return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"Message": f"{e}"}, status.HTTP_400_BAD_REQUEST)
+
+
+
+
+class SponsorView(APIView):
+    parser_classes = (
+        MultiPartParser,
+        JSONParser,
+    )
+    queryset = None
+
+    def post(self, request):
+        serializer = SponsorSerializer(data=request.data)
+        
+        serializer.is_valid(raise_exception=True)
+        image = request.FILES["logo"]
+        
+        Sponsor.objects.create(
+            name = serializer.validated_data.get('name'),
+            logo = upload_image(image)
+        )
+
+        data = {
+            "status": status.HTTP_201_CREATED,
+            "message": "Sponsor created",
+            "error": False,
+        }
+
+        return Response(data, status=status.HTTP_201_CREATED)
+
+
+    def get(self, request):
+        sponsor_queryset = Sponsor.objects.all()
+        serializer = SponsorSerializer(sponsor_queryset, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
+
+
+    def delete(self, request, id):
+        try:
+            sponsor = Sponsor.objects.get(id = id)
+            sponsor.delete()
+            data = {
+                "status": status.HTTP_200_OK,
+                "message": "Sponsor deleted",
+                "error": False,
+            }
+            return Response(data, status.HTTP_200_OK)
+        except Sponsor.DoesNotExist:
+            data = {
+                "status": status.HTTP_404_NOT_FOUND,
+                "message": "Sponsor not found",
+                "error": True,
+            }
+            return Response(data, status.HTTP_404_NOT_FOUND)
+        
+        except:
+            data = {
+                "status": status.HTTP_500_INTERNAL_SERVER_ERROR,
+                "message": "something went wrong",
+                "error": True,
+            }
+            return Response(data, status.HTTP_500_INTERNAL_SERVER_ERROR)
+        

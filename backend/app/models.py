@@ -115,10 +115,10 @@ class NewsLetter(models.Model):
 # ==================================================================================================================
 
 class Statistic(models.Model):
-    male = models.IntegerField()
-    female = models.IntegerField()
-    year = models.IntegerField()
-    finalist = models.IntegerField()
+    male        = models.IntegerField()
+    female      = models.IntegerField()
+    year        = models.IntegerField()
+    finalist    = models.IntegerField()
 
     def __str__(self):
         return str(self.year)
@@ -128,3 +128,11 @@ class Statistic(models.Model):
         return self.male + self.female
 
 # ==================================================================================================================
+
+
+class Sponsor(models.Model):
+    name    = models.CharField(max_length=800)
+    logo    = models.URLField(default="https://ingressive.org/wp-content/uploads/2020/05/I4G-Logo-Color-Cropped.png")
+
+    def __str__(self):
+        return self.name

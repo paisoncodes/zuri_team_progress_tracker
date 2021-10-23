@@ -106,7 +106,7 @@ class JobSerializer(serializers.ModelSerializer):
 class NewsLetterSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsLetter
-        fields = "__all__"
+        fields = ['id', 'name', 'logo']
 
 # ==================================================================================================================
 
@@ -131,3 +131,8 @@ class StatisticSerializer(serializers.ModelSerializer):
         fields = ["year", "male", "female", "finalist", "participant"]
 
 # ==================================================================================================================
+
+class SponsorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sponsor
+        fields = '__all__'
