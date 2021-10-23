@@ -6,12 +6,10 @@ export default createStore({
   state: {
     profileModalActive: false,
     intern: [],
+    interns: [],
     totalSalary: '',
     stacks: [],
     year: [],
-    stats20: [],
-    stats19: [],
-    stats18: [],
     allInterns:[],
     internJob:[],
     progresStat:[],
@@ -45,20 +43,17 @@ export default createStore({
 
     setStackYear(state, payload) {state.stacks = payload},
     setYear(state, payload) {state.year = payload},
-    setStats20(state, payload) {
-      state.stats20 = payload
-    },
-    setStats19(state, payload) {
-      state.stats19 = payload
-    },
-    setStats18(state, payload) {
-      state.stats18 = payload
-    },
+
     allInterns(state, payload) { state.allInterns = payload },
+
     userJob(state, payload) { state.internJob.push(payload) },
     currentUserId(state, payload){state.currentUserID = payload},
+
     setProgresStat(state, payload) {
       state.progresStat = payload
+    },
+    setInterns(state, payload) {
+      state.interns = payload
     },
     updateField,
     setImageOne(state, payload){
@@ -148,6 +143,11 @@ export default createStore({
         commit("setProgresStat", res.data.sort((a, b) => b.year - a.year ).slice(0,4));
       })
     },
+    async fetchInterns({commit}, payload){
+      await ContributionServices.getIntern(payload).then(res =>{
+        commit('setInterns', res.data)
+      })
+    },
 
   },
   getters:{
@@ -172,7 +172,11 @@ export default createStore({
         return item.participants
       })
       return yearParticipants;
-    }
+    },
+    interns(state){
+      const interns = state.interns.sort(() => Math.random() - 0.5).slice(0,4)
+      return interns;
+    },
   },
   modules: {
   },
