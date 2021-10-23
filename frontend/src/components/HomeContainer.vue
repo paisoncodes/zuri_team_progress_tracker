@@ -2,10 +2,13 @@
 
 <div class="px-6 mx-auto max-w-7xl bg-brand-red-light-1">
 
-    <div class="bg-brand-red-light-1" v-for="(this_year, i) in progresStat" :key="i">
+    <div class="w-full h-auto bg-brand-red-light-1" v-for="(this_year, i) in progresStat" :key="i">
         <div class="flex">
-            <div class="flex overview-width flex-col justify-center w-32">
+            <div class="bor h-auto bg-brand-red-light-2 flex overview-width flex-col justify-center w-44">
                 <p>{{this_year.year}}</p>
+                <div>
+                    <img class="inline-block align-middle px-0 my-5" v-for="intern in sponsors" v-bind:key="intern.id" v-bind:src="intern.pic">
+                </div>
             </div>
 
             <div class="w-full">
@@ -38,7 +41,16 @@
             Statistics,
         },
         data(){
-            return{}
+            return{
+                sponsors: [
+                    {id: 1, pic: require("@/assets/hng.png")},
+                    {id: 2, pic: require("@/assets/ss.jpeg")},
+                    {id: 3, pic: require("@/assets/flutterwave.png")},
+                    {id: 4, pic: require("@/assets/paystack.png")},
+                    {id: 5, pic: require("@/assets/paypal.png")},
+                    {id: 6, pic: require("@/assets/clubhouse.png")},
+                ]
+            }
         },
         methods: {
             ...mapActions(['getProgresStat']),
@@ -60,6 +72,18 @@
 
 .padothers{
     padding: 1.2rem 2.41rem;
+}
+
+img{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.bor{
+    margin-bottom: 24.2px;
+    margin-top: 20px;
+
 }
 
 
