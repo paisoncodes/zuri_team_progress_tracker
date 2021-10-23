@@ -106,29 +106,21 @@ class JobSerializer(serializers.ModelSerializer):
 class NewsLetterSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsLetter
-        fields = ['id', 'name', 'logo']
+        fields = "__all__"
 
 # ==================================================================================================================
 
 class InternUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Intern
-        fields = [
-            "full_name",
-            "state",
-            "about",
-            "batch",
-            "current_salary",
-            "is_employed",
-            "picture",
-        ]
+        fields = "__all__"
 
 # ==================================================================================================================
 
 class StatisticSerializer(serializers.ModelSerializer):
     class Meta:
         model = Statistic
-        fields = ["year", "male", "female", "finalist", "participant"]
+        fields = "__all__"
 
 # ==================================================================================================================
 
