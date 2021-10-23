@@ -27,16 +27,16 @@
 
 <script>
 
-import axios from "axios"
+// import axios from "axios"
+import {mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Interns',
   data(){
     return {
-      interns:[],
   }
   },
-   created () {
+/*     created () {
     axios
      .get ('https://zuri-progress-tracker.herokuapp.com/api/v1/interns/')
       .then(res => {
@@ -46,7 +46,16 @@ export default {
         .catch(error => {
           console.log(error.response)
         })
-      }
+      }, */
+    methods: {
+        ...mapActions(['fetchInterns']),
+    },
+    computed: {
+        ...mapGetters(["interns"])
+        },
+    mounted() {
+      this.fetchInterns()
+        }
   
 }
 </script>
