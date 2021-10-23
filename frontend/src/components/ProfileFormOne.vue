@@ -2,9 +2,11 @@
   <div>
     <form class="">
       <div class="block xs:flex justify-between items-center mb-4 xs:mb-10">
+        <p style="color:red" v-if="this.$store.state.formOneConfirmation" class="text-center">Information saved</p>
         <h1 class="text-2xl">SOJI AMINU'S PROFILE</h1>
         <p class="text-2xl text-brand-gray-light">1/2</p>
       </div>
+      
 
       <div class="w-full mb-3 sm:mb-5 sm:mr-12">
         <label class="">EDIT NAME</label><br />
@@ -74,7 +76,7 @@
           :src="item.imageUrl ? item.imageUrl : require('../assets/carbon_image.png')"
           alt="Uploaded image"
         />
-        <input @change="uploadImage" type="file" accept="image/*" id="image" />
+        <input @change="upload" type="file" accept="image/*" id="image" />
       </div>
     </form>
   </div>
@@ -89,8 +91,9 @@ export default {
     return {
       item: {
         image: null,
-        imageUrl: null,
-      }
+        imagesArray: null
+      },
+      imageUrl: null,
     };
   },
   computed: {
@@ -103,16 +106,37 @@ export default {
   },
   methods: {
     ...mapActions(["editIntern"]),
-    ...mapMutations(["setData"]),
-    uploadImage(e) {
-      const image = e.target.file[0];
+    ...mapMutations(["setImageOne"]),
+    
+      async uploadImage(e) {
+      let image = e.target.files[0];
       const reader = new FileReader();
       reader.readAsDataURL(image);
-      reader.onload = e => {
-        this.item.imageUrl = e.target.result;
-        console.log(this.item.imageUrl);
+      var myimage = await callBack(g)
+
+      var g = "mockVariable"
+      this.imageUrl = myimage
+      this.setImageOne(this.imageUrl)
+
+      function callBack(g){
+        console.log(g)
+      return new Promise (function(resolve,reject){
+        reader.onload = function(){
+          resolve(reader.result);
+        }
+        reader.onerror = reject;
+      })
       }
+
+    }, 
+
+    upload(e){
+      let image = e.target.files[0];
+      this.item.image = image;
+      this.setImageOne(this.item.image)
     }
+  
+
   },
 };
 </script>

@@ -9,16 +9,16 @@
                         OVERVIEW
                     </li>  
                     <li @click="component = 'TwentyOne', activeTab = 2; changeYear(2021)"  class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 2}">                      
-                        2021 <br> (10,000 interns)        
+                        2021 <br> ({{yearParticipants[0]}} interns)        
                     </li>
                     <li @click="component = 'Twenty', activeTab = 3; changeYear(2020)" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 3}">                  
-                        2020 <br> (10,000 interns)        
+                        2020 <br> ({{yearParticipants[1]}}  interns)        
                     </li>
                     <li @click="component = 'Nineteen', activeTab = 4; changeYear(2019)" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 4}">                    
-                        2019 <br> (10,000 interns)        
+                        2019 <br> ({{yearParticipants[2]}}  interns)        
                     </li>
                     <li @click="component = 'Eighteen', activeTab = 5; changeYear(2018)" class="block py-4 cursor-pointer text-brand-gray-light w-36 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 5}">                        
-                        2018 <br> (10,000 interns)        
+                        2018 <br> ({{yearParticipants[3]}}  interns)        
                     </li>  
                 </ul>        
             </nav>
@@ -36,7 +36,7 @@ import Eighteen from '@/components/Eighteen.vue'
 import Nineteen from '@/components/Nineteen.vue'
 import Twenty from '@/components/Twenty.vue'
 import TwentyOne from '@/components/TwentyOne.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
     components: {
         Eighteen,
@@ -48,11 +48,13 @@ export default {
     data(){
         return{
             component: 'HomeContainer',
-            activeTab: 1
+            activeTab: 1,
+            statIndex:[],
+            filteredIndex: [],
         }
     },
     methods: {
-         ...mapActions([
+        ...mapActions([
             'getStackYear',
             'getYear'
         ]),
@@ -60,6 +62,9 @@ export default {
             this.getStackYear(year)
             this.getYear(year)
         }
+    },
+    computed:{
+        ...mapGetters(["yearParticipants"])
     }
 }
 </script>

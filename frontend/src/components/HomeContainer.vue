@@ -48,7 +48,6 @@
         },
         mounted() {
             this.getProgresStat()
-            
         }
     }
 </script>

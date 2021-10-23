@@ -4,7 +4,7 @@ from .manager import UserManager
 
 # Create your models here.
 
-
+# ==================================================================================================================
 class User(AbstractBaseUser):
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=300, null=True)
@@ -52,12 +52,32 @@ class User(AbstractBaseUser):
     def is_active(self):
         return self.active
 
+# ==================================================================================================================
+
+class Stack(models.Model):
+    """Model definition for Stack."""
+
+    # TODO: Define fields here
+    name = models.CharField(max_length=50)
+   
+
+    class Meta:
+        """Meta definition for Stack."""
+
+        verbose_name = 'Stack'
+        verbose_name_plural = 'stacks'
+
+    def __str__(self):
+        """Unicode representation of Stack."""
+        return str(self.name)
+
+# ==================================================================================================================
 
 class Intern(models.Model):
     GENDER_CHOICES = (("M", "Male"), ("F", "Female"))
     username = models.CharField(unique=True, max_length=255, verbose_name="Slack name")
     full_name = models.CharField(max_length=100)
-    stack = models.CharField(max_length=1000)
+    # Stack = models.CharField(max_length=1000)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     about = models.TextField()
     state = models.CharField(max_length=200)
@@ -66,9 +86,12 @@ class Intern(models.Model):
     current_salary = models.IntegerField(default=0)
     picture = models.URLField()
     created_at = models.DateTimeField(auto_now_add=True)
+    stack = models.ManyToManyField(Stack, related_name="intern_stack", blank=True)
 
     def __str__(self):
         return self.username
+
+# ==================================================================================================================
 
 
 class Jobs(models.Model):
@@ -84,16 +107,18 @@ class Jobs(models.Model):
     def __str__(self):
         return self.company_name
 
+# ==================================================================================================================
 
 class NewsLetter(models.Model):
     subscriber_email = models.EmailField(max_length=200, blank=False)
 
+# ==================================================================================================================
 
 class Statistic(models.Model):
-    male = models.IntegerField()
-    female = models.IntegerField()
-    year = models.IntegerField()
-    finalist = models.IntegerField()
+    male        = models.IntegerField()
+    female      = models.IntegerField()
+    year        = models.IntegerField()
+    finalist    = models.IntegerField()
 
     def __str__(self):
         return str(self.year)
@@ -101,3 +126,13 @@ class Statistic(models.Model):
     @property
     def participant(self):
         return self.male + self.female
+
+# ==================================================================================================================
+
+
+class Sponsor(models.Model):
+    name    = models.CharField(max_length=800)
+    logo    = models.URLField(default="https://ingressive.org/wp-content/uploads/2020/05/I4G-Logo-Color-Cropped.png")
+
+    def __str__(self):
+        return self.name
