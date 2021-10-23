@@ -61,7 +61,15 @@ class UserUpdateSerializer(serializers.Serializer):
 
 # ==================================================================================================================
 
+class StackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Stack
+        fields = "__all__"
+
+# ==================================================================================================================
+
 class InternSerializer(serializers.ModelSerializer):
+    stack = StackSerializer(many=True, read_only=True)
     class Meta:
         model = Intern
         fields = [

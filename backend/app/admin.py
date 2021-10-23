@@ -10,6 +10,7 @@ admin.site.register(Jobs)
 admin.site.register(User)
 admin.site.register(Intern)
 admin.site.register(Sponsor)
+admin.site.register(Stack)
 
 
 @admin.register(Statistic)

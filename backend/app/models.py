@@ -53,11 +53,31 @@ class User(AbstractBaseUser):
         return self.active
 
 # ==================================================================================================================
+
+class Stack(models.Model):
+    """Model definition for Stack."""
+
+    # TODO: Define fields here
+    name = models.CharField(max_length=50)
+   
+
+    class Meta:
+        """Meta definition for Stack."""
+
+        verbose_name = 'Stack'
+        verbose_name_plural = 'stacks'
+
+    def __str__(self):
+        """Unicode representation of Stack."""
+        return str(self.name)
+
+# ==================================================================================================================
+
 class Intern(models.Model):
     GENDER_CHOICES = (("M", "Male"), ("F", "Female"))
     username = models.CharField(unique=True, max_length=255, verbose_name="Slack name")
     full_name = models.CharField(max_length=100)
-    stack = models.CharField(max_length=1000)
+    # Stack = models.CharField(max_length=1000)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     about = models.TextField()
     state = models.CharField(max_length=200)
@@ -66,6 +86,7 @@ class Intern(models.Model):
     current_salary = models.IntegerField(default=0)
     picture = models.URLField()
     created_at = models.DateTimeField(auto_now_add=True)
+    stack = models.ManyToManyField(Stack, related_name="intern_stack", blank=True)
 
     def __str__(self):
         return self.username
