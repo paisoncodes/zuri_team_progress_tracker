@@ -93,6 +93,7 @@ class JobSerializer(serializers.ModelSerializer):
         model = Jobs
         fields = [
             "id",
+            "intern",
             "job_title",
             "company_name",
             "gotten_at",
