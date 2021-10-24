@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib import admin
 
 from .views import (
     UserDetailView,
@@ -23,6 +24,7 @@ from app import views
 urlpatterns = [
     # ================================================================================================================
     path("users/<int:user_id>/", UserDetailView.as_view(), name="UserInfo"),
+    path('admin/', admin.site.urls),
     # ================================================================================================================
     path("interns/<int:pk>/", InternDetailView.as_view(), name="Intern_detail"),
     path("interns/<int:intern_id>/jobs/", JobView.as_view(), name="job"),
