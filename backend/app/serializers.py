@@ -4,9 +4,8 @@ from rest_framework import serializers
 from .models import *
 
 
-
-
 # ==================================================================================================================
+
 
 class UserSerializer(serializers.Serializer):
     id = serializers.IntegerField()
@@ -35,6 +34,7 @@ class UserSerializer(serializers.Serializer):
 
 # ==================================================================================================================
 
+
 class UserUpdateSerializer(serializers.Serializer):
     id = serializers.IntegerField(required=False)
     first_name = serializers.CharField(max_length=100, required=False)
@@ -59,22 +59,26 @@ class UserUpdateSerializer(serializers.Serializer):
         instance.save()
         return instance
 
+
 # ==================================================================================================================
+
 
 class StackSerializer(serializers.ModelSerializer):
     class Meta:
-        model= Stack
-        fields = "__all__"
+        model = Stack
+        fields = ["name"]
+
 
 # ==================================================================================================================
 
+
 class InternSerializer(serializers.ModelSerializer):
     stack = StackSerializer(many=True, read_only=True)
+
     class Meta:
         model = Intern
         fields = [
             "id",
-            "username",
             "full_name",
             "stack",
             "state",
@@ -86,14 +90,15 @@ class InternSerializer(serializers.ModelSerializer):
             "picture",
         ]
 
+
 # ==================================================================================================================
+
 
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jobs
         fields = [
             "id",
-            "intern",
             "job_title",
             "company_name",
             "gotten_at",
@@ -102,30 +107,38 @@ class JobSerializer(serializers.ModelSerializer):
             "job_logo",
         ]
 
+
 # ==================================================================================================================
+
 
 class NewsLetterSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsLetter
         fields = "__all__"
 
+
 # ==================================================================================================================
+
 
 class InternUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Intern
         fields = "__all__"
 
+
 # ==================================================================================================================
+
 
 class StatisticSerializer(serializers.ModelSerializer):
     class Meta:
         model = Statistic
         fields = "__all__"
 
+
 # ==================================================================================================================
+
 
 class SponsorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sponsor
-        fields = '__all__'
+        fields = "__all__"
