@@ -52,32 +52,36 @@ class User(AbstractBaseUser):
     def is_active(self):
         return self.active
 
+
 # ==================================================================================================================
+
 
 class Stack(models.Model):
     """Model definition for Stack."""
 
     # TODO: Define fields here
-    name = models.CharField(max_length=50)
-   
+    name = models.CharField(max_length=50, unique_for_year="batch")
+    batch = models.IntegerField()
 
     class Meta:
         """Meta definition for Stack."""
 
-        verbose_name = 'Stack'
-        verbose_name_plural = 'stacks'
+        verbose_name = "Stack"
+        verbose_name_plural = "stacks"
+        unique_together = [["name", "batch"]]
 
     def __str__(self):
         """Unicode representation of Stack."""
         return str(self.name)
 
+
 # ==================================================================================================================
+
 
 class Intern(models.Model):
     GENDER_CHOICES = (("M", "Male"), ("F", "Female"))
-    username = models.CharField(unique=True, max_length=255, verbose_name="Slack name")
     full_name = models.CharField(max_length=100)
-    # Stack = models.CharField(max_length=1000)
+    email = models.EmailField(max_length=255, blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     about = models.TextField()
     state = models.CharField(max_length=200)
@@ -89,7 +93,8 @@ class Intern(models.Model):
     stack = models.ManyToManyField(Stack, related_name="intern_stack", blank=True)
 
     def __str__(self):
-        return self.username
+        return self.full_name
+
 
 # ==================================================================================================================
 
@@ -97,7 +102,7 @@ class Intern(models.Model):
 class Jobs(models.Model):
     intern = models.ForeignKey(Intern, on_delete=models.CASCADE, related_name="job")
     job_title = models.CharField(max_length=255)
-    gotten_at = models.DateTimeField()
+    gotten_at = models.DateField()
     company_name = models.CharField(max_length=255, verbose_name="Organization name")
     job_description = models.CharField(max_length=255)
     currently_active = models.BooleanField(default=False)
@@ -107,18 +112,22 @@ class Jobs(models.Model):
     def __str__(self):
         return self.company_name
 
+
 # ==================================================================================================================
+
 
 class NewsLetter(models.Model):
     subscriber_email = models.EmailField(max_length=200, blank=False)
 
+
 # ==================================================================================================================
 
+
 class Statistic(models.Model):
-    male        = models.IntegerField()
-    female      = models.IntegerField()
-    year        = models.IntegerField()
-    finalist    = models.IntegerField()
+    male = models.IntegerField()
+    female = models.IntegerField()
+    year = models.IntegerField(unique=True)
+    finalist = models.IntegerField()
 
     def __str__(self):
         return str(self.year)
@@ -127,12 +136,15 @@ class Statistic(models.Model):
     def participant(self):
         return self.male + self.female
 
+
 # ==================================================================================================================
 
 
 class Sponsor(models.Model):
-    name    = models.CharField(max_length=800)
-    logo    = models.URLField(default="https://ingressive.org/wp-content/uploads/2020/05/I4G-Logo-Color-Cropped.png")
+    name = models.CharField(max_length=800)
+    logo = models.URLField(
+        default="https://ingressive.org/wp-content/uploads/2020/05/I4G-Logo-Color-Cropped.png"
+    )
 
     def __str__(self):
         return self.name
