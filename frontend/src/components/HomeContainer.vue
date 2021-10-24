@@ -1,6 +1,6 @@
 <template>
 
-<div class="px-6 mx-auto max-w-7xl bg-brand-red-light-1">
+<div class="mx-auto max-w-7xl bg-brand-red-light-1">
 
     <div class="w-full h-auto bg-brand-red-light-1" v-for="(this_year, i) in progresStat" :key="i">
         <div class="flex">

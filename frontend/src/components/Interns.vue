@@ -10,7 +10,7 @@
             </p>
           </a>
           <p class="py-2 text-brand-gray-dark-1">
-          {{intern.stack}}
+          {{intern.stack.join(', ')}}
           </p>
           <div class="flex space-x-4">
             <span class="text-brand-gray-light">

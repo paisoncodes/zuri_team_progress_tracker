@@ -8,7 +8,7 @@
  
     <div class="px-6 py-4 text-left">
       <h1 class="text-4xl font-bold leading-loose text-brand-gray-dark-1">{{profile.full_name}}</h1>
-      <h3 class="py-2 text-xl leading-normal text-brand-gray-dark-1 ">{{profile.stack}}</h3>
+      <h3 class="py-2 text-xl leading-normal text-brand-gray-dark-1 ">{{profile.stack.join(',')}}</h3>
       <h4 class="py-2 text-base leading-tight text-brand-gray-light">{{profile.username}}</h4>
       <p class="text-base text-brand-gray-light">{{profile.about}}</p>
     </div>
