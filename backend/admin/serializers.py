@@ -1,0 +1,34 @@
+from django.db import models
+from rest_framework import serializers
+
+from app.models import *
+
+class AdminUserSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    first_name = serializers.CharField(max_length=100)
+    last_name = serializers.CharField(max_length=100)
+    email = serializers.EmailField(max_length=200)
+    # password = serializers.PasswordField(max_length=100)
+    address = serializers.CharField(max_length=200)
+    city = serializers.CharField(max_length=100)
+    state = serializers.CharField(max_length=100)
+    active = serializers.BooleanField(required=False, default=False)
+    staff = serializers.BooleanField(required=False, default=False)
+    admin = serializers.BooleanField(required=False, default=False)
+
+    def create(self, validated_data):
+        return User.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.first_name = validated_data.get("first_name", instance.first_name)
+        instance.last_name = validated_data.get("last_name", instance.last_name)
+        instance.email = validated_data.get("email", instance.email)
+        instance.address = validated_data.get("address", instance.address)
+        instance.city = validated_data.get("city", instance.city)
+        instance.state = validated_data.get("state", instance.state)
+        instance.active = validated_data.get("active", instance.active)
+        instance.staff = validated_data.get("staff", instance.staff)
+        instance.admin = validated_data.get("admin", instance.admin)
+
+        instance.save()
+        return instance
