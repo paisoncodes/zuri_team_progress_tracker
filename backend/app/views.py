@@ -141,7 +141,7 @@ class JobView(APIView):
             if len(jobsList_objects) > 0:
                 serializer = JobSerializer(jobsList_objects, many=True)
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response("Unemployed", status=status.HTTP_400_BAD_REQUEST)
+            return Response("Unemployed", status=status.HTTP_204_NO_CONTENT)
         except Exception as e:
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 
