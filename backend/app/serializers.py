@@ -106,7 +106,6 @@ class JobSerializer(serializers.ModelSerializer):
 class NewsLetterSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsLetter
-        # fields = ['id', 'name', 'logo']
         fields = "__all__"
 
 # ==================================================================================================================
