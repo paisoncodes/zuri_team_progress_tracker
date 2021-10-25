@@ -12,10 +12,14 @@ class AccountUserAdmin(admin.ModelAdmin):
         return False
 
 # Register your models here.
-admin.site.register(User, AccountUserAdmin)
+admin.site.register(User)
+admin.site.register(Intern)
+admin.site.register(Sponsor)
+admin.site.register(Stack)
+""" admin.site.register(User, AccountUserAdmin)
 admin.site.register(Intern, AccountUserAdmin)
 admin.site.register(Sponsor, AccountUserAdmin)
-admin.site.register(Stack, AccountUserAdmin)
+admin.site.register(Stack, AccountUserAdmin) """
 
 
 @admin.register(Statistic)
