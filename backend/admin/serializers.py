@@ -2,6 +2,7 @@ from django.db import models
 from rest_framework import serializers
 
 from app.models import *
+from app.serializers import *
 
 class AdminUserSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
@@ -32,3 +33,28 @@ class AdminUserSerializer(serializers.Serializer):
 
         instance.save()
         return instance
+
+class InternAdminSerializer(serializers.ModelSerializer):
+    stack = StackSerializer(many=True)
+    class Meta:
+        model = Intern
+        fields = [
+            "id",
+            "username",
+            "full_name",
+            "stack",
+            "state",
+            "gender",
+            "about",
+            "batch",
+            "current_salary",
+            "is_employed",
+            "picture",
+        ]
+
+    def create(self, validated_data):
+        stacks_data = validated_data.pop('stack')
+        intern = Intern.objects.create(**validated_data)
+        for stack_data in stacks_data:
+            Stack.objects.create(intern=intern, **stack_data)
+        return intern
