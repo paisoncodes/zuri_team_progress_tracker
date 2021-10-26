@@ -1,10 +1,7 @@
 <template>
     <div class="bg-brand-red-light-2 p-6 m-0">
         <h2 class="cjb-heading text-left text-xs">CURRENT JOB PLACEMENTS</h2>
-        <div class="flex justify-between">
-            <div class="cjb-month mt-5 text-sm">January</div>
-            <div class="cjb-month mt-5 text-sm">December</div>
-        </div>
+        
         <div class="relative pt-5">
             <div class="overflow-hidden h-5 text-lg flex rounded-xl bg-gray-200">
                 <div :style="'width:' + progress_percent +'%'"
@@ -14,10 +11,8 @@
         </div>
         <p class="emp-status mt-5 text-left text-xs">{{total_employed}} / {{total_finalist}} Employed</p>
         
-        <div class="flex flex-row justify-between align-middle">
-            <div class="mt-10 mb-8 text-brand-gray-blue text-left">
-                <h2 class="text-xs"><a href="#">VIEW COMPLETE PROGRESS {{'\xa0'}}≻</a></h2>
-            </div>
+        <div class="flex flex-row justify-end align-middle">
+            
 
             <div class="">
                 <img class="inline-block align-middle px-0 my-5" v-for="intern in internPictures" v-bind:key="intern.id" v-bind:src="intern.picture" v-bind:alt="intern.alt">
