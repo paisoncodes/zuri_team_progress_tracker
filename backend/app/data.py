@@ -86,7 +86,7 @@ def create_stat(request):
         )
 
         instance.save()
-        return Response({"message": "Stacks Populated"})
+        return Response({"message": "Statistic Populated"})
     except Exception as e:
         return Response(
             {"message": f"see your Big head: {e}"}, status=status.HTTP_400_BAD_REQUEST
@@ -96,8 +96,11 @@ def create_stat(request):
 def get_image_link(photo):
     x = photo.index("(")
     y = photo.index(")")
-    image = photo[x + 1 : y]
-    return image
+    image = photo[x + 1: y]
+    if image[0:4] == "http":
+        return image
+    else:
+        return "https://res.cloudinary.com/psami-wondah/image/upload/v1635282292/profile_pic_yxkand.png"
 
 
 def create_intern(data):
