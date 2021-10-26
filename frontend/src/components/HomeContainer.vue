@@ -6,8 +6,8 @@
         <div class="flex">
             <div class="bor h-auto bg-brand-red-light-2 flex overview-width flex-col justify-center w-44">
                 <p>{{this_year.year}}</p>
-                <div>
-                    <img class="inline-block align-middle px-0 my-5" v-for="intern in sponsors" v-bind:key="intern.id" v-bind:src="intern.pic">
+                <div class="w-44">
+                    <img class="inline-block align-middle mx-1 my-5" v-for="intern in sponsors" v-bind:key="intern.id" v-bind:src="intern.pic">
                 </div>
             </div>
 
@@ -83,8 +83,9 @@ img{
 .bor{
     margin-bottom: 24.2px;
     margin-top: 20px;
-
 }
+
+
 
 
 </style>
