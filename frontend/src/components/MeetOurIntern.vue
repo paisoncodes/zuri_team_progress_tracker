@@ -27,7 +27,7 @@
               </div>
               <div class="flex flex-wrap lg:flex-row items-center space-x-2">
                 <h1 class="text-3xl font-medium leading-loose text-brand-gray-dark-1 tracker-wide">$ {{ totalCombinedSalary }}</h1>
-                <span class="uppercase text-brand-gray-light leading-tight text-base">In Montly Income</span>
+                <span class="uppercase text-brand-gray-light leading-tight text-base">In Monthly Income</span>
               </div>
             </div>
           </div>
