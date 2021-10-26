@@ -39,7 +39,7 @@ export default {
     computed: {
         ...mapGetters(["interns"])
         },
-    mounted() {
+    created() {
       this.fetchInterns()
         }
   
