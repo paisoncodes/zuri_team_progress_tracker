@@ -1,10 +1,7 @@
 <template>
     <div class="bg-brand-red-light-2 p-6 m-0">
         <h2 class="cjb-heading text-left text-xs">CURRENT JOB PLACEMENTS</h2>
-        <div class="flex justify-between">
-            <div class="cjb-month mt-5 text-sm">January</div>
-            <div class="cjb-month mt-5 text-sm">December</div>
-        </div>
+        
         <div class="relative pt-5">
             <div class="overflow-hidden h-5 text-lg flex rounded-xl bg-gray-200">
                 <div :style="'width:' + progress_percent +'%'"
@@ -13,13 +10,21 @@
             </div>
         </div>
         <p class="emp-status mt-5 text-left text-xs">{{total_employed}} / {{total_finalist}} Employed</p>
-        <div class="mt-10 mb-8 text-brand-gray-blue text-left">
-            <h2 class="text-xs"><a href="#">VIEW COMPLETE PROGRESS {{'\xa0'}}≻</a></h2>
+        
+        <div class="flex flex-row justify-end align-middle">
+            
+
+            <div class="">
+                <img class="inline-block align-middle px-0 my-5" v-for="intern in internPictures" v-bind:key="intern.id" v-bind:src="intern.picture" v-bind:alt="intern.alt">
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+
+import {mapGetters, mapActions } from 'vuex'
+
     export default {
         name: 'CurrentJobPlacement',
         props:['total_finalist', 'total_employed'],
@@ -36,8 +41,15 @@
                 this.new_total_finalist = this.total_finalist
                 //console.log(this.new_total_employed, this.new_total_finalist)
                 return (this.new_total_employed/this.new_total_finalist)*100
-            }
+            },
+            ...mapActions(['fetchInterns'])
         },
+            computed: {
+        ...mapGetters(["internPictures"])
+        },
+        mounted() {
+        this.fetchInterns()
+            },
         watch: {
             total_finalist (val, oldVal) {
               if (val !== oldVal){
@@ -55,6 +67,7 @@
 </script>
 
 <style scoped>
+
     .cjb-container {
         background: #F7F3F2;
         font-style: normal;
@@ -76,4 +89,10 @@
         width: 50%;
         margin: 5px;
     }
+
+    img {
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+}
 </style>
