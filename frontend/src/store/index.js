@@ -174,7 +174,7 @@ export default createStore({
       return yearParticipants;
     },
     interns(state){
-      const interns = state.interns.sort(() => Math.random() - 0.5).slice(0,4)
+      const interns = state.allInterns.sort(() => Math.random() - 0.5).slice(0,4)
       return interns;
     },
     internPictures(state){
