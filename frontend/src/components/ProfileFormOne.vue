@@ -3,7 +3,7 @@
     <form class="">
       <div class="block xs:flex justify-between items-center mb-4 xs:mb-10">
         <p style="color:red" v-if="this.$store.state.formOneConfirmation" class="text-center">Information saved</p>
-        <h1 class="text-2xl">SOJI AMINU'S PROFILE</h1>
+        <h1 class="text-2xl">EDIT PROFILE</h1>
         <p class="text-2xl text-brand-gray-light">1/2</p>
       </div>
       

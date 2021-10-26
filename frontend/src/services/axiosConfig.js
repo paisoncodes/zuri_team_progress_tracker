@@ -10,7 +10,7 @@ const axiosClient = Axios.create({
 });
 
 export const axiosClientForm = Axios.create({
-    baseURL: 'https://cors-anywhere.herokuapp.com/https://zuri-progress-tracker.herokuapp.com/',
+    baseURL: 'https://zuri-progress-tracker.herokuapp.com/',
     withCredentials: false,
     headers: {
         'Access-Control-Allow-Origin': '*',
