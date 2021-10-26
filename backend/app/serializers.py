@@ -116,7 +116,6 @@ class NewsLetterSerializer(serializers.ModelSerializer):
         model = NewsLetter
         fields = "__all__"
 
-
 # ==================================================================================================================
 
 

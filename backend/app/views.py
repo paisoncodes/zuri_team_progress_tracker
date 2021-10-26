@@ -141,7 +141,7 @@ class JobView(APIView):
             if len(jobsList_objects) > 0:
                 serializer = JobSerializer(jobsList_objects, many=True)
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response("Unemployed", status=status.HTTP_400_BAD_REQUEST)
+            return Response("Unemployed", status=status.HTTP_204_NO_CONTENT)
         except Exception as e:
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 
@@ -564,7 +564,7 @@ class GetStacksPerBatch(APIView):
                 )
             for stack in year:
                 stacks.append(stack.name)
-            data = {"stack_data": stack_detail}
+            data = {"stacks": stacks, "stack_data": stack_detail}
             return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"Message": f"{e}"}, status.HTTP_400_BAD_REQUEST)
