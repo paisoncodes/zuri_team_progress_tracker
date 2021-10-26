@@ -3,8 +3,8 @@
   <div v-if="showLoder" class="flex justify-center">
   <CustomLoader />
   </div>
-  <div v-else class="grid  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-for="(intern, index) in getAllInterns" :key="index" >
-    <div v-if="batch == intern.batch">
+  <div v-else class="grid  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-for="(intern, index) in getAllInterns" :key="index" v-if="batch == intern.batch" >
+   
      <!-- <div class="icon" style=" width:inherit; height:100%;">
          <img class="object-contain object-center  h-full w-full" style="width:inherit; height:100%;" :src="intern.picture"/>
      </div> -->
