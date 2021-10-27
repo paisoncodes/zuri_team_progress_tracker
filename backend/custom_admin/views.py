@@ -34,6 +34,11 @@ class UserAdminCreateView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = AdminUserSerializer(data=request.data)
         if serializer.is_valid():
+            if serializer.validated_data["permissions"] == "S":
+                serializer.validated_data["staff"] = True
+            if serializer.validated_data["permissions"] == "A":
+                serializer.validated_data["staff"] = True
+                serializer.validated_data["admin"] = True
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -286,3 +291,7 @@ class InternAdminUpdateView(APIView):
             {"message": "Intern deleted successfully."},
             status=status.HTTP_204_NO_CONTENT,
         )
+
+class StaffInviteView(APIView):
+
+    pass

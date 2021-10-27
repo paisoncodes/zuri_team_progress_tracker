@@ -6,32 +6,21 @@ from app.serializers import *
 
 class AdminUserSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    first_name = serializers.CharField(max_length=100)
-    last_name = serializers.CharField(max_length=100)
+    full_name = serializers.CharField(max_length=200)
     email = serializers.EmailField(max_length=200)
-    # password = serializers.PasswordField(max_length=100)
-    address = serializers.CharField(max_length=200)
-    city = serializers.CharField(max_length=100)
-    state = serializers.CharField(max_length=100)
-    active = serializers.BooleanField(required=False, default=False)
-    staff = serializers.BooleanField(required=False, default=False)
-    admin = serializers.BooleanField(required=False, default=False)
+    permissions = serializers.CharField(max_length=1, help_text="\'S' for staff, \'A' for admin", required=False)
+    staff = serializers.BooleanField(default=False)
+    admin =serializers.BooleanField(default=False)
 
     def create(self, validated_data):
         return User.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.first_name = validated_data.get("first_name", instance.first_name)
-        instance.last_name = validated_data.get("last_name", instance.last_name)
+        instance.full_name = validated_data.get("first_name", instance.full_name)
         instance.email = validated_data.get("email", instance.email)
-        instance.address = validated_data.get("address", instance.address)
-        instance.city = validated_data.get("city", instance.city)
-        instance.state = validated_data.get("state", instance.state)
-        instance.active = validated_data.get("active", instance.active)
+        instance.permissions = validated_data.get("permission", instance.permissions)
         instance.staff = validated_data.get("staff", instance.staff)
         instance.admin = validated_data.get("admin", instance.admin)
-
-        instance.save()
         return instance
 
 class InternAdminSerializer(serializers.ModelSerializer):
@@ -48,7 +37,7 @@ class InternAdminSerializer(serializers.ModelSerializer):
             "about",
             "batch",
             "current_salary",
-            "is_employed",
+            "employed",
             "picture",
         ]
 
