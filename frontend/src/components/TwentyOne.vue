@@ -23,7 +23,6 @@ import Interns from "@/components/Interns.vue";
 import FilterButton from "@/components/FilterButton.vue";
 import ExperienceTracker from "@/components/ExperienceTracker.vue";
 import axios from "axios";
-
 export default {
   components: {
     MeetOurIntern,

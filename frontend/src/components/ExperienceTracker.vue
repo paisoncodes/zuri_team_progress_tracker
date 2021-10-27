@@ -5,7 +5,7 @@
          <img class="object-contain object-center  h-full w-full" style="width:inherit; height:100%;" :src="intern.picture"/>
      </div> -->
      
-      <div class="icon h-72" :style="{ backgroundImage: `url('${intern.picture}')` }">
+      <div class="icon h-72 rounded" :style="{ backgroundImage: `url('${intern.picture}')` }">
          <!-- <img class="object-contain object-center  h-full w-full"/> -->
      </div>
 
