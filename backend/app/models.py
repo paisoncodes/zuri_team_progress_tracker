@@ -10,7 +10,8 @@ class User(AbstractBaseUser):
     PERMISSION_CHOICES          = (("S", 'Staff'), ("A", 'Admin'))
     id                          = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     email                       = models.EmailField(unique=True)
-    full_name                   = models.CharField(max_length=300, default="Admin")
+    first_name                   = models.CharField(max_length=100, default="Admin")
+    last_name                   = models.CharField(max_length=100, default="Admin")
     date                        = models.DateTimeField(auto_now_add=True)
     permissions                 = models.CharField(max_length=1, choices=PERMISSION_CHOICES, blank=True)
     active                      = models.BooleanField(default=True)
@@ -26,16 +27,15 @@ class User(AbstractBaseUser):
         return str(self.email)
 
     def get_full_name(self):
-        return self.full_name
+        return f"{self.first_name} {self.last_name}"
 
     def get_short_name(self):
-        return self.full_name[0]
+        return self.first_name
 
     def has_perm(self, perm, obj=None):
         return True
 
     def has_module_perms(self, app_label):
-
         return True
 
     @property
