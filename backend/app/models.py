@@ -14,6 +14,7 @@ class User(AbstractBaseUser):
     state = models.CharField(max_length=300, null=True)
     about = models.TextField(null=True)
     date = models.DateTimeField(auto_now_add=True)
+    image = models.URLField(null=True)
 
     active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)
