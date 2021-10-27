@@ -17,7 +17,7 @@ class User(AbstractBaseUser):
     active                      = models.BooleanField(default=True)
     staff                       = models.BooleanField(default=False)
     admin                       = models.BooleanField(default=False)
-    image                       = models.URLField(default="https://www.seekpng.com/ima/u2y3q8t4t4o0a9a9/", null=True)
+    image                       = models.URLField(default="https://www.seekpng.com/ima/u2y3q8t4t4o0a9a9/")
 
     USERNAME_FIELD              = "email"
     REQUIRED_FIELDS             = []
