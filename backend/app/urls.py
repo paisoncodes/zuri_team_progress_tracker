@@ -36,13 +36,13 @@ urlpatterns = [
         name="job_update",
     ),
     path(
-        "interns/<int:intern_id>/update", InternUpdate.as_view(), name="intern_update"
+        "interns/<int:intern_id>/update/", InternUpdate.as_view(), name="intern_update"
     ),
     path("interns/", InternsView.as_view(), name="intern_list"),
     path("interns/stack/<str:stack>/", InternStackList.as_view(), name="intern_stack"),
     path("interns/batch/<int:batch>/total_salary/", total_salary, name="total_salary"),
     path(
-        "interns/batch/<int:batch>",
+        "interns/batch/<int:batch>/",
         BatchList.as_view(),
         name="list_of_interns_per_batch",
     ),

@@ -88,6 +88,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "app.apps.AppConfig",
+    "custom_admin",
     "corsheaders",
     "drf_yasg",
     "drf_spectacular",

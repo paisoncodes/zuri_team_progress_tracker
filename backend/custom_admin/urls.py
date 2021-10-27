@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib import admin
 
-from admin.views import (
+from custom_admin.views import (
     UserAdminCreateView,
     UserAdminUpdateView,
     StackAdminCreateView,

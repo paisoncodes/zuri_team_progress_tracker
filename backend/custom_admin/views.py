@@ -3,7 +3,7 @@ from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.generics import UpdateAPIView
 from rest_framework.response import Response
-from admin.serializers import (
+from custom_admin.serializers import (
     AdminUserSerializer,
     InternAdminSerializer,
 )
