@@ -1,39 +1,67 @@
 from django.urls import path
-# from django.conf import settings
-# from django.conf.urls.static import static
-# from rest_framework import permissions
+from django.contrib import admin
+
+
 from .views import (
-    UserCreateView,
-    UserUpdateView,
-    UserDetailView,
-
-    InternCreateUpdateView,
-    InternList,
+    InternUpdate,
+    InternsView,
     InternDetailView,
-
+    InternStackList,
     JobView,
-    JobListView,
     JobUpdateView,
-
-
     NewsLetterSubscribeView,
-    NewsLetterSubscribersView
+    NewsLetterSubscribersView,
+    StatisticView,
+    BatchList,
+    all_stats,
+    get_interns_by_year_and_stack,
+    total_salary,
+    SponsorView,
 )
+from app import views
 
+from . import data
 
 
 urlpatterns = [
-    path("users/create/",UserCreateView.as_view(),name="create_user"),
-    path("users/update/<int:user_id>/",UserUpdateView.as_view(),name="update_user"),
-    path("intern/<int:pk>/", InternDetailView.as_view(), name="Intern_detail"),
-    path("users/<int:user_id>/", UserDetailView.as_view(), name="UserInfo"),
-    path("jobs/create/<str:username>/",JobView.as_view(), name="Jobcreate"),
-    path("get-jobs/<str:username>/", JobListView.as_view(), name="job_list"),
-    path("jobs/update/<str:username>/<int:pk>/", JobUpdateView.as_view(), name="job_update"),
-    path('intern/create/', InternCreateUpdateView.as_view(), name='intern_create_update'),
-    path('interns/', InternList.as_view(), name='intern_list'),
+    # ================================================================================================================
+    path("interns/<str:intern_id>/", InternDetailView.as_view(), name="Intern_detail"),
+    path("interns/<str:intern_id>/jobs/", JobView.as_view(), name="job"),
+    path(
+        "interns/<str:intern_id>/jobs/<str:job_id>/",
+        JobUpdateView.as_view(),
+        name="job_update",
+    ),
+    path(
+        "interns/<str:intern_id>/update/", InternUpdate.as_view(), name="intern_update"
+    ),
+    path("interns/", InternsView.as_view(), name="intern_list"),
+    path("interns/stack/<str:stack>/", InternStackList.as_view(), name="intern_stack"),
+    path("interns/batch/<int:batch>/total_salary/", total_salary, name="total_salary"),
+    path(
+        "interns/batch/<int:batch>/",
+        BatchList.as_view(),
+        name="list_of_interns_per_batch",
+    ),
+    path(
+        "interns/batch/<int:batch>/stack/<str:stack>/",
+        views.get_interns_by_year_and_stack,
+        name="stack_list_and_count",
+    ),
+    # ================================================================================================================
+    path(
+        "stacks/batch/<int:batch>/", views.GetStacksPerBatch.as_view(), name="get_stats"
+    ),
     path("subscribers/", NewsLetterSubscribersView.as_view(), name="subscribers"),
-    path("subscribers/subscribe/", NewsLetterSubscribeView.as_view(),name="subscribe"),
-    
-] 
-
+    path("subscribers/subscribe/", NewsLetterSubscribeView.as_view(), name="subscribe"),
+    # ================================================================================================================
+    path("statistics/batch/<int:batch>/", StatisticView.as_view()),
+    path("statistics/", views.all_stats, name="all_stats"),
+    # ================================================================================================================
+    path("sponsors/", SponsorView.as_view()),
+    path("sponsors/<str:id>/", SponsorView.as_view()),
+    path("populate_interns/", data.create_an_intern),
+    path("populate_stacks/", data.create_stacks),
+    path("populate_statistic/", data.create_stat),
+    path("tistic/", views.get_all_jobs),
+]

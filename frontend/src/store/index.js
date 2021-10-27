@@ -1,13 +1,187 @@
 import { createStore } from 'vuex'
+import ContributionServices from '@/services/http-client'
+import { getField, updateField } from 'vuex-map-fields';
 
 export default createStore({
   state: {
-    
+    profileModalActive: false,
+    intern: [],
+    interns: [],
+    totalSalary: '',
+    stacks: [],
+    year: [],
+    allInterns:[],
+    internJob:[],
+    progresStat:[],
+    currentUserID:null,
+    formOne : {
+      full_name : '',
+      currentSalary : '',
+      about: '',
+      employed: '',
+    },
+    imageOne: '',
+    imageTwo: '',
+    formTwo:{
+      position : '',
+      company : '',
+      dateGotten: '',
+      jobDescription: '',
+      image: ''
+    },
+    formOneConfirmation: false,
+    formTwoConfirmation: false,
   },
   mutations: {
+    toggleProfileEditModal: state => {
+      state.profileModalActive =! state.profileModalActive
+    },
+    setStack(state, payload) { state.intern = payload },
+    setTotalSalary(state, payload) {
+      state.totalSalary = payload
+    },
+
+    setStackYear(state, payload) {state.stacks = payload},
+    setYear(state, payload) {state.year = payload},
+
+    allInterns(state, payload) { state.allInterns = payload },
+
+    userJob(state, payload) { state.internJob.push(payload) },
+    currentUserId(state, payload){state.currentUserID = payload},
+
+    setProgresStat(state, payload) {
+      state.progresStat = payload
+    },
+    setInterns(state, payload) {
+      state.interns = payload
+    },
+    updateField,
+    setImageOne(state, payload){
+      state.imageOne = payload
+    },
+    setImageTwo(state, payload){
+      state.imageTwo = payload
+    },
   },
   actions: {
+    async getAllStack({commit, getters}) {
+      const year = getters.year
+      await ContributionServices.getAllStack(year).then(response => {
+        commit("allInterns", response.data)
+      })
+    },
+    async getStack({commit, getters}, payload) {
+      const year = getters.year
+      await ContributionServices.getStack(payload, year).then(response => {
+        commit("allInterns", response.data)
+      })
+    },
+    async getYear({commit}, payload) {
+      commit("setYear", payload)
+    },
+    async getStackYear({commit}, payload) {
+      await ContributionServices.getStackYear(payload).then(response => {
+        commit("setStackYear", response.data.stacks)
+      })
+    },
+    async getTotalSalary({ commit }) {
+      await ContributionServices.getTotalSalary().then(response => {
+        commit('setTotalSalary', response.data.total_salary)
+      })
+    },
+    async getAllInterns({commit}){
+      await ContributionServices.getIntern().then(response =>{
+        commit('allInterns', response.data)
+      })
+    },
+    async getUserJob({commit}, user_id){
+      await ContributionServices.getJobs(user_id).then(response => {
+        commit ('userJob', response.data)
+      }).catch((error)=>{
+        console.log(error)
+      })
+    },
+    async editIntern({state}) {
+
+      try {
+        let formData = new FormData();
+        formData.append('full_name', state.formOne.full_name)
+        formData.append('current_salary', state.formOne.currentSalary)
+        formData.append('about', state.formOne.about)
+        formData.append('is_employed', state.formOne.employed)
+        formData.append('image', state.imageOne)     
+      await ContributionServices.editIntern(state.currentUserID, formData).then(res => {
+        return res
+      })
+      } catch (error) {
+        console.log(error)
+      }finally{
+        state.formOneConfirmation = !state.formOneConfirmation
+      }
+    },
+    async postJob({state}) {
+      try {
+      let formData = new FormData();
+      formData.append('job_title', state.formTwo.position)
+      formData.append('company_name', state.formTwo.company)
+      formData.append('job_description', state.formTwo.about)
+      formData.append('gotten_at', state.formTwo.dateGotten)
+      formData.append('image', state.imageTwo)
+
+      await ContributionServices.postJob(state.currentUserID, formData).then(res => {
+        console.log(res)
+      })
+      } catch (error) {
+        console.log(error)
+      }
+      finally{
+        state.formTwoConfirmation = !state.formTwoConfirmation
+      }
+    },
+    async getProgresStat({commit}, payload) {
+      await ContributionServices.getProgresStat(payload).then(res => {
+        commit("setProgresStat", res.data.sort((a, b) => b.year - a.year ).slice(0,4));
+      })
+    },
+    async fetchInterns({commit}, payload){
+      await ContributionServices.getIntern(payload).then(res =>{
+        commit('setInterns', res.data)
+      })
+    },
+
+  },
+  getters:{
+    allInterns(state){
+      return state.allInterns
+    },
+    allUserjobs (state){
+      return state.internJob
+    },
+    stacks(state) {
+      return state.stacks
+    },
+    year(state) {
+      return state.year
+    },
+    progresStat(state){
+      return state.progresStat
+    },
+    getField,
+    yearParticipants(state){
+      const yearParticipants =  state.progresStat.map(item=> {
+        return item.participants
+      })
+      return yearParticipants;
+    },
+    interns(state){
+      const interns = state.allInterns.sort(() => Math.random() - 0.5).slice(0,4)
+      return interns;
+    },
+    internPictures(state){
+      const internPictures = state.interns.sort(() => Math.random() - 0.5).slice(0,10)
+      return internPictures;
+    },
   },
   modules: {
-  }
+  },
 })
