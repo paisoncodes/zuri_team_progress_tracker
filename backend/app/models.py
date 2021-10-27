@@ -1,27 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from .manager import UserManager
+import uuid
 
 # Create your models here.
 
 # ==================================================================================================================
 class User(AbstractBaseUser):
-    email = models.EmailField(unique=True)
-    first_name = models.CharField(max_length=300, null=True)
-    last_name = models.CharField(max_length=300, null=True)
-    address = models.TextField(null=True)
-    city = models.CharField(max_length=300, null=True)
-    state = models.CharField(max_length=300, null=True)
-    about = models.TextField(null=True)
-    date = models.DateTimeField(auto_now_add=True)
-    image = models.URLField(null=True)
+    PERMISSION_CHOICES          = (("S", 'Staff'), ("A", 'Admin'))
+    id                          = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    email                       = models.EmailField(unique=True)
+    first_name                   = models.CharField(max_length=100, default="Admin")
+    last_name                   = models.CharField(max_length=100, default="Admin")
+    date                        = models.DateTimeField(auto_now_add=True)
+    permissions                 = models.CharField(max_length=1, choices=PERMISSION_CHOICES, blank=True)
+    active                      = models.BooleanField(default=True)
+    staff                       = models.BooleanField(default=False)
+    admin                       = models.BooleanField(default=False)
+    image                       = models.URLField(null=True)
 
-    active = models.BooleanField(default=True)
-    staff = models.BooleanField(default=False)
-    admin = models.BooleanField(default=False)
-
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    USERNAME_FIELD              = "email"
+    REQUIRED_FIELDS             = []
 
     objects = UserManager()
 
@@ -38,7 +37,6 @@ class User(AbstractBaseUser):
         return True
 
     def has_module_perms(self, app_label):
-
         return True
 
     @property
@@ -61,8 +59,9 @@ class Stack(models.Model):
     """Model definition for Stack."""
 
     # TODO: Define fields here
-    name = models.CharField(max_length=50, unique_for_year="batch")
-    batch = models.IntegerField()
+    id                          = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    name                        = models.CharField(max_length=50, unique_for_year="batch")
+    batch                       = models.IntegerField()
 
     class Meta:
         """Meta definition for Stack."""
@@ -80,18 +79,19 @@ class Stack(models.Model):
 
 
 class Intern(models.Model):
-    GENDER_CHOICES = (("M", "Male"), ("F", "Female"))
-    full_name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=255, blank=True)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    about = models.TextField()
-    state = models.CharField(max_length=200)
-    batch = models.IntegerField(verbose_name="Year")
-    is_employed = models.BooleanField(default=False)
-    current_salary = models.IntegerField(default=0)
-    picture = models.URLField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    stack = models.ManyToManyField(Stack, related_name="intern_stack", blank=True)
+    GENDER_CHOICES              = (("M", "Male"), ("F", "Female"))
+    id                          = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    full_name                   = models.CharField(max_length=100)
+    email                       = models.EmailField(max_length=255, blank=True)
+    gender                      = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    about                       = models.TextField()
+    state                       = models.CharField(max_length=200)
+    batch                       = models.IntegerField(verbose_name="Year")
+    is_employed                 = models.BooleanField(default=False)
+    current_salary              = models.IntegerField(default=0)
+    picture                     = models.URLField()
+    created_at                  = models.DateTimeField(auto_now_add=True)
+    stack                       = models.ManyToManyField(Stack, related_name="intern_stack", blank=True)
 
     def __str__(self):
         return self.full_name
@@ -101,14 +101,15 @@ class Intern(models.Model):
 
 
 class Jobs(models.Model):
-    intern = models.ForeignKey(Intern, on_delete=models.CASCADE, related_name="job")
-    job_title = models.CharField(max_length=255)
-    gotten_at = models.DateField()
-    company_name = models.CharField(max_length=255, verbose_name="Organization name")
-    job_description = models.CharField(max_length=255)
-    currently_active = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    job_logo = models.URLField(default="https://www.seekpng.com/ima/u2y3q8t4t4o0a9a9/")
+    id                          = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    intern                      = models.ForeignKey(Intern, on_delete=models.CASCADE, related_name="job")
+    job_title                   = models.CharField(max_length=255)
+    gotten_at                   = models.DateField()
+    company_name                = models.CharField(max_length=255, verbose_name="Organization name")
+    job_description             = models.CharField(max_length=255)
+    currently_active            = models.BooleanField(default=False)
+    created_at                  = models.DateTimeField(auto_now_add=True)
+    job_logo                    = models.URLField(default="https://www.seekpng.com/ima/u2y3q8t4t4o0a9a9/")
 
     def __str__(self):
         return self.company_name
@@ -118,17 +119,19 @@ class Jobs(models.Model):
 
 
 class NewsLetter(models.Model):
-    subscriber_email = models.EmailField(max_length=200, blank=False)
+    id                          = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    subscriber_email            = models.EmailField(max_length=200, blank=False)
 
 
 # ==================================================================================================================
 
 
 class Statistic(models.Model):
-    male = models.IntegerField()
-    female = models.IntegerField()
-    year = models.IntegerField(unique=True)
-    finalist = models.IntegerField()
+    id                          = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    male                        = models.IntegerField()
+    female                      = models.IntegerField()
+    year                        = models.IntegerField(unique=True)
+    finalist                    = models.IntegerField()
 
     def __str__(self):
         return str(self.year)
@@ -142,10 +145,11 @@ class Statistic(models.Model):
 
 
 class Sponsor(models.Model):
-    name = models.CharField(max_length=800)
-    logo = models.URLField(
-        default="https://ingressive.org/wp-content/uploads/2020/05/I4G-Logo-Color-Cropped.png"
-    )
+    id                          = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    name                        = models.CharField(max_length=800)
+    logo                        = models.URLField(
+                                    default="https://ingressive.org/wp-content/uploads/2020/05/I4G-Logo-Color-Cropped.png"
+                                )
 
     def __str__(self):
         return self.name

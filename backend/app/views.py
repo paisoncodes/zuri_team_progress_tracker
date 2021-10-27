@@ -1,19 +1,11 @@
 from os import name
 from django.db.models.query import QuerySet
 from rest_framework import status, permissions
-from rest_framework.fields import IPAddressField
-from rest_framework.serializers import Serializer
 from rest_framework.views import APIView
 from rest_framework.generics import UpdateAPIView
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
-from .serializers import (
-    UserSerializer,
-    UserUpdateSerializer,
-    JobSerializer,
-    InternUpdateSerializer,
-)
-from .models import User, Intern, Jobs, NewsLetter, Stack
+from .models import Intern, Jobs, NewsLetter, Stack
 from .serializers import *
 from django.http import Http404
 from rest_framework.decorators import api_view
@@ -32,78 +24,6 @@ def convert_stack_to_list(data):
         stacks.append(item["name"])
 
     data["stack"] = stacks
-
-
-# ==================================================================================================================
-class UserCreateView(APIView):
-    """
-    Create Users View
-    """
-
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-    def post(self, request, *args, **kwargs):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# ==================================================================================================================
-
-
-class UserUpdateView(APIView):
-    """
-    Update Users View
-    """
-
-    queryset = User.objects.all()
-    serializer_class = UserUpdateSerializer
-
-    def put(self, request, user_id, *args, **kwargs):
-        user = User.objects.get(pk=user_id)
-        serializer = UserUpdateSerializer(user, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# ==================================================================================================================
-
-
-class UserDetailView(APIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer()
-
-    def get(self, request, user_id):
-        """
-        Get User Details
-        """
-        try:
-            UserInfo = User.objects.get(pk=user_id)
-            serializer = UserSerializer(UserInfo, data=request.data)
-            if serializer.is_valid():
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(
-                {"message": "Unable to retrieve user details"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        except Exception as e:
-            return Response({"message": f"{e}"}, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, user_id, format=None):
-        """
-        Delete User
-        """
-        UserInfo = User.objects.get(pk=user_id)
-        UserInfo.delete()
-        return Response(
-            {"message": "User deleted successfully."},
-            status=status.HTTP_204_NO_CONTENT,
-        )
 
 
 # ==================================================================================================================
@@ -159,12 +79,12 @@ class JobUpdateView(UpdateAPIView):
     serializer_class = JobSerializer
     permission_classes = (permissions.AllowAny,)
 
-    def put(self, request, intern_id, pk):
+    def put(self, request, intern_id, job_id):
         """
         Updates a job model
         """
         intern = Intern.objects.get(pk=intern_id)
-        instance = Jobs.objects.get(intern=intern, pk=pk)
+        instance = Jobs.objects.get(intern=intern, pk=job_id)
         data = {
             "job_title": request.data.get("job_title"),
             "company_name": request.data.get("company_name"),
@@ -199,22 +119,22 @@ class InternDetailView(APIView):
     Intern Update View
     """
 
-    def get_object(self, pk):
+    def get_object(self, intern_id):
         try:
-            return Intern.objects.get(pk=pk)
+            return Intern.objects.get(pk=intern_id)
         except Intern.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
-        intern = self.get_object(pk)
+    def get(self, request, intern_id, format=None):
+        intern = self.get_object(intern_id)
         serializer = InternSerializer(intern)
         data = serializer.data
         convert_stack_to_list(data)
 
         return Response(data)
 
-    def delete(self, request, pk, format=None):
-        intern = self.get_object(pk)
+    def delete(self, request, intern_id, format=None):
+        intern = self.get_object(intern_id)
         intern.delete()
         return Response(status=status.HTTP_200_OK)
 
@@ -261,59 +181,6 @@ class InternsView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# ==================================================================================================================
-
-
-class InternUpdateView(APIView):
-    """
-    endpoint to create or update an intern
-    create:
-        request body:
-            {
-            "username": "user",
-            "full_name": "fullname",
-            "stack": "Backend",
-            "state": "Oyo",
-            "gender": "M",
-            "about": "Random text",
-            "batch": "2020",
-            "current_salary": "3000",
-            "is_employed": "True",
-            "picture": "https://ocdn.eu/pulscms-transforms/1/9zVk9kuTURBXy84MTcxYmNmNy0zMmIwLTQ1MzAtOTE0MS1iMWU1Y2Y1MTNjN2MuanBlZ5GTBc0DFs0BroGhMAU"
-            }
-
-     update:
-        request_body:
-            {   "intern_id":1,
-                "data":
-                    {"username": "user",
-                    "full_name": "fullname",
-                    "stack": "Backend",
-                    "state": "Oyo",
-                    "gender": "M",
-                    "about": "Random text",
-                    "batch": "2020",
-                    "current_salary": "3000",
-                    "is_employed": "True",
-                    "picture": "https://ocdn.eu/pulscms-transforms/1/9zVk9kuTURBXy84MTcxYmNmNy0zMmIwLTQ1MzAtOTE0MS1iMWU1Y2Y1MTNjN2MuanBlZ5GTBc0DFs0BroGhMAU"
-                    }}
-    """
-
-    def put(self, request):
-        intern_id = request.data.pop("intern_id")
-        try:
-            intern = Intern.objects.get(pk=intern_id)
-        except Intern.DoesNotExist:
-            return Response(
-                {"message": "This intern does not exist"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-        serializer = InternSerializer(intern, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 # ==================================================================================================================
