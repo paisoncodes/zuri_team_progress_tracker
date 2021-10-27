@@ -1,10 +1,12 @@
 from os import name
 from django.db.models.query import QuerySet
 from rest_framework import status, permissions
+from rest_framework.fields import IPAddressField
 from rest_framework.serializers import Serializer
 from rest_framework.views import APIView
 from rest_framework.generics import UpdateAPIView
 from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 from .serializers import (
     UserSerializer,
     UserUpdateSerializer,
@@ -19,6 +21,9 @@ from rest_framework.parsers import MultiPartParser, JSONParser
 from .cloudinary import upload_image
 
 # Create your views here.
+
+paginator = PageNumberPagination()
+paginator.page_size = 20
 
 
 def convert_stack_to_list(data):
@@ -245,7 +250,8 @@ class InternsView(APIView):
         data = serializer.data
         for datum in data:
             convert_stack_to_list(datum)
-        return Response(data, status=status.HTTP_200_OK)
+        paginated_data = paginator.paginate_queryset(data, request=request)
+        return paginator.get_paginated_response(paginated_data)
 
     def post(self, request):
 
@@ -440,7 +446,8 @@ class InternStackList(APIView):
         data = serializer.data
         for datum in data:
             convert_stack_to_list(datum)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        paginated_data = paginator.paginate_queryset(data, request=request)
+        return paginator.get_paginated_response(paginated_data)
 
 
 # ==================================================================================================================
@@ -457,7 +464,8 @@ class StatisticView(APIView):
             # serializer = StatisticSerializer(statistic)
             # data = serializer.data
             all_interns = Intern.objects.filter(batch=batch)
-            employed_interns = Intern.objects.filter(batch=batch, is_employed=True)
+            employed_interns = Intern.objects.filter(
+                batch=batch, is_employed=True)
             # print(data)
             response_body = {
                 "year": statistic.year,
@@ -484,7 +492,8 @@ def all_stats(request):
         statistics = Statistic.objects.all()
         for stat in statistics:
             all_interns = Intern.objects.filter(batch=stat.year)
-            employed_interns = Intern.objects.filter(batch=stat.year, is_employed=True)
+            employed_interns = Intern.objects.filter(
+                batch=stat.year, is_employed=True)
 
             response_body = {
                 "year": stat.year,
@@ -527,7 +536,8 @@ class BatchList(APIView):
             data = serializer.data
             for datum in data:
                 convert_stack_to_list(datum)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            paginated_data = paginator.paginate_queryset(data, request=request)
+            return paginator.get_paginated_response(paginated_data)
         except Exception as e:
             return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
 
@@ -535,7 +545,7 @@ class BatchList(APIView):
 # ==================================================================================================================
 
 
-@api_view(["get"])
+@api_view(["GET"])
 def get_interns_by_year_and_stack(request, batch, stack):
     try:
         instance = Stack.objects.get(name=stack, batch=batch)
@@ -544,7 +554,8 @@ def get_interns_by_year_and_stack(request, batch, stack):
         data = serializer.data
         for datum in data:
             convert_stack_to_list(datum)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        paginated_data = paginator.paginate_queryset(data, request=request)
+        return paginator.get_paginated_response(paginated_data)
     except Exception as e:
         return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
 
