@@ -3,7 +3,7 @@
 
   <div class="flex flex-row justify-end">
     <p class="pb-5">
-      Total Intern Count: {{getAllInterns.length}}
+      Total Intern Count: {{getAllInterns.length}} / {{yearFinalists[0]}}
     </p>
     
   </div>
@@ -155,8 +155,9 @@ export default {
   },
  computed: {
         ...mapGetters({
-             getAllInterns: 'allInterns',
-             userJob:'allUserjobs',
+              getAllInterns: 'allInterns',
+              userJob:'allUserjobs',
+              yearFinalists: 'yearFinalists'
         })
     },
 methods:{
