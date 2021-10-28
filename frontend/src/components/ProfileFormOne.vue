@@ -1,6 +1,9 @@
 <template>
   <div>
     <form class="">
+      <div class="cursor-pointer flex justify-end pb-2" @click="toggleProfileEditModal">
+        <img src="../assets/closeicon.svg" alt="" class="w-4 h-4 mt-2"/>
+      </div>
       <div class="block xs:flex justify-between items-center mb-4 xs:mb-10">
         <p style="color:red" v-if="this.$store.state.formOneConfirmation" class="text-center">Information saved</p>
         <h1 class="text-2xl">EDIT PROFILE</h1>
@@ -106,7 +109,7 @@ export default {
   },
   methods: {
     ...mapActions(["editIntern"]),
-    ...mapMutations(["setImageOne"]),
+    ...mapMutations(["setImageOne", "toggleProfileEditModal"]),
     
       async uploadImage(e) {
       let image = e.target.files[0];
