@@ -152,7 +152,7 @@ export default createStore({
   },
   getters:{
     allInterns(state){
-      return state.allInterns
+      return state.allInterns.results
     },
     allUserjobs (state){
       return state.internJob
