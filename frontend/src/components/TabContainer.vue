@@ -9,7 +9,7 @@
                         OVERVIEW
                     </li>  
                     <li @click="component = 'TwentyOne', activeTab = 2; changeYear(2021)"  class="block py-4 cursor-pointer text-brand-gray-light w-44 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 2}">                      
-                        2021 <br> ({{yearParticipants[0]}} interns)        
+                        2021 <br> ({{yearFinalists[0]}} finalists)        
                     </li>
                     <!-- <li @click="component = 'Twenty', activeTab = 3; changeYear(2020)" class="block py-4 cursor-pointer text-brand-gray-light w-44 hover:text-brand-gray-dark-1 focus:outline-none" :class="{'is-active': activeTab === 3}">                  
                         2020 <br> ({{yearParticipants[1]}}  interns)        
@@ -64,7 +64,7 @@ export default {
         }
     },
     computed:{
-        ...mapGetters(["yearParticipants"])
+        ...mapGetters(["yearFinalists"])
     }
 }
 </script>
