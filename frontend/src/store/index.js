@@ -152,7 +152,7 @@ export default createStore({
   },
   getters:{
     allInterns(state){
-      return state.allInterns
+      return state.allInterns.results
     },
     allUserjobs (state){
       return state.internJob
@@ -173,12 +173,18 @@ export default createStore({
       })
       return yearParticipants;
     },
+    yearFinalists(state){
+      const yearFinalists =  state.progresStat.map(item=> {
+        return item.finalists
+      })
+      return yearFinalists;
+    },
     interns(state){
-      const interns = state.allInterns.sort(() => Math.random() - 0.5).slice(0,4)
+      const interns = state.interns.results.sort(() => Math.random() - 0.5).slice(0,4)
       return interns;
     },
     internPictures(state){
-      const internPictures = state.interns.sort(() => Math.random() - 0.5).slice(0,10)
+      const internPictures = state.interns.results
       return internPictures;
     },
   },
