@@ -40,7 +40,7 @@ class UserAdminCreateView(APIView):
                 {"mesage": "You can't perform this operation"},
                 status=status.HTTP_401_UNAUTHORIZED
             )
-            
+
         serializer = AdminUserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -316,7 +316,7 @@ class InternAdminUpdateView(APIView):
         StackInfo.delete()
 
         return Response(
-            # {"message": "Intern deleted successfully."},
-            {"message": f"{user_is_admin}"},
+            {"message": "Intern deleted successfully."},
+            # {"message": f"{user_is_admin}"},
             status=status.HTTP_204_NO_CONTENT,
         )
