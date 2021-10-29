@@ -13,6 +13,7 @@ from django.http import Http404
 from rest_framework.decorators import api_view
 from rest_framework.parsers import MultiPartParser, JSONParser
 from app.cloudinary import upload_image
+import json
 
 # Create your views here.
 
@@ -32,6 +33,14 @@ class UserAdminCreateView(APIView):
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
+        user_is_admin = request.user.is_admin
+
+        if user_is_admin == False:
+            return Response(
+                {"mesage": "You can't perform this operation"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+            
         serializer = AdminUserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -74,6 +83,13 @@ class UserAdminUpdateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, user_id, format=None):
+        user_is_admin = request.user.is_admin
+
+        if user_is_admin == False:
+            return Response(
+                {"mesage": "You can't perform this operation"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
         """
         Delete User
         """
@@ -142,6 +158,13 @@ class StackAdminUpdateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, stack_id, format=None):
+        user_is_admin = request.user.is_admin
+
+        if user_is_admin == False:
+            return Response(
+                {"mesage": "You can't perform this operation"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
         """
         Delete Stack
         """
@@ -277,12 +300,23 @@ class InternAdminUpdateView(APIView):
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 
     def delete(self, request, intern_id, format=None):
+        user_is_staff = request.user.is_staff
+        user_is_admin = request.user.is_admin
+
+        if user_is_admin == False:
+            return Response(
+                {"mesage": "You can't perform this operation"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
         """
         Delete Stack
         """
         StackInfo = self.get_object(intern_id)
         StackInfo.delete()
+
         return Response(
-            {"message": "Intern deleted successfully."},
+            # {"message": "Intern deleted successfully."},
+            {"message": f"{user_is_admin}"},
             status=status.HTTP_204_NO_CONTENT,
         )
