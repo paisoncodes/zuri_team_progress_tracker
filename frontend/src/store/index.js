@@ -177,6 +177,10 @@ export default createStore({
       const interns = state.interns.sort(() => Math.random() - 0.5).slice(0,4)
       return interns;
     },
+    internPictures(state){
+      const internPictures = state.interns.sort(() => Math.random() - 0.5).slice(0,10)
+      return internPictures;
+    },
   },
   modules: {
   },

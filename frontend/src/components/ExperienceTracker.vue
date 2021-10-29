@@ -14,7 +14,7 @@
           <div class="grid md:grid-cols-2  gap-4" >
           <div class="w-full text-brand-gray-dark-1 font-normal">
             <p class="text-xl">{{intern.full_name}}</p>
-            <p class="text-base">{{intern.stack}}</p>
+            <p class="text-base">{{intern.stack.join(', ')}}</p>
           </div>
           <div class="w-full">
             <p class="leading-tight text-brand-gray-dark-2">{{intern.about}}</p>
@@ -144,7 +144,7 @@ export default {
  computed: {
         ...mapGetters({
              getAllInterns: 'allInterns',
-             userJob:'allUserjobs'
+             userJob:'allUserjobs',
         })
     },
 methods:{

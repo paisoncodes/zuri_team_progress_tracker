@@ -1,5 +1,7 @@
+from os import name
 from django.db.models.query import QuerySet
 from rest_framework import status, permissions
+from rest_framework.serializers import Serializer
 from rest_framework.views import APIView
 from rest_framework.generics import UpdateAPIView
 from rest_framework.response import Response
@@ -9,7 +11,7 @@ from .serializers import (
     JobSerializer,
     InternUpdateSerializer,
 )
-from .models import User, Intern, Jobs, NewsLetter
+from .models import User, Intern, Jobs, NewsLetter, Stack
 from .serializers import *
 from django.http import Http404
 from rest_framework.decorators import api_view
@@ -17,6 +19,15 @@ from rest_framework.parsers import MultiPartParser, JSONParser
 from .cloudinary import upload_image
 
 # Create your views here.
+
+
+def convert_stack_to_list(data):
+    stacks = []
+    for item in data["stack"]:
+        stacks.append(item["name"])
+
+    data["stack"] = stacks
+
 
 # ==================================================================================================================
 class UserCreateView(APIView):
@@ -34,7 +45,9 @@ class UserCreateView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 # ==================================================================================================================
+
 
 class UserUpdateView(APIView):
     """
@@ -52,11 +65,14 @@ class UserUpdateView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 # ==================================================================================================================
+
 
 class UserDetailView(APIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer()
+
     def get(self, request, user_id):
         """
         Get User Details
@@ -84,7 +100,9 @@ class UserDetailView(APIView):
             status=status.HTTP_204_NO_CONTENT,
         )
 
+
 # ==================================================================================================================
+
 
 class JobView(APIView):
     parser_classes = (
@@ -92,7 +110,8 @@ class JobView(APIView):
         JSONParser,
     )
     queryset = Jobs.objects.all()
-    serializer_class = JobSerializer()
+    serializer_class = JobSerializer
+
     def post(self, request, intern_id):
         """
         Creates a new job for a particular intern
@@ -101,7 +120,6 @@ class JobView(APIView):
             intern = Intern.objects.get(pk=intern_id)
             image = request.FILES["image"]
 
-            
             serializer = JobSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.validated_data["intern"] = intern
@@ -123,11 +141,13 @@ class JobView(APIView):
             if len(jobsList_objects) > 0:
                 serializer = JobSerializer(jobsList_objects, many=True)
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response("Unemployed", status=status.HTTP_400_BAD_REQUEST)
+            return Response("Unemployed", status=status.HTTP_204_NO_CONTENT)
         except Exception as e:
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 
+
 # ==================================================================================================================
+
 
 class JobUpdateView(UpdateAPIView):
     queryset = Jobs.objects.all()
@@ -165,7 +185,9 @@ class JobUpdateView(UpdateAPIView):
         serializer = JobSerializer(job)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 # ==================================================================================================================
+
 
 class InternDetailView(APIView):
     """
@@ -181,14 +203,19 @@ class InternDetailView(APIView):
     def get(self, request, pk, format=None):
         intern = self.get_object(pk)
         serializer = InternSerializer(intern)
-        return Response(serializer.data)
+        data = serializer.data
+        convert_stack_to_list(data)
+
+        return Response(data)
 
     def delete(self, request, pk, format=None):
         intern = self.get_object(pk)
         intern.delete()
         return Response(status=status.HTTP_200_OK)
 
+
 # ==================================================================================================================
+
 
 class InternsView(APIView):
     """
@@ -208,12 +235,17 @@ class InternsView(APIView):
             "picture": "https://ocdn.eu/pulscms-transforms/1/9zVk9kuTURBXy84MTcxYmNmNy0zMmIwLTQ1MzAtOTE0MS1iMWU1Y2Y1MTNjN2MuanBlZ5GTBc0DFs0BroGhMAU"
             }
     """
+
     queryset = Intern.objects.all()
     serializer_class = InternSerializer
+
     def get(self, request, format=None):
         interns = Intern.objects.all()
         serializer = InternSerializer(interns, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        data = serializer.data
+        for datum in data:
+            convert_stack_to_list(datum)
+        return Response(data, status=status.HTTP_200_OK)
 
     def post(self, request):
 
@@ -224,7 +256,9 @@ class InternsView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 # ==================================================================================================================
+
 
 class InternUpdateView(APIView):
     """
@@ -275,7 +309,9 @@ class InternUpdateView(APIView):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
 # ==================================================================================================================
+
 
 class InternUpdate(UpdateAPIView):
     parser_classes = (
@@ -299,7 +335,6 @@ class InternUpdate(UpdateAPIView):
                 else:
                     is_employed = False
                 data = {
-                    "username": instance.username,
                     "full_name": request.data.get("full_name"),
                     "stack": instance.stack,
                     "gender": instance.gender,
@@ -324,7 +359,6 @@ class InternUpdate(UpdateAPIView):
                 else:
                     is_employed = False
                 data = {
-                    "username": instance.username,
                     "full_name": request.data.get("full_name"),
                     "stack": instance.stack,
                     "gender": instance.gender,
@@ -348,7 +382,9 @@ class InternUpdate(UpdateAPIView):
     def get(self, request, intern_id):
         intern = Intern.objects.get(pk=intern_id)
         serializer = InternSerializer(intern)
-        return Response(serializer.data)
+        data = serializer.data
+        convert_stack_to_list(data)
+        return Response(data)
 
     def patch(self, request, intern_id):
         image = request.FILES["image"]
@@ -362,7 +398,9 @@ class InternUpdate(UpdateAPIView):
         serializer = InternSerializer(instance)
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
+
 # ==================================================================================================================
+
 
 class NewsLetterSubscribeView(APIView):
     """
@@ -379,7 +417,9 @@ class NewsLetterSubscribeView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 # ==================================================================================================================
+
 
 class NewsLetterSubscribersView(APIView):
     """
@@ -394,11 +434,17 @@ class NewsLetterSubscribersView(APIView):
 
 class InternStackList(APIView):
     def get(self, request, stack):
-        interns = Intern.objects.filter(stack=stack)
+        instance = Stack.objects.get(name=stack)
+        interns = Intern.objects.filter(stack=instance)
         serializer = InternSerializer(interns, many=True)
+        data = serializer.data
+        for datum in data:
+            convert_stack_to_list(datum)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 # ==================================================================================================================
+
 
 class StatisticView(APIView):
     """
@@ -408,16 +454,16 @@ class StatisticView(APIView):
     def get(self, request, batch, format=None):
         try:
             statistic = Statistic.objects.get(year=batch)
-            serializer = StatisticSerializer(statistic)
-            data = serializer.data
+            # serializer = StatisticSerializer(statistic)
+            # data = serializer.data
             all_interns = Intern.objects.filter(batch=batch)
             employed_interns = Intern.objects.filter(batch=batch, is_employed=True)
-            print(data)
+            # print(data)
             response_body = {
-                "year": data["year"],
-                "male": data["male"],
-                "female": data["female"],
-                "participants": data["participant"],
+                "year": statistic.year,
+                "male": statistic.male,
+                "female": statistic.female,
+                "participants": statistic.participant,
                 "finalists": len(all_interns),
                 "employed_finalists": len(employed_interns),
             }
@@ -426,7 +472,9 @@ class StatisticView(APIView):
         except Exception as e:
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 
+
 # ==================================================================================================================
+
 
 @api_view(["GET"])
 def all_stats(request):
@@ -452,11 +500,13 @@ def all_stats(request):
     except Exception as e:
         return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 
+
 # ==================================================================================================================
+
 
 @api_view(["GET"])
 def total_salary(request, batch):
-    interns = Intern.objects.filter(batch=batch)
+    interns = Intern.objects.filter(batch=batch, is_employed=True)
     salary = 0
     try:
         for intern in interns:
@@ -465,47 +515,59 @@ def total_salary(request, batch):
     except Exception as e:
         return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
 
+
 # ==================================================================================================================
+
 
 class BatchList(APIView):
     def get(self, request, batch):
         try:
             interns = Intern.objects.filter(batch=batch)
             serializer = InternSerializer(interns, many=True)
+            data = serializer.data
+            for datum in data:
+                convert_stack_to_list(datum)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
 
+
 # ==================================================================================================================
+
 
 @api_view(["get"])
 def get_interns_by_year_and_stack(request, batch, stack):
     try:
-        interns = Intern.objects.filter(batch=batch, stack=stack)
+        instance = Stack.objects.get(name=stack, batch=batch)
+        interns = Intern.objects.filter(stack=instance)
         serializer = InternSerializer(interns, many=True)
+        data = serializer.data
+        for datum in data:
+            convert_stack_to_list(datum)
         return Response(serializer.data, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
 
+
 # ==================================================================================================================
+
 
 class GetStacksPerBatch(APIView):
     def get(self, request, batch):
         try:
-            year = Intern.objects.filter(batch=batch)
-            serializer = InternSerializer(year, many=True)
-            stacks = {}
-            for intern in serializer.data:
-                if intern["stack"] not in stacks:
-                    stacks[intern["stack"]] = 1
-                else:
-                    stacks[intern["stack"]] += 1
-            data = {"stacks": stacks}
+            stack_detail = {}
+            stacks = []
+            year = Stack.objects.filter(batch=batch)
+            for leap_year in year:
+                stack_detail[leap_year.name] = len(
+                    Intern.objects.filter(stack=leap_year)
+                )
+            for stack in year:
+                stacks.append(stack.name)
+            data = {"stacks": stack, "stack_data": stack_detail}
             return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"Message": f"{e}"}, status.HTTP_400_BAD_REQUEST)
-
-
 
 
 class SponsorView(APIView):
@@ -517,13 +579,12 @@ class SponsorView(APIView):
 
     def post(self, request):
         serializer = SponsorSerializer(data=request.data)
-        
+
         serializer.is_valid(raise_exception=True)
         image = request.FILES["logo"]
-        
+
         Sponsor.objects.create(
-            name = serializer.validated_data.get('name'),
-            logo = upload_image(image)
+            name=serializer.validated_data.get("name"), logo=upload_image(image)
         )
 
         data = {
@@ -534,16 +595,14 @@ class SponsorView(APIView):
 
         return Response(data, status=status.HTTP_201_CREATED)
 
-
     def get(self, request):
         sponsor_queryset = Sponsor.objects.all()
         serializer = SponsorSerializer(sponsor_queryset, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
 
-
     def delete(self, request, id):
         try:
-            sponsor = Sponsor.objects.get(id = id)
+            sponsor = Sponsor.objects.get(id=id)
             sponsor.delete()
             data = {
                 "status": status.HTTP_200_OK,
@@ -558,7 +617,7 @@ class SponsorView(APIView):
                 "error": True,
             }
             return Response(data, status.HTTP_404_NOT_FOUND)
-        
+
         except:
             data = {
                 "status": status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -566,4 +625,14 @@ class SponsorView(APIView):
                 "error": True,
             }
             return Response(data, status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
+
+
+@api_view(["GET"])
+def get_all_jobs(request):
+    instance = Jobs.objects.all()
+    interns = []
+    for job in instance:
+        serializer = InternSerializer(job.intern)
+        data = serializer.data
+        interns.append(data)
+    return Response({"data": interns})
