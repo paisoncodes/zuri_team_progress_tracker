@@ -51,3 +51,10 @@ class InternAdminSerializer(serializers.ModelSerializer):
         for stack_data in stacks_data:
             Stack.objects.create(intern=intern, **stack_data)
         return intern
+
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    password = serializers.CharField(required=True)
+    password2 = serializers.CharField(required=True)
