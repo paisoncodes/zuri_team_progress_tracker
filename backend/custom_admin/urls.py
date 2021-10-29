@@ -7,6 +7,7 @@ from custom_admin.views import (
     StackAdminUpdateView,
     InternsAdminView,
     InternAdminUpdateView,
+    ChangePasswordView
 )
 
 from app import views
@@ -22,6 +23,8 @@ urlpatterns = [
     # ================================================================================================================
     path("interns/", views.InternsView.as_view(), name="InternCreate"),
     path("interns/<str:intern_id>/update/", InternAdminUpdateView.as_view(), name="InternUpdate"),
+    path('change_password/', ChangePasswordView.as_view(), name='auth_change_password')
+    
     # ================================================================================================================
    
     # ================================================================================================================
