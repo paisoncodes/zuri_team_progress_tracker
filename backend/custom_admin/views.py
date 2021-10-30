@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from custom_admin.serializers import (
     AdminUserSerializer,
     InternAdminSerializer,
+    ChangePasswordSerializer
+
 )
 from app.models import User, Stack, Intern, Jobs, NewsLetter
 from app.serializers import *
@@ -13,6 +15,8 @@ from django.http import Http404
 from rest_framework.decorators import api_view
 from rest_framework.parsers import MultiPartParser, JSONParser
 from app.cloudinary import upload_image
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
 
 # Create your views here.
 
@@ -295,3 +299,42 @@ class InternAdminUpdateView(APIView):
 class StaffInviteView(APIView):
 
     pass
+
+
+
+class ChangePasswordView(UpdateAPIView):
+        """
+        An endpoint for changing password. Use PUT OR PATCH as your htto method
+        """
+        serializer_class = ChangePasswordSerializer
+        model = User
+        permission_classes = (IsAuthenticated,)
+
+        def get_object(self, queryset=None):
+            obj = self.request.user
+            return obj
+
+        def update(self, request, *args, **kwargs):
+            self.object = self.get_object()
+            serializer = self.get_serializer(data=request.data)
+
+            if serializer.is_valid():
+                
+                if not self.object.check_password(serializer.data.get("old_password")):
+                    return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
+                
+                if serializer.data.get("password") != serializer.data.get("password2"):
+                    return Response({"password": "new password doesn't match "}, status=status.HTTP_400_BAD_REQUEST)
+                
+                self.object.set_password(serializer.data.get("password"))
+                self.object.save()
+                response = {
+                    'status': 'success',
+                    'code': status.HTTP_200_OK,
+                    'message': 'Password updated successfully',
+                    
+                }
+
+                return Response(response)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
