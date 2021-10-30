@@ -4,6 +4,7 @@ from rest_framework import serializers
 from app.models import *
 from app.serializers import *
 
+
 class AdminUserSerializer(serializers.Serializer):
     id                  = serializers.ReadOnlyField()
     first_name           = serializers.CharField(max_length=100)
@@ -12,6 +13,7 @@ class AdminUserSerializer(serializers.Serializer):
     permissions         = serializers.CharField(max_length=1, help_text="\'S' for staff, \'A' for admin", required=False)
     staff               = serializers.BooleanField(default=False)
     admin               = serializers.BooleanField(default=False)
+    password            = serializers.CharField(max_length=200, default="admin")
 
     def create(self, validated_data):
         return User.objects.create(**validated_data)
