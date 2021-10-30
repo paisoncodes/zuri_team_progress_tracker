@@ -1,20 +1,9 @@
-from django.db.models.query import QuerySet
-from rest_framework import status, permissions
-from rest_framework.views import APIView
-from rest_framework.generics import UpdateAPIView
-from rest_framework.response import Response
-from custom_admin.serializers import (
-    AdminUserSerializer,
-    InternAdminSerializer,
-    ChangePasswordSerializer
-
-)
-from app.models import User, Stack, Intern, Jobs, NewsLetter
+from app.cloudinary import upload_image
+from app.models import Intern, Stack, User
 from app.serializers import *
 from django.http import Http404
-from rest_framework.decorators import api_view
-from rest_framework.parsers import MultiPartParser, JSONParser
-from app.cloudinary import upload_image
+from rest_framework import status
+from rest_framework.generics import UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics
 from django.contrib.auth.hashers import make_password
@@ -23,6 +12,11 @@ from django.contrib.auth.hashers import make_password
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from custom_admin.serializers import (AdminUserSerializer,
+                                      ChangePasswordSerializer,
+                                      InternAdminSerializer)
 
 class CustomAuthToken(ObtainAuthToken):
 
@@ -37,6 +31,7 @@ class CustomAuthToken(ObtainAuthToken):
             'user_id': user.pk,
             'email': user.email
         })
+
 
 # Create your views here.
 
@@ -55,7 +50,7 @@ class UserAdminCreateView(APIView):
         serializer = AdminUserSerializer(users, many=True)
         return Response(serializer.data)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         serializer = AdminUserSerializer(data=request.data)
         request.data['password'] = make_password("admin")
         if serializer.is_valid():

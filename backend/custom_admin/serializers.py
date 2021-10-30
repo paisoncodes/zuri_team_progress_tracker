@@ -3,6 +3,7 @@ from rest_framework import serializers
 
 from app.models import *
 from app.serializers import *
+from django.contrib.auth.hashers import make_password
 
 
 class AdminUserSerializer(serializers.Serializer):
@@ -14,6 +15,8 @@ class AdminUserSerializer(serializers.Serializer):
     staff               = serializers.BooleanField(default=False)
     admin               = serializers.BooleanField(default=False)
     password            = serializers.CharField(max_length=200, default="admin")
+    image               = serializers.URLField(default="https://www.seekpng.com/ima/u2y3q8t4t4o0a9a9/")
+
 
     def create(self, validated_data):
         return User.objects.create(**validated_data)
@@ -25,6 +28,8 @@ class AdminUserSerializer(serializers.Serializer):
         instance.permissions    = validated_data.get("permission", instance.permissions)
         instance.staff          = validated_data.get("staff", instance.staff)
         instance.admin          = validated_data.get("admin", instance.admin)
+        instance.image          = validated_data.get("image", instance.image)
+
         
         instance.save()
         return instance

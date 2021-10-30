@@ -1,16 +1,15 @@
-from os import name
-from django.db.models.query import QuerySet
-from rest_framework import status, permissions
-from rest_framework.views import APIView
+from django.http import Http404
+from rest_framework import permissions, status
+from rest_framework.decorators import api_view
 from rest_framework.generics import UpdateAPIView
-from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.parsers import JSONParser, MultiPartParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .cloudinary import upload_image
 from .models import Intern, Jobs, NewsLetter, Stack
 from .serializers import *
-from django.http import Http404
-from rest_framework.decorators import api_view
-from rest_framework.parsers import MultiPartParser, JSONParser
-from .cloudinary import upload_image
 
 # Create your views here.
 
