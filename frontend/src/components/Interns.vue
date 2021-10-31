@@ -25,7 +25,7 @@
 
 
 <script>
-import {mapGetters, mapActions } from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'Interns',
@@ -33,14 +33,18 @@ export default {
     return {
     }
   },
-  methods: {
-    ...mapActions(['fetchInterns']),
-  },
-  computed: {
-    ...mapGetters(["interns"])
-    },
-  creq() {
-    this.fetchInterns()
-  } 
+    computed: {
+        ...mapGetters(["interns"])
+        },
+  methods:{
+    ...mapActions({
+      interns: 'getAllStack'
+    })
+      
+  },  
+    async created () {
+    await this.interns()
+    }
+  
 }
 </script>

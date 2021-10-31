@@ -6,8 +6,6 @@
     <div class="pt-0">
       <div class="px-6 py-10 mx-auto max-w-7xl bg-brand-red-light-1">
         <MeetOurIntern :finalists="finalists" :totalCombinedSalary="totalCombinedSalary" :finalistDescription="finalistDescription"/>
-        <InternProfile />
-        <Interns />
         <FilterButton />
         <ExperienceTracker />
         <Footer />
@@ -18,16 +16,12 @@
 
 <script>
 import MeetOurIntern from "@/components/MeetOurIntern.vue";
-import InternProfile from "@/components/InternProfile.vue";
-import Interns from "@/components/Interns.vue";
 import FilterButton from "@/components/FilterButton.vue";
 import ExperienceTracker from "@/components/ExperienceTracker.vue";
 import axios from "axios";
 export default {
   components: {
     MeetOurIntern,
-    InternProfile,
-    Interns,
     FilterButton,
     ExperienceTracker,
   },
