@@ -17,6 +17,7 @@ from .views import (
     get_interns_by_year_and_stack,
     total_salary,
     SponsorView,
+    search,
 )
 from app import views
 
@@ -64,4 +65,6 @@ urlpatterns = [
     path("populate_stacks/", data.create_stacks),
     path("populate_statistic/", data.create_stat),
     path("tistic/", views.get_all_jobs),
+    path("search/", search.as_view(), name="search"),
 ]
+
