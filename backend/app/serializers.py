@@ -1,23 +1,14 @@
-from django.db import models
 from rest_framework import serializers
 
 from .models import *
 
 
-
-
 # ==================================================================================================================
-
-
 class StackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Stack
         fields = ["name"]
-
-
 # ==================================================================================================================
-
-
 class InternSerializer(serializers.ModelSerializer):
     stack = StackSerializer(many=True, read_only=True)
 
@@ -35,11 +26,7 @@ class InternSerializer(serializers.ModelSerializer):
             "is_employed",
             "picture",
         ]
-
-
 # ==================================================================================================================
-
-
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Jobs
@@ -52,37 +39,22 @@ class JobSerializer(serializers.ModelSerializer):
             "currently_active",
             "job_logo",
         ]
-
-
 # ==================================================================================================================
-
-
 class NewsLetterSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsLetter
         fields = "__all__"
-
 # ==================================================================================================================
-
-
 class InternUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Intern
         fields = "__all__"
-
-
 # ==================================================================================================================
-
-
 class StatisticSerializer(serializers.ModelSerializer):
     class Meta:
         model = Statistic
         fields = "__all__"
-
-
 # ==================================================================================================================
-
-
 class SponsorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sponsor

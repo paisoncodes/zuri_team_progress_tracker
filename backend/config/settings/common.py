@@ -59,13 +59,10 @@ CORS_ORIGIN_WHITELIST = (
 
 # rest_framework global configs
 REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PARSER_CLASSES": [
         "rest_framework.parsers.JSONParser",
     ],
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-    # "DEFAULT_PAGINATION_CLASS": [
-    #     'apps.core.pagination.StandardResultsSetPagination',
-    # ],
     "DEFAULT_AUTHENTICATION_CLASSES": ['rest_framework.authentication.TokenAuthentication'], 
 }
 

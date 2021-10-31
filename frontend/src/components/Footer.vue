@@ -7,8 +7,8 @@
             <div class="mb-8 md:mb-0">
                 <h2 class="mb-3 font-bold text-2xl md:text-base">Links</h2>
                 <ul class="font-medium text-brand-red-dark">
-                    <li class="mb-3"><a href="flutterwave.com/store/zuriteam">Store</a></li>
-                    <li class="mb-3"><a href="blog.zuri.team">Blog</a></li>
+                    <li class="mb-3"><a href="https://flutterwave.com/store/zuriteam">Store</a></li>
+                    <li class="mb-3"><a href="htpps://blog.zuri.team">Blog</a></li>
                 </ul>
             </div>
             <div class="mb-8 md:mb-0">
