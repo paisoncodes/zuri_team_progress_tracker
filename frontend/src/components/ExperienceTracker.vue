@@ -9,13 +9,13 @@
   </div>
 
   <div class="grid  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-for="(intern, index) in getAllInterns" :key="index" >
-     <!-- <div class="icon" style=" width:inherit; height:100%;">
-         <img class="object-contain object-center  h-full w-full" style="width:inherit; height:100%;" :src="intern.picture"/>
-     </div> -->
-     
-      <div class="icon h-72 rounded" :style="{ backgroundImage: `url('${intern.picture}')` }">
-         <!-- <img class="object-contain object-center  h-full w-full"/> -->
-     </div>
+      <!-- <div class="icon" style=" width:inherit; height:100%;">
+          <img class="object-contain object-center  h-full w-full" style="width:inherit; height:100%;" :src="intern.picture"/>
+      </div> -->
+      
+        <div class="icon h-72 rounded" :style="{ backgroundImage: `url('${intern.picture}')` }">
+          <!-- <img class="object-contain object-center  h-full w-full"/> -->
+      </div>
 
      <div class="md:col-span-3 ">
       <div class="mx-5 mt-5"  >
@@ -62,7 +62,7 @@
               <img src="@/assets/flutterwave.png" class="h-12 w-12 border-solid border-2 border-brand-gray-dark-3 rounded-full" alt="">
                 <div class="absolute top-12">FLUTTERWAVE</div>
             </div>
-             <div  class="relative bottom-4" >2018</div>
+            <div  class="relative bottom-4" >2018</div>
 
 
             <div class="h-12 w-12 relative grid justify-items-center">
@@ -86,16 +86,25 @@
       </div>
       </div>
   </div>
-  <div class="mt-2 flex items-center justify-center">
-        <ul class="flex">
-          <li class="mr-2" :class="{'hidden': !prev}">
-            <div class="cursor-pointer" @click="handlePrev">Prev</div>
-          </li>
-          <li :class="{'hidden': !next}">
-            <div class="cursor-pointer" @click="handleNext">Next</div>
-          </li>
-        </ul>
-      </div>
+
+
+<div class="flex flex-col items-center">
+  <!-- Help text -->
+  <!-- <span class="text-sm text-gray-700">
+      Showing <span class="font-semibold text-gray-900">1</span> to <span class="font-semibold text-gray-900">20</span> of <span class="font-semibold text-gray-900">{{yearFinalists[0]}}</span> Finalists
+  </span> -->
+  <!-- Buttons -->
+  <div class="inline-flex mt-2 xs:mt-0">
+      <button @click="handlePrev" :class="{'hidden': !prev}" class="cursor-pointer mx-3 bg-brand-gray-dark-1 hover:bg-brand-gray-dark-2 text-white text-sm font-medium rounded py-2 px-4">
+          Prev
+      </button>
+      <button @click="handleNext" :class="{'hidden': !next}" class="cursor-pointer mx-3 bg-brand-gray-dark-1 hover:bg-brand-gray-dark-2 text-white text-sm font-medium rounded border-0 border-gray-700 py-2 px-4">
+          Next
+      </button>
+  </div>
+</div>
+
+
   </div>
 </template>
 
