@@ -77,21 +77,39 @@
 
         </div>
         </div>
+        <p @click="showLogin(intern.id)" class="float-right text-blue-500 cursor-pointer w-100 flex mb-3"  >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M14 1L19 6L6 19H1V14L14 1Z" stroke="#4774E8" stroke-width="1.22693" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg> <span class="ml-3">Edit</span>
+          </p>
       </div>
       </div>
       </div>
   </div>
-
+  <div class="mt-2 flex items-center justify-center">
+        <ul class="flex">
+          <li class="mr-2" :class="{'hidden': !prev}">
+            <div class="cursor-pointer" @click="handlePrev">Prev</div>
+          </li>
+          <li :class="{'hidden': !next}">
+            <div class="cursor-pointer" @click="handleNext">Next</div>
+          </li>
+        </ul>
+      </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import { mapActions } from 'vuex'
+import axios from 'axios';
 export default {
   
   data(){
     return {
+      pager: "",
+      initialPage: 1,
+      pageOfIterns: [],
       internTraker:[
         {
           name:"Soji Aminu",
@@ -155,9 +173,12 @@ export default {
   },
  computed: {
         ...mapGetters({
-              getAllInterns: 'allInterns',
-              userJob:'allUserjobs',
-              yearFinalists: 'yearFinalists'
+             count: 'counts',
+             getAllInterns: 'allInterns',
+             userJob:'allUserjobs',
+             next: 'next',
+             prev: 'prev',
+             yearFinalists: 'yearFinalists'
         })
     },
 methods:{
@@ -176,12 +197,29 @@ internsJobs(){
   });
   // console.log(this.userJob)
 },
-
+handleNext() {
+  axios.get(this.next).then((response) => {
+    console.log(response)
+    this.$store.commit('allInterns', response.data.results);
+    this.$store.commit('setNext', response.data.next);
+    this.$store.commit('setPrev', response.data.previous);
+  })
+},
+handlePrev() {
+  axios.get(this.prev).then((response) => {
+     console.log(response)
+    this.$store.commit('allInterns', response.data.results);
+    this.$store.commit('setNext', response.data.next);
+    this.$store.commit('setPrev', response.data.previous);
+  })
+}
 },
 async created() {
  await this.interns().then(()=>{
    this.internsJobs()
+   this.pager = Math.round(this.count / 20);
  })
+ console.log(this.getAllInterns)
 }
 }
 </script>
