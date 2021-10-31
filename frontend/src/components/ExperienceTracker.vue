@@ -223,9 +223,10 @@ async created() {
   this.showLoder = true
  await this.interns().then(()=>{
    this.internsJobs()
+    this.showLoder = false
    this.pager = Math.round(this.count / 20);
  })
- console.log(this.getAllInterns)
+
 }
 }
 </script>
