@@ -177,7 +177,8 @@ export default {
              getAllInterns: 'allInterns',
              userJob:'allUserjobs',
              next: 'next',
-             prev: 'prev'
+             prev: 'prev',
+             yearFinalists: 'yearFinalists'
         })
     },
 methods:{
