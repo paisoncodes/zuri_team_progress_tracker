@@ -9,13 +9,13 @@
   </div>
 
   <div class="grid  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-for="(intern, index) in getAllInterns" :key="index" >
-     <!-- <div class="icon" style=" width:inherit; height:100%;">
-         <img class="object-contain object-center  h-full w-full" style="width:inherit; height:100%;" :src="intern.picture"/>
-     </div> -->
-     
-      <div class="icon h-72 rounded" :style="{ backgroundImage: `url('${intern.picture}')` }">
-         <!-- <img class="object-contain object-center  h-full w-full"/> -->
-     </div>
+      <!-- <div class="icon" style=" width:inherit; height:100%;">
+          <img class="object-contain object-center  h-full w-full" style="width:inherit; height:100%;" :src="intern.picture"/>
+      </div> -->
+      
+        <div class="icon h-72 rounded" :style="{ backgroundImage: `url('${intern.picture}')` }">
+          <!-- <img class="object-contain object-center  h-full w-full"/> -->
+      </div>
 
      <div class="md:col-span-3 ">
       <div class="mx-5 mt-5"  >
@@ -62,7 +62,7 @@
               <img src="@/assets/flutterwave.png" class="h-12 w-12 border-solid border-2 border-brand-gray-dark-3 rounded-full" alt="">
                 <div class="absolute top-12">FLUTTERWAVE</div>
             </div>
-             <div  class="relative bottom-4" >2018</div>
+            <div  class="relative bottom-4" >2018</div>
 
 
             <div class="h-12 w-12 relative grid justify-items-center">
@@ -92,64 +92,7 @@ export default {
   
   data(){
     return {
-      internTraker:[
-        {
-          name:"Soji Aminu",
-          role: 'Senior Digital Product Designer @andela',
-           picture: require('../assets/soji.png'),
-           about: 'An exceptional product designer with years of experience understanding the users thinking pattern and this helps in creating user centered product.',
-           experience:[
-             {
-               year:'2016',
-               state:'0',
-               companyName:'JOBLESS',
-               companyIcon:'',
-             },
-             {
-               year:'2017',
-               state:'1',
-               companyName:'PAYPAL',
-               companyIcon:require('../assets/hotels.png'),
-             },
-             {
-               year:'2018',
-               state:'0',
-               companyName:'FLUTTERWAVE',
-               companyIcon:require('../assets/flutterwave.png'),
-             },
-              {
-               year:'2019',
-               state:'0',
-               companyName:'FLUTTERWAVE',
-               companyIcon:require('../assets/flutterwave.png'),
-             },
-             {
-               year:'2020',
-               state:'0',
-               companyName:'HOTELS',
-               companyIcon:require('../assets/flutterwave.png'),
-             }
-           ]
-        }, 
-        {
-          name:"Soji Aminu",
-          role: 'Senior Digital Product Designer @andela',
-           picture: require('../assets/soji.png'),
-           about: 'An exceptional product designer with years of experience understanding the users thinking pattern and this helps in creating user centered product.'
-        },
-        {
-          name:"Soji Aminu",
-          role: 'Senior Digital Product Designer @andela',
-           picture: require('../assets/soji.png'),
-           about: 'An exceptional product designer with years of experience understanding the users thinking pattern and this helps in creating user centered product.'
-        },
-        {
-          name:"Soji Aminu",
-          role: 'Senior Digital Product Designer @andela',
-           picture: require('../assets/soji.png'),
-           about: 'An exceptional product designer with years of experience understanding the users thinking pattern and this helps in creating user centered product.'
-        },
-      ],
+
       internjobs:[]
     }
   },
