@@ -23,7 +23,6 @@ import Interns from "@/components/Interns.vue";
 import FilterButton from "@/components/FilterButton.vue";
 import ExperienceTracker from "@/components/ExperienceTracker.vue";
 import axios from "axios";
-
 export default {
   components: {
     MeetOurIntern,
@@ -39,7 +38,7 @@ export default {
       isFetchingFinalist: false,
       totalCombinedSalary: 0,
       isFetchingTotalCombinedSalary: false,
-      finalistDescription: "A key player in his field. He proved himself to be dedicated and focused in all his endeavours. Having mastered the art of programming, he came out in flying colors as one of our best performing interns. With daily activites such coding and test programming for software and mobile apps, he is defining his space in the tech industry. He is proficient in several languagues such as Javascript, Python and PHP. He also has great communication skills and he has proven himself to be a true leader amongst his peers."
+      finalistDescription: "After a professional internship program lasting several weeks, a selection of the very best interns was made from a pool of talented individuals ranging from designers to developers to digital marketers etc. These finalists have proven to be competent in their various fields of expertise and are ready to join the workforce to solve critical world problems."
     }
   },
   methods: {
@@ -55,9 +54,8 @@ export default {
     getTotalCombinedSalary() {
       this.isFetchingTotalCombinedSalary = true;
       axios.get('https://zuri-progress-tracker.herokuapp.com/api/v1/interns/batch/2021/total_salary/').then(response => {
-        this.totalCombinedSalary = response.data.total_salary
+        this.totalCombinedSalary = new Intl.NumberFormat("en-US").format(response.data.total_salary)
         this.isFetchingTotalCombinedSalary = false;
-        console.log(this.totalCombinedSalary);
       }).catch(() => {
         this.isFetchingTotalCombinedSalary = false;
       })

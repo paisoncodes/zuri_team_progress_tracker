@@ -78,7 +78,7 @@
               <input
                 required
                 v-model="password"
-                type="text"
+                type="password"
                 name=""
                 id=""
                 placeholder="Enter your password here"

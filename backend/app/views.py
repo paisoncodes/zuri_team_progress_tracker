@@ -1,110 +1,48 @@
-from os import name
-from django.db.models.query import QuerySet
-from rest_framework import status, permissions
-from rest_framework.serializers import Serializer
-from rest_framework.views import APIView
-from rest_framework.generics import UpdateAPIView
-from rest_framework.response import Response
-from .serializers import (
-    UserSerializer,
-    UserUpdateSerializer,
-    JobSerializer,
-    InternUpdateSerializer,
-)
-from .models import User, Intern, Jobs, NewsLetter, Stack
-from .serializers import *
 from django.http import Http404
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import generics, permissions, status
+from rest_framework.decorators import api_view
+from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.generics import UpdateAPIView
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.parsers import JSONParser, MultiPartParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .cloudinary import upload_image
+from .models import Intern, Jobs, NewsLetter, Stack
+from .serializers import *
 from rest_framework.decorators import api_view
 from rest_framework.parsers import MultiPartParser, JSONParser
-from .cloudinary import upload_image
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework import generics
 
 # Create your views here.
 
-
+paginator = PageNumberPagination()
+paginator.page_size = 20
+# ==================================================================================================================
 def convert_stack_to_list(data):
+    """[summary]
+
+    Args:
+        data ([type]): [description]
+    """    
     stacks = []
     for item in data["stack"]:
         stacks.append(item["name"])
-
     data["stack"] = stacks
-
-
 # ==================================================================================================================
-class UserCreateView(APIView):
-    """
-    Create Users View
-    """
-
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-    def post(self, request, *args, **kwargs):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# ==================================================================================================================
-
-
-class UserUpdateView(APIView):
-    """
-    Update Users View
-    """
-
-    queryset = User.objects.all()
-    serializer_class = UserUpdateSerializer
-
-    def put(self, request, user_id, *args, **kwargs):
-        user = User.objects.get(pk=user_id)
-        serializer = UserUpdateSerializer(user, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# ==================================================================================================================
-
-
-class UserDetailView(APIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer()
-
-    def get(self, request, user_id):
-        """
-        Get User Details
-        """
-        try:
-            UserInfo = User.objects.get(pk=user_id)
-            serializer = UserSerializer(UserInfo, data=request.data)
-            if serializer.is_valid():
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(
-                {"message": "Unable to retrieve user details"},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        except Exception as e:
-            return Response({"message": f"{e}"}, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, user_id, format=None):
-        """
-        Delete User
-        """
-        UserInfo = User.objects.get(pk=user_id)
-        UserInfo.delete()
-        return Response(
-            {"message": "User deleted successfully."},
-            status=status.HTTP_204_NO_CONTENT,
-        )
-
-
-# ==================================================================================================================
-
-
 class JobView(APIView):
+    """[summary]
+
+    Args:
+        APIView ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """    
     parser_classes = (
         MultiPartParser,
         JSONParser,
@@ -113,9 +51,15 @@ class JobView(APIView):
     serializer_class = JobSerializer
 
     def post(self, request, intern_id):
-        """
-        Creates a new job for a particular intern
-        """
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            intern_id ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """        
         try:
             intern = Intern.objects.get(pk=intern_id)
             image = request.FILES["image"]
@@ -132,9 +76,15 @@ class JobView(APIView):
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, intern_id):
-        """
-        Retrieves and list the job details of an intern
-        """
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            intern_id ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """        
         try:
             intern = Intern.objects.get(pk=intern_id)
             jobsList_objects = Jobs.objects.filter(intern=intern)
@@ -144,22 +94,33 @@ class JobView(APIView):
             return Response("Unemployed", status=status.HTTP_204_NO_CONTENT)
         except Exception as e:
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
-
-
 # ==================================================================================================================
-
-
 class JobUpdateView(UpdateAPIView):
+    """[summary]
+
+    Args:
+        UpdateAPIView ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """    
     queryset = Jobs.objects.all()
     serializer_class = JobSerializer
     permission_classes = (permissions.AllowAny,)
 
-    def put(self, request, intern_id, pk):
-        """
-        Updates a job model
-        """
+    def put(self, request, intern_id, job_id):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            intern_id ([type]): [description]
+            job_id ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """        
         intern = Intern.objects.get(pk=intern_id)
-        instance = Jobs.objects.get(intern=intern, pk=pk)
+        instance = Jobs.objects.get(intern=intern, pk=job_id)
         data = {
             "job_title": request.data.get("job_title"),
             "company_name": request.data.get("company_name"),
@@ -177,77 +138,111 @@ class JobUpdateView(UpdateAPIView):
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
     def get(self, request, intern_id, pk):
-        """
-        Gets a particular job detail
-        """
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            intern_id ([type]): [description]
+            pk ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """        
         intern = Intern.objects.get(pk=intern_id)
         job = Jobs.objects.get(pk=pk, intern=intern)
         serializer = JobSerializer(job)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-
 # ==================================================================================================================
-
-
 class InternDetailView(APIView):
-    """
-    Intern Update View
-    """
+    """[summary]
 
-    def get_object(self, pk):
+    Args:
+        APIView ([type]): [description]
+    """    
+    def get_object(self, intern_id):
+        """[summary]
+
+        Args:
+            intern_id ([type]): [description]
+
+        Raises:
+            Http404: [description]
+
+        Returns:
+            [type]: [description]
+        """        
         try:
-            return Intern.objects.get(pk=pk)
+            return Intern.objects.get(pk=intern_id)
         except Intern.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk, format=None):
-        intern = self.get_object(pk)
+    def get(self, request, intern_id, format=None):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            intern_id ([type]): [description]
+            format ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            [type]: [description]
+        """        
+        intern = self.get_object(intern_id)
         serializer = InternSerializer(intern)
         data = serializer.data
         convert_stack_to_list(data)
 
         return Response(data)
 
-    def delete(self, request, pk, format=None):
-        intern = self.get_object(pk)
+    def delete(self, request, intern_id, format=None):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            intern_id ([type]): [description]
+            format ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            [type]: [description]
+        """        
+        intern = self.get_object(intern_id)
         intern.delete()
         return Response(status=status.HTTP_200_OK)
-
-
 # ==================================================================================================================
-
-
 class InternsView(APIView):
-    """
-    endpoint to create an intern or get a list of interns
-    create:
-        request body:
-            {
-            "username": "user",
-            "full_name": "fullname",
-            "stack": "Backend",
-            "state": "Oyo",
-            "gender": "M",
-            "about": "Random text",
-            "batch": "2020",
-            "current_salary": "3000",
-            "is_employed": "True",
-            "picture": "https://ocdn.eu/pulscms-transforms/1/9zVk9kuTURBXy84MTcxYmNmNy0zMmIwLTQ1MzAtOTE0MS1iMWU1Y2Y1MTNjN2MuanBlZ5GTBc0DFs0BroGhMAU"
-            }
-    """
+    """[summary]
 
-    queryset = Intern.objects.all()
-    serializer_class = InternSerializer
-
+    Args:
+        APIView ([type]): [description]
+    """    
+    
     def get(self, request, format=None):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            format ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            [type]: [description]
+        """        
         interns = Intern.objects.all()
         serializer = InternSerializer(interns, many=True)
         data = serializer.data
         for datum in data:
             convert_stack_to_list(datum)
-        return Response(data, status=status.HTTP_200_OK)
+        paginated_data = paginator.paginate_queryset(data, request=request)
+        return paginator.get_paginated_response(paginated_data)
 
     def post(self, request):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """        
 
         serializer = InternSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -255,65 +250,16 @@ class InternsView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 # ==================================================================================================================
-
-
-class InternUpdateView(APIView):
-    """
-    endpoint to create or update an intern
-    create:
-        request body:
-            {
-            "username": "user",
-            "full_name": "fullname",
-            "stack": "Backend",
-            "state": "Oyo",
-            "gender": "M",
-            "about": "Random text",
-            "batch": "2020",
-            "current_salary": "3000",
-            "is_employed": "True",
-            "picture": "https://ocdn.eu/pulscms-transforms/1/9zVk9kuTURBXy84MTcxYmNmNy0zMmIwLTQ1MzAtOTE0MS1iMWU1Y2Y1MTNjN2MuanBlZ5GTBc0DFs0BroGhMAU"
-            }
-
-     update:
-        request_body:
-            {   "intern_id":1,
-                "data":
-                    {"username": "user",
-                    "full_name": "fullname",
-                    "stack": "Backend",
-                    "state": "Oyo",
-                    "gender": "M",
-                    "about": "Random text",
-                    "batch": "2020",
-                    "current_salary": "3000",
-                    "is_employed": "True",
-                    "picture": "https://ocdn.eu/pulscms-transforms/1/9zVk9kuTURBXy84MTcxYmNmNy0zMmIwLTQ1MzAtOTE0MS1iMWU1Y2Y1MTNjN2MuanBlZ5GTBc0DFs0BroGhMAU"
-                    }}
-    """
-
-    def put(self, request):
-        intern_id = request.data.pop("intern_id")
-        try:
-            intern = Intern.objects.get(pk=intern_id)
-        except Intern.DoesNotExist:
-            return Response(
-                {"message": "This intern does not exist"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-        serializer = InternSerializer(intern, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-# ==================================================================================================================
-
-
 class InternUpdate(UpdateAPIView):
+    """[summary]
+
+    Args:
+        UpdateAPIView ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """    
     parser_classes = (
         MultiPartParser,
         JSONParser,
@@ -323,9 +269,15 @@ class InternUpdate(UpdateAPIView):
     permission_classes = (permissions.AllowAny,)
 
     def put(self, request, intern_id):
-        """
-        Updates an intern
-        """
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            intern_id ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """        
         try:
             if request.FILES:
                 image = request.FILES["image"]
@@ -380,6 +332,15 @@ class InternUpdate(UpdateAPIView):
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, intern_id):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            intern_id ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """        
         intern = Intern.objects.get(pk=intern_id)
         serializer = InternSerializer(intern)
         data = serializer.data
@@ -387,6 +348,15 @@ class InternUpdate(UpdateAPIView):
         return Response(data)
 
     def patch(self, request, intern_id):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            intern_id ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """        
         image = request.FILES["image"]
         try:
             instance = Intern.objects.get(pk=intern_id)
@@ -397,68 +367,123 @@ class InternUpdate(UpdateAPIView):
         instance.save()
         serializer = InternSerializer(instance)
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-
-
 # ==================================================================================================================
 
 
-class NewsLetterSubscribeView(APIView):
-    """
-    Creates Subscribers For NewsLetters
-    """
+class Search(generics.ListCreateAPIView):
 
+    """[summary]
+
+    Args:
+        generics ([type]): [description]
+    """    
+    queryset = Intern.objects.all()
+    serializer_class = InternSerializer
+    filterset_fields = ['id', 'full_name', 'stack']
+    filter_backends = [DjangoFilterBackend,SearchFilter,OrderingFilter]
+    ordering_fields = ['id', 'full_name', 'stack']
+    ordering =('full_name',)
+    search_fields = ['id','full_name','stack__name']
+    
+     
+#================================================================================================================
+class NewsLetterSubscribeView(APIView):
+    """[summary]
+
+    Args:
+        APIView ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """    
     queryset = NewsLetter.objects.all()
     serializer_class = NewsLetterSerializer
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """        
         serializer = NewsLetterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 # ==================================================================================================================
-
-
 class NewsLetterSubscribersView(APIView):
-    """
-    Lists all the NewsLetter Subscribers
+    """[summary]
+
+    Args:
+        APIView ([type]): [description]
+
+    Returns:
+        [type]: [description]
     """
 
-    def get(self, request, *args, **kwargs):
+    def get(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """        
         subscriber = NewsLetter.objects.all()
         serializer = NewsLetterSerializer(subscriber, many=True)
         return Response(serializer.data)
-
-
+# ==================================================================================================================
 class InternStackList(APIView):
+    """[summary]
+
+    Args:
+        APIView ([type]): [description]
+    """    
     def get(self, request, stack):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            stack ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """        
         instance = Stack.objects.get(name=stack)
         interns = Intern.objects.filter(stack=instance)
         serializer = InternSerializer(interns, many=True)
         data = serializer.data
         for datum in data:
             convert_stack_to_list(datum)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
+        paginated_data = paginator.paginate_queryset(data, request=request)
+        return paginator.get_paginated_response(paginated_data)
 # ==================================================================================================================
-
-
 class StatisticView(APIView):
-    """
-    Intern Statistics
-    """
+    """[summary]
+
+    Args:
+        APIView ([type]): [description]
+    """    
 
     def get(self, request, batch, format=None):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            batch ([type]): [description]
+            format ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            [type]: [description]
+        """        
         try:
             statistic = Statistic.objects.get(year=batch)
             # serializer = StatisticSerializer(statistic)
             # data = serializer.data
             all_interns = Intern.objects.filter(batch=batch)
-            employed_interns = Intern.objects.filter(batch=batch, is_employed=True)
-            # print(data)
+            employed_interns = Intern.objects.filter(
+                batch=batch, is_employed=True)
             response_body = {
                 "year": statistic.year,
                 "male": statistic.male,
@@ -471,20 +496,24 @@ class StatisticView(APIView):
             return Response(response_body, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
-
-
 # ==================================================================================================================
-
-
 @api_view(["GET"])
 def all_stats(request):
-    data = []
+    """[summary]
 
+    Args:
+        request ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """    
+    data = []
     try:
         statistics = Statistic.objects.all()
         for stat in statistics:
             all_interns = Intern.objects.filter(batch=stat.year)
-            employed_interns = Intern.objects.filter(batch=stat.year, is_employed=True)
+            employed_interns = Intern.objects.filter(
+                batch=stat.year, is_employed=True)
 
             response_body = {
                 "year": stat.year,
@@ -499,13 +528,18 @@ def all_stats(request):
         return Response(data, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
-
-
 # ==================================================================================================================
-
-
 @api_view(["GET"])
 def total_salary(request, batch):
+    """[summary]
+
+    Args:
+        request ([type]): [description]
+        batch ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """    
     interns = Intern.objects.filter(batch=batch, is_employed=True)
     salary = 0
     try:
@@ -514,29 +548,46 @@ def total_salary(request, batch):
         return Response({"total_salary": f"{salary}"}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
-
-
 # ==================================================================================================================
-
-
 class BatchList(APIView):
+    """[summary]
+
+    Args:
+        APIView ([type]): [description]
+    """    
     def get(self, request, batch):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            batch ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """        
         try:
             interns = Intern.objects.filter(batch=batch)
             serializer = InternSerializer(interns, many=True)
             data = serializer.data
             for datum in data:
                 convert_stack_to_list(datum)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            paginated_data = paginator.paginate_queryset(data, request=request)
+            return paginator.get_paginated_response(paginated_data)
         except Exception as e:
             return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
-
-
 # ==================================================================================================================
-
-
-@api_view(["get"])
+@api_view(["GET"])
 def get_interns_by_year_and_stack(request, batch, stack):
+    """[summary]
+
+    Args:
+        request ([type]): [description]
+        batch ([type]): [description]
+        stack ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """    
     try:
         instance = Stack.objects.get(name=stack, batch=batch)
         interns = Intern.objects.filter(stack=instance)
@@ -544,16 +595,27 @@ def get_interns_by_year_and_stack(request, batch, stack):
         data = serializer.data
         for datum in data:
             convert_stack_to_list(datum)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        paginated_data = paginator.paginate_queryset(data, request=request)
+        return paginator.get_paginated_response(paginated_data)
     except Exception as e:
         return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
-
-
 # ==================================================================================================================
-
-
 class GetStacksPerBatch(APIView):
+    """[summary]
+
+    Args:
+        APIView ([type]): [description]
+    """    
     def get(self, request, batch):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            batch ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """        
         try:
             stack_detail = {}
             stacks = []
@@ -568,9 +630,16 @@ class GetStacksPerBatch(APIView):
             return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"Message": f"{e}"}, status.HTTP_400_BAD_REQUEST)
-
-
+# ==================================================================================================================
 class SponsorView(APIView):
+    """[summary]
+
+    Args:
+        APIView ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """    
     parser_classes = (
         MultiPartParser,
         JSONParser,
@@ -578,6 +647,14 @@ class SponsorView(APIView):
     queryset = None
 
     def post(self, request):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """        
         serializer = SponsorSerializer(data=request.data)
 
         serializer.is_valid(raise_exception=True)
@@ -596,11 +673,28 @@ class SponsorView(APIView):
         return Response(data, status=status.HTTP_201_CREATED)
 
     def get(self, request):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """        
         sponsor_queryset = Sponsor.objects.all()
         serializer = SponsorSerializer(sponsor_queryset, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
 
     def delete(self, request, id):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            id ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """        
         try:
             sponsor = Sponsor.objects.get(id=id)
             sponsor.delete()
@@ -625,10 +719,17 @@ class SponsorView(APIView):
                 "error": True,
             }
             return Response(data, status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
+# ==================================================================================================================
 @api_view(["GET"])
 def get_all_jobs(request):
+    """[summary]
+
+    Args:
+        request ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """    
     instance = Jobs.objects.all()
     interns = []
     for job in instance:
@@ -636,3 +737,7 @@ def get_all_jobs(request):
         data = serializer.data
         interns.append(data)
     return Response({"data": interns})
+
+# class DynamicSearchFilter(filters.SearchFilter):
+#     def get_search_fields(self, view, request):
+#         return request.GET.getlist('search_fields', [])
