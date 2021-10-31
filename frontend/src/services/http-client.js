@@ -3,16 +3,16 @@ import axiosClientForm from "./axiosConfig"
 
 class ContributionServices {
     getIntern(){
-        return axiosConfig.get("/api/v1/interns/")
+        return axiosConfig.get("/api/v1/interns/?page=1")
     }
     getStackYear(year) {
         return axiosConfig.get(`/api/v1/stacks/batch/${year}/`)
     }
     getAllStack(year){
-        return axiosConfig.get(`/api/v1/interns/batch/${year}`)
+        return axiosConfig.get(`/api/v1/interns/batch/${year}/?page=1`)
     }
-    getStack(stack){
-        return axiosConfig.get(`/api/v1/interns/stack/${stack}/`)
+    getStack(stack, year){
+        return axiosConfig.get(`/api/v1/interns/batch/${year}/stack/${stack}/?page=1`)
     }
     getTotalSalary() {
         return axiosConfig.get("/api/v1/interns/total_salary")

@@ -10,6 +10,9 @@ export default createStore({
     totalSalary: '',
     stacks: [],
     year: [],
+    count: "",
+    setNext: "",
+    setPrev: "",
     allInterns:[],
     internJob:[],
     progresStat:[],
@@ -45,7 +48,9 @@ export default createStore({
     setYear(state, payload) {state.year = payload},
 
     allInterns(state, payload) { state.allInterns = payload },
-
+    setCount(state, payload) {state.count = payload},
+    setNext(state, payload) {state.next = payload},
+    setPrev(state, payload) {state.prev = payload},
     userJob(state, payload) { state.internJob.push(payload) },
     currentUserId(state, payload){state.currentUserID = payload},
 
@@ -67,13 +72,19 @@ export default createStore({
     async getAllStack({commit, getters}) {
       const year = getters.year
       await ContributionServices.getAllStack(year).then(response => {
-        commit("allInterns", response.data)
+        commit("setCount", response.data.count)
+        commit("allInterns", response.data.results)
+        commit("setNext", response.data.next);
+        console.log(response)
       })
     },
     async getStack({commit, getters}, payload) {
       const year = getters.year
       await ContributionServices.getStack(payload, year).then(response => {
-        commit("allInterns", response.data)
+       // console.log(response)
+        commit("allInterns", response.data.results)
+        commit("setCount", response.data.count)
+        commit("setNext", response.data.next);
       })
     },
     async getYear({commit}, payload) {
@@ -145,17 +156,26 @@ export default createStore({
     },
     async fetchInterns({commit}, payload){
       await ContributionServices.getIntern(payload).then(res =>{
-        commit('setInterns', res.data)
+        commit('setInterns', res.data.results)
       })
     },
 
   },
   getters:{
     allInterns(state){
-      return state.allInterns.results
+      return state.allInterns
     },
     allUserjobs (state){
       return state.internJob
+    },
+    counts(state) {
+      return state.count
+    },
+    next(state) {
+      return state.next
+    },
+    prev(state) {
+      return state.prev
     },
     stacks(state) {
       return state.stacks
@@ -180,11 +200,11 @@ export default createStore({
       return yearFinalists;
     },
     interns(state){
-      const interns = state.interns.results.sort(() => Math.random() - 0.5).slice(0,4)
+      const interns = state.allInterns.sort(() => Math.random() - 0.5).slice(0,4)
       return interns;
     },
     internPictures(state){
-      const internPictures = state.interns.results
+      const internPictures = state.interns.sort(() => Math.random() - 0.5).slice(0,10)
       return internPictures;
     },
   },
