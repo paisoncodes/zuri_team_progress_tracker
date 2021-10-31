@@ -4,12 +4,18 @@ from django.views import generic
 from rest_framework import status, permissions
 from rest_framework.serializers import Serializer
 from rest_framework.views import APIView
+from django.http import Http404
+from rest_framework import permissions, status
+from rest_framework.decorators import api_view
 from rest_framework.generics import UpdateAPIView
-from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.parsers import JSONParser, MultiPartParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .cloudinary import upload_image
 from .models import Intern, Jobs, NewsLetter, Stack
 from .serializers import *
-from django.http import Http404
 from rest_framework.decorators import api_view
 from rest_framework.parsers import MultiPartParser, JSONParser
 from .cloudinary import upload_image
@@ -291,21 +297,7 @@ class search(generics.ListCreateAPIView):
     search_fields = ['id','full_name']
     
      
-    # def list(self, request, format=None):
-    #     querySet =self.get_queryset()
-    #     serializer = InternSerializer(querySet, many=True)
-    #     paginated_data = paginator.paginate_queryset(serializer.data, request=request)
-    #     return paginator.get_paginated_response(paginated_data)
-       
-        
-        
-        # data = serializer.data
-        # for datum in data:
-        #     convert_stack_to_list(datum)
-        # 
-
-
-
+   
 #================================================================================================================
 
 

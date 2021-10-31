@@ -1,18 +1,37 @@
-from django.db.models.query import QuerySet
-from rest_framework import status, permissions
-from rest_framework.views import APIView
-from rest_framework.generics import UpdateAPIView
-from rest_framework.response import Response
-from custom_admin.serializers import (
-    AdminUserSerializer,
-    InternAdminSerializer,
-)
-from app.models import User, Stack, Intern, Jobs, NewsLetter
+from app.cloudinary import upload_image
+from app.models import Intern, Stack, User
 from app.serializers import *
 from django.http import Http404
-from rest_framework.decorators import api_view
-from rest_framework.parsers import MultiPartParser, JSONParser
-from app.cloudinary import upload_image
+from rest_framework import status
+from rest_framework.generics import UpdateAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
+from django.contrib.auth.hashers import make_password
+
+
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from custom_admin.serializers import (AdminUserSerializer,
+                                      ChangePasswordSerializer,
+                                      InternAdminSerializer)
+
+class CustomAuthToken(ObtainAuthToken):
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                       context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+            'email': user.email
+        })
+
 
 # Create your views here.
 
@@ -31,8 +50,9 @@ class UserAdminCreateView(APIView):
         serializer = AdminUserSerializer(users, many=True)
         return Response(serializer.data)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         serializer = AdminUserSerializer(data=request.data)
+        request.data['password'] = make_password("admin")
         if serializer.is_valid():
             if serializer.validated_data["permissions"] == "S":
                 serializer.validated_data["staff"] = True
@@ -110,6 +130,7 @@ class StackAdminCreateView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # ==================================================================================================================
 class StackAdminUpdateView(APIView):
@@ -295,3 +316,42 @@ class InternAdminUpdateView(APIView):
 class StaffInviteView(APIView):
 
     pass
+
+
+
+class ChangePasswordView(UpdateAPIView):
+        """
+        An endpoint for changing password. Use PUT OR PATCH as your htto method
+        """
+        serializer_class = ChangePasswordSerializer
+        model = User
+        permission_classes = (IsAuthenticated,)
+
+        def get_object(self, queryset=None):
+            obj = self.request.user
+            return obj
+
+        def update(self, request, *args, **kwargs):
+            self.object = self.get_object()
+            serializer = self.get_serializer(data=request.data)
+
+            if serializer.is_valid():
+                
+                if not self.object.check_password(serializer.data.get("old_password")):
+                    return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
+                
+                if serializer.data.get("password") != serializer.data.get("password2"):
+                    return Response({"password": "new password doesn't match "}, status=status.HTTP_400_BAD_REQUEST)
+                
+                self.object.set_password(serializer.data.get("password"))
+                self.object.save()
+                response = {
+                    'status': 'success',
+                    'code': status.HTTP_200_OK,
+                    'message': 'Password updated successfully',
+                    
+                }
+
+                return Response(response)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

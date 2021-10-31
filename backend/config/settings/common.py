@@ -63,9 +63,12 @@ REST_FRAMEWORK = {
         "rest_framework.parsers.JSONParser",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-
-    
+    # "DEFAULT_PAGINATION_CLASS": [
+    #     'apps.core.pagination.StandardResultsSetPagination',
+    # ],
+    "DEFAULT_AUTHENTICATION_CLASSES": ['rest_framework.authentication.TokenAuthentication'], 
 }
+
 
 
 SPECTACULAR_SETTINGS = {
@@ -94,6 +97,7 @@ INSTALLED_APPS = [
     "cloudinary",
     "whitenoise.runserver_nostatic",
     "django_filters"
+    "rest_framework.authtoken",
 ]
 
 MIDDLEWARE = [
