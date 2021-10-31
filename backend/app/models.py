@@ -60,7 +60,7 @@ class Stack(models.Model):
 
     # TODO: Define fields here
     id                          = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    name                        = models.CharField(max_length=50, unique_for_year="batch")
+    name                        = models.CharField(max_length=50)
     batch                       = models.IntegerField()
 
     class Meta:

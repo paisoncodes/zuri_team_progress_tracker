@@ -12,6 +12,11 @@ from rest_framework.views import APIView
 from .cloudinary import upload_image
 from .models import Intern, Jobs, NewsLetter, Stack
 from .serializers import *
+from rest_framework.decorators import api_view
+from rest_framework.parsers import MultiPartParser, JSONParser
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework import generics
 
 # Create your views here.
 
@@ -363,7 +368,10 @@ class InternUpdate(UpdateAPIView):
         serializer = InternSerializer(instance)
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 # ==================================================================================================================
-class search(generics.ListCreateAPIView):
+
+
+class Search(generics.ListCreateAPIView):
+
     """[summary]
 
     Args:
@@ -375,7 +383,9 @@ class search(generics.ListCreateAPIView):
     filter_backends = [DjangoFilterBackend,SearchFilter,OrderingFilter]
     ordering_fields = ['id', 'full_name', 'stack']
     ordering =('full_name',)
-    search_fields = ['id','full_name']
+    search_fields = ['id','full_name','stack__name']
+    
+     
 #================================================================================================================
 class NewsLetterSubscribeView(APIView):
     """[summary]
