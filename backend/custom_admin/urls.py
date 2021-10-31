@@ -1,5 +1,6 @@
 from django.urls import path
 
+
 from custom_admin.views import (
     UserAdminCreateView,
     UserAdminUpdateView,
@@ -7,7 +8,8 @@ from custom_admin.views import (
     StackAdminUpdateView,
     InternsAdminView,
     InternAdminUpdateView,
-    ChangePasswordView
+    ChangePasswordView,
+    CustomAuthToken
 )
 
 from app import views
@@ -23,10 +25,11 @@ urlpatterns = [
     # ================================================================================================================
     path("interns/", views.InternsView.as_view(), name="InternCreate"),
     path("interns/<str:intern_id>/update/", InternAdminUpdateView.as_view(), name="InternUpdate"),
-    path('change_password/', ChangePasswordView.as_view(), name='auth_change_password')
+    path('change_password/', ChangePasswordView.as_view(), name='auth_change_password'),
+    
     
     # ================================================================================================================
-   
+    path(r'login/', CustomAuthToken.as_view())
     # ================================================================================================================
 
     

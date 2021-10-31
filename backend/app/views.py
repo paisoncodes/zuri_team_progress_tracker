@@ -1,16 +1,27 @@
 from os import name
 from django.db.models.query import QuerySet
+from django.views import generic
 from rest_framework import status, permissions
+from rest_framework.serializers import Serializer
 from rest_framework.views import APIView
+from django.http import Http404
+from rest_framework import permissions, status
+from rest_framework.decorators import api_view
 from rest_framework.generics import UpdateAPIView
-from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.parsers import JSONParser, MultiPartParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .cloudinary import upload_image
 from .models import Intern, Jobs, NewsLetter, Stack
 from .serializers import *
-from django.http import Http404
 from rest_framework.decorators import api_view
 from rest_framework.parsers import MultiPartParser, JSONParser
 from .cloudinary import upload_image
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework import generics
 
 # Create your views here.
 
@@ -160,10 +171,7 @@ class InternsView(APIView):
             "picture": "https://ocdn.eu/pulscms-transforms/1/9zVk9kuTURBXy84MTcxYmNmNy0zMmIwLTQ1MzAtOTE0MS1iMWU1Y2Y1MTNjN2MuanBlZ5GTBc0DFs0BroGhMAU"
             }
     """
-
-    queryset = Intern.objects.all()
-    serializer_class = InternSerializer
-
+    
     def get(self, request, format=None):
         interns = Intern.objects.all()
         serializer = InternSerializer(interns, many=True)
@@ -173,6 +181,7 @@ class InternsView(APIView):
         paginated_data = paginator.paginate_queryset(data, request=request)
         return paginator.get_paginated_response(paginated_data)
 
+    
     def post(self, request):
 
         serializer = InternSerializer(data=request.data)
@@ -273,6 +282,27 @@ class InternUpdate(UpdateAPIView):
 
 
 # ==================================================================================================================
+
+
+
+class search(generics.ListCreateAPIView):
+
+
+    queryset = Intern.objects.all()
+    serializer_class = InternSerializer
+    filterset_fields = ['id', 'full_name', 'stack']
+    filter_backends = [DjangoFilterBackend,SearchFilter,OrderingFilter]
+    ordering_fields = ['id', 'full_name', 'stack']
+    ordering =('full_name',)
+    search_fields = ['id','full_name']
+    
+     
+   
+#================================================================================================================
+
+
+
+
 
 
 class NewsLetterSubscribeView(APIView):
@@ -514,3 +544,11 @@ def get_all_jobs(request):
         data = serializer.data
         interns.append(data)
     return Response({"data": interns})
+
+
+
+
+
+# class DynamicSearchFilter(filters.SearchFilter):
+#     def get_search_fields(self, view, request):
+#         return request.GET.getlist('search_fields', [])
