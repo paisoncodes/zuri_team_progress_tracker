@@ -12,14 +12,11 @@ from rest_framework.views import APIView
 from .cloudinary import upload_image
 from .models import Intern, Jobs, NewsLetter, Stack
 from .serializers import *
-<<<<<<< HEAD
 from rest_framework.decorators import api_view
 from rest_framework.parsers import MultiPartParser, JSONParser
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework import generics
-=======
->>>>>>> 6d34950432011b81290edfa7f3036e6fcbb340af
 
 # Create your views here.
 
