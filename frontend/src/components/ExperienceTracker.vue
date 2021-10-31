@@ -10,14 +10,15 @@
 <div v-if="showLoder" class="flex justify-center">
   <CustomLoader />
   </div>
-  <div v-else class="grid  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-for="(intern, index) in getAllInterns" :key="index" >
-      <!-- <div class="icon" style=" width:inherit; height:100%;">
-          <img class="object-contain object-center  h-full w-full" style="width:inherit; height:100%;" :src="intern.picture"/>
-      </div> -->
-      
-        <div class="icon h-72 rounded" :style="{ backgroundImage: `url('${intern.picture}')` }">
-          <!-- <img class="object-contain object-center  h-full w-full"/> -->
-      </div>
+  <div v-else  v-for="(intern, index) in getAllInterns" :key="index" >
+    <div class="grid  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-if="batch== intern.batch">
+     <!-- <div class="icon" style=" width:inherit; height:100%;">
+         <img class="object-contain object-center  h-full w-full" style="width:inherit; height:100%;" :src="intern.picture"/>
+     </div> -->
+     
+      <div class="icon h-72" :style="{ backgroundImage: `url('${intern.picture}')` }">
+         <!-- <img class="object-contain object-center  h-full w-full"/> -->
+     </div>
 
      <div class="md:col-span-3 ">
       <div class="mx-5 mt-5"  >
