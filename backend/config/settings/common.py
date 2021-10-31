@@ -96,7 +96,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "cloudinary",
     "whitenoise.runserver_nostatic",
-    "django_filters"
+    "django_filters",
     "rest_framework.authtoken",
 ]
 

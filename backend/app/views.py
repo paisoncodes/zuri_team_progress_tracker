@@ -18,7 +18,6 @@ from .models import Intern, Jobs, NewsLetter, Stack
 from .serializers import *
 from rest_framework.decorators import api_view
 from rest_framework.parsers import MultiPartParser, JSONParser
-from .cloudinary import upload_image
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework import generics
@@ -285,7 +284,7 @@ class InternUpdate(UpdateAPIView):
 
 
 
-class search(generics.ListCreateAPIView):
+class Search(generics.ListCreateAPIView):
 
 
     queryset = Intern.objects.all()
@@ -294,7 +293,7 @@ class search(generics.ListCreateAPIView):
     filter_backends = [DjangoFilterBackend,SearchFilter,OrderingFilter]
     ordering_fields = ['id', 'full_name', 'stack']
     ordering =('full_name',)
-    search_fields = ['id','full_name']
+    search_fields = ['id','full_name','stack__name']
     
      
    
