@@ -86,16 +86,25 @@
       </div>
       </div>
   </div>
-  <div class="mt-2 flex items-center justify-center">
-        <ul class="flex">
-          <li class="mr-2" :class="{'hidden': !prev}">
-            <div class="cursor-pointer" @click="handlePrev">Prev</div>
-          </li>
-          <li :class="{'hidden': !next}">
-            <div class="cursor-pointer" @click="handleNext">Next</div>
-          </li>
-        </ul>
-      </div>
+
+
+<div class="flex flex-col items-center">
+  <!-- Help text -->
+  <!-- <span class="text-sm text-gray-700">
+      Showing <span class="font-semibold text-gray-900">1</span> to <span class="font-semibold text-gray-900">20</span> of <span class="font-semibold text-gray-900">{{yearFinalists[0]}}</span> Finalists
+  </span> -->
+  <!-- Buttons -->
+  <div class="inline-flex mt-2 xs:mt-0">
+      <button @click="handlePrev" :class="{'hidden': !prev}" class="cursor-pointer mx-3 bg-brand-gray-dark-1 hover:bg-brand-gray-dark-2 text-white text-sm font-medium rounded py-2 px-4">
+          Prev
+      </button>
+      <button @click="handleNext" :class="{'hidden': !next}" class="cursor-pointer mx-3 bg-brand-gray-dark-1 hover:bg-brand-gray-dark-2 text-white text-sm font-medium rounded border-0 border-gray-700 py-2 px-4">
+          Next
+      </button>
+  </div>
+</div>
+
+
   </div>
 </template>
 
