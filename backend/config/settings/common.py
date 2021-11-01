@@ -33,28 +33,28 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # corspolicy settings
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ORIGIN_WHITELIST = (
-    "http://localhost:8080",
-    "https://zuriprogresstracker.netlify.app",
-)
+# CORS_ALLOW_ALL_ORIGINS = False
+# CORS_ORIGIN_WHITELIST = (
+#     "http://localhost:8080",
+#     "https://zuriprogresstracker.netlify.app",
+# )
 
-# CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True
 
-# CORS_PREFLIGHT_MAX_AGE = 86400
+CORS_PREFLIGHT_MAX_AGE = 86400
 
-# CORS_REPLACE_HTTPS_REFERER = True
+CORS_REPLACE_HTTPS_REFERER = True
 
 
-# CORS_ALLOW_METHODS = [
-#     'DELETE',
-#     'GET',
-#     'OPTIONS',
-#     'PATCH',
-#     'POST',
-#     'PUT',
-#     'HEAD',
-# ]
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+    'HEAD',
+]
 
 
 # rest_framework global configs
