@@ -299,7 +299,7 @@ class InternAdminUpdateView(APIView):
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 
     def delete(self, request, intern_id, format=None):
-        user_is_staff = request.user.is_staff
+        # user_is_staff = request.user.is_staff
         user_is_admin = request.user.is_admin
 
         if user_is_admin == False:
