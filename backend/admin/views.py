@@ -317,6 +317,5 @@ class InternAdminUpdateView(APIView):
 
         return Response(
             {"message": "Intern deleted successfully."},
-            # {"message": f"{user_is_admin}"},
             status=status.HTTP_204_NO_CONTENT,
         )
