@@ -23,17 +23,21 @@ from rest_framework import generics
 paginator = PageNumberPagination()
 paginator.page_size = 20
 # ==================================================================================================================
+
+
 def convert_stack_to_list(data):
     """[summary]
 
     Args:
         data ([type]): [description]
-    """    
+    """
     stacks = []
     for item in data["stack"]:
         stacks.append(item["name"])
     data["stack"] = stacks
 # ==================================================================================================================
+
+
 class JobView(APIView):
     """[summary]
 
@@ -42,7 +46,7 @@ class JobView(APIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
     parser_classes = (
         MultiPartParser,
         JSONParser,
@@ -59,7 +63,7 @@ class JobView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         try:
             intern = Intern.objects.get(pk=intern_id)
             image = request.FILES["image"]
@@ -84,7 +88,7 @@ class JobView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         try:
             intern = Intern.objects.get(pk=intern_id)
             jobsList_objects = Jobs.objects.filter(intern=intern)
@@ -95,6 +99,8 @@ class JobView(APIView):
         except Exception as e:
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 # ==================================================================================================================
+
+
 class JobUpdateView(UpdateAPIView):
     """[summary]
 
@@ -103,7 +109,7 @@ class JobUpdateView(UpdateAPIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
     queryset = Jobs.objects.all()
     serializer_class = JobSerializer
     permission_classes = (permissions.AllowAny,)
@@ -118,7 +124,7 @@ class JobUpdateView(UpdateAPIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         intern = Intern.objects.get(pk=intern_id)
         instance = Jobs.objects.get(intern=intern, pk=job_id)
         data = {
@@ -147,18 +153,21 @@ class JobUpdateView(UpdateAPIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         intern = Intern.objects.get(pk=intern_id)
         job = Jobs.objects.get(pk=pk, intern=intern)
         serializer = JobSerializer(job)
         return Response(serializer.data, status=status.HTTP_200_OK)
 # ==================================================================================================================
+
+
 class InternDetailView(APIView):
     """[summary]
 
     Args:
         APIView ([type]): [description]
-    """    
+    """
+
     def get_object(self, intern_id):
         """[summary]
 
@@ -170,7 +179,7 @@ class InternDetailView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         try:
             return Intern.objects.get(pk=intern_id)
         except Intern.DoesNotExist:
@@ -186,7 +195,7 @@ class InternDetailView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         intern = self.get_object(intern_id)
         serializer = InternSerializer(intern)
         data = serializer.data
@@ -204,18 +213,20 @@ class InternDetailView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         intern = self.get_object(intern_id)
         intern.delete()
         return Response(status=status.HTTP_200_OK)
 # ==================================================================================================================
+
+
 class InternsView(APIView):
     """[summary]
 
     Args:
         APIView ([type]): [description]
-    """    
-    
+    """
+
     def get(self, request, format=None):
         """[summary]
 
@@ -225,7 +236,7 @@ class InternsView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         interns = Intern.objects.all()
         serializer = InternSerializer(interns, many=True)
         data = serializer.data
@@ -242,7 +253,7 @@ class InternsView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
 
         serializer = InternSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -251,6 +262,8 @@ class InternsView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 # ==================================================================================================================
+
+
 class InternUpdate(UpdateAPIView):
     """[summary]
 
@@ -259,7 +272,7 @@ class InternUpdate(UpdateAPIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
     parser_classes = (
         MultiPartParser,
         JSONParser,
@@ -277,7 +290,7 @@ class InternUpdate(UpdateAPIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         try:
             if request.FILES:
                 image = request.FILES["image"]
@@ -340,7 +353,7 @@ class InternUpdate(UpdateAPIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         intern = Intern.objects.get(pk=intern_id)
         serializer = InternSerializer(intern)
         data = serializer.data
@@ -356,7 +369,7 @@ class InternUpdate(UpdateAPIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         image = request.FILES["image"]
         try:
             instance = Intern.objects.get(pk=intern_id)
@@ -370,23 +383,46 @@ class InternUpdate(UpdateAPIView):
 # ==================================================================================================================
 
 
-class Search(generics.ListCreateAPIView):
+class Search(generics.ListAPIView):
 
     """[summary]
 
     Args:
         generics ([type]): [description]
-    """    
+    """
     queryset = Intern.objects.all()
     serializer_class = InternSerializer
     filterset_fields = ['id', 'full_name', 'stack']
-    filter_backends = [DjangoFilterBackend,SearchFilter,OrderingFilter]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     ordering_fields = ['id', 'full_name', 'stack']
-    ordering =('full_name',)
-    search_fields = ['id','full_name','stack__name']
-    
-     
-#================================================================================================================
+    ordering = ('full_name',)
+    search_fields = ['id', 'full_name', 'stack__name']
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        data = serializer.data
+        for datum in data:
+            convert_stack_to_list(datum)
+        paginated_data = paginator.paginate_queryset(data, request=request)
+        return paginator.get_paginated_response(paginated_data)
+
+        # page = self.paginate_queryset(queryset)
+        # if page is not None:
+        #     serializer = self.get_serializer(page, many=True)
+        #     data = serializer.data
+        #     for datum in data:
+        #         convert_stack_to_list(datum)
+        #     return self.get_paginated_response(data)
+
+        # serializer = self.get_serializer(queryset, many=True)
+        # data = serializer.data
+        # for datum in data:
+        #     convert_stack_to_list(datum)
+        # return Response(data)
+
+
+# ================================================================================================================
 class NewsLetterSubscribeView(APIView):
     """[summary]
 
@@ -395,7 +431,7 @@ class NewsLetterSubscribeView(APIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
     queryset = NewsLetter.objects.all()
     serializer_class = NewsLetterSerializer
 
@@ -407,13 +443,15 @@ class NewsLetterSubscribeView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         serializer = NewsLetterSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 # ==================================================================================================================
+
+
 class NewsLetterSubscribersView(APIView):
     """[summary]
 
@@ -429,17 +467,20 @@ class NewsLetterSubscribersView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         subscriber = NewsLetter.objects.all()
         serializer = NewsLetterSerializer(subscriber, many=True)
         return Response(serializer.data)
 # ==================================================================================================================
+
+
 class InternStackList(APIView):
     """[summary]
 
     Args:
         APIView ([type]): [description]
-    """    
+    """
+
     def get(self, request, stack):
         """[summary]
 
@@ -449,7 +490,7 @@ class InternStackList(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         instance = Stack.objects.get(name=stack)
         interns = Intern.objects.filter(stack=instance)
         serializer = InternSerializer(interns, many=True)
@@ -459,12 +500,14 @@ class InternStackList(APIView):
         paginated_data = paginator.paginate_queryset(data, request=request)
         return paginator.get_paginated_response(paginated_data)
 # ==================================================================================================================
+
+
 class StatisticView(APIView):
     """[summary]
 
     Args:
         APIView ([type]): [description]
-    """    
+    """
 
     def get(self, request, batch, format=None):
         """[summary]
@@ -476,7 +519,7 @@ class StatisticView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         try:
             statistic = Statistic.objects.get(year=batch)
             # serializer = StatisticSerializer(statistic)
@@ -497,6 +540,8 @@ class StatisticView(APIView):
         except Exception as e:
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 # ==================================================================================================================
+
+
 @api_view(["GET"])
 def all_stats(request):
     """[summary]
@@ -506,7 +551,7 @@ def all_stats(request):
 
     Returns:
         [type]: [description]
-    """    
+    """
     data = []
     try:
         statistics = Statistic.objects.all()
@@ -529,6 +574,8 @@ def all_stats(request):
     except Exception as e:
         return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 # ==================================================================================================================
+
+
 @api_view(["GET"])
 def total_salary(request, batch):
     """[summary]
@@ -539,7 +586,7 @@ def total_salary(request, batch):
 
     Returns:
         [type]: [description]
-    """    
+    """
     interns = Intern.objects.filter(batch=batch, is_employed=True)
     salary = 0
     try:
@@ -549,12 +596,15 @@ def total_salary(request, batch):
     except Exception as e:
         return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
 # ==================================================================================================================
+
+
 class BatchList(APIView):
     """[summary]
 
     Args:
         APIView ([type]): [description]
-    """    
+    """
+
     def get(self, request, batch):
         """[summary]
 
@@ -564,7 +614,7 @@ class BatchList(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         try:
             interns = Intern.objects.filter(batch=batch)
             serializer = InternSerializer(interns, many=True)
@@ -576,6 +626,8 @@ class BatchList(APIView):
         except Exception as e:
             return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
 # ==================================================================================================================
+
+
 @api_view(["GET"])
 def get_interns_by_year_and_stack(request, batch, stack):
     """[summary]
@@ -587,7 +639,7 @@ def get_interns_by_year_and_stack(request, batch, stack):
 
     Returns:
         [type]: [description]
-    """    
+    """
     try:
         instance = Stack.objects.get(name=stack, batch=batch)
         interns = Intern.objects.filter(stack=instance)
@@ -600,12 +652,15 @@ def get_interns_by_year_and_stack(request, batch, stack):
     except Exception as e:
         return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
 # ==================================================================================================================
+
+
 class GetStacksPerBatch(APIView):
     """[summary]
 
     Args:
         APIView ([type]): [description]
-    """    
+    """
+
     def get(self, request, batch):
         """[summary]
 
@@ -615,7 +670,7 @@ class GetStacksPerBatch(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         try:
             stack_detail = {}
             stacks = []
@@ -631,6 +686,8 @@ class GetStacksPerBatch(APIView):
         except Exception as e:
             return Response({"Message": f"{e}"}, status.HTTP_400_BAD_REQUEST)
 # ==================================================================================================================
+
+
 class SponsorView(APIView):
     """[summary]
 
@@ -639,7 +696,7 @@ class SponsorView(APIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
     parser_classes = (
         MultiPartParser,
         JSONParser,
@@ -654,7 +711,7 @@ class SponsorView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         serializer = SponsorSerializer(data=request.data)
 
         serializer.is_valid(raise_exception=True)
@@ -680,7 +737,7 @@ class SponsorView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         sponsor_queryset = Sponsor.objects.all()
         serializer = SponsorSerializer(sponsor_queryset, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
@@ -694,7 +751,7 @@ class SponsorView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         try:
             sponsor = Sponsor.objects.get(id=id)
             sponsor.delete()
@@ -720,6 +777,8 @@ class SponsorView(APIView):
             }
             return Response(data, status.HTTP_500_INTERNAL_SERVER_ERROR)
 # ==================================================================================================================
+
+
 @api_view(["GET"])
 def get_all_jobs(request):
     """[summary]
@@ -729,7 +788,7 @@ def get_all_jobs(request):
 
     Returns:
         [type]: [description]
-    """    
+    """
     instance = Jobs.objects.all()
     interns = []
     for job in instance:
