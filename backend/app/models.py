@@ -95,6 +95,9 @@ class Intern(models.Model):
 
     def __str__(self):
         return self.full_name
+    
+    class Meta:
+        ordering = ("-created_at",)
 
 
 # ==================================================================================================================
