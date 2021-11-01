@@ -39,6 +39,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #     "https://zuriprogresstracker.netlify.app",
 # )
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_PREFLIGHT_MAX_AGE = 86400
