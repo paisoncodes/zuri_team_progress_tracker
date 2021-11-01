@@ -13,7 +13,6 @@ from django.http import Http404
 from rest_framework.decorators import api_view
 from rest_framework.parsers import MultiPartParser, JSONParser
 from app.cloudinary import upload_image
-import json
 
 # Create your views here.
 
