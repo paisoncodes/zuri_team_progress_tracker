@@ -2,13 +2,13 @@
     <div class="max-w-7xl mx-auto my-6 py-16 px-6 text-brand-gray-dark-1">
         <div class="md:flex md:justify-between mb-16 py-4 text-center md:text-left font-medium">
             <div class="mb-8 md:mb-0 text-3xl md:text-2xl font-bold">
-                <router-link to="/" class="hover:text-brand-red-dark">Zuri<span class="text-brand-red-dark">.</span>Team</router-link>
+                <p>Zuri<span class="text-brand-red-dark">.</span>Team</p>
             </div>
             <div class="mb-8 md:mb-0">
                 <h2 class="mb-3 font-bold text-2xl md:text-base">Links</h2>
                 <ul class="font-medium text-brand-red-dark">
-                    <li class="mb-3"><a href="https://flutterwave.com/store/zuriteam">Store</a></li>
-                    <li class="mb-3"><a href="htpps://blog.zuri.team">Blog</a></li>
+                    <li class="mb-3"><a class="hover:text-red-400" href="https://flutterwave.com/store/zuriteam">Store</a></li>
+                    <li class="mb-3"><a class="hover:text-red-400" href="htpps://blog.zuri.team">Blog</a></li>
                 </ul>
             </div>
             <div class="mb-8 md:mb-0">
@@ -18,7 +18,7 @@
                     <p>Lagos State</p>
                 </div>
                 <div class="text-sm">
-                    <a class="text-brand-red-dark" href="mailto:hello@zuri.com">hello@zuri.com</a>
+                    <a class="text-brand-red-dark hover:text-red-400" href="mailto:hello@zuri.com">hello@zuri.com</a>
                 </div>
             </div>
             <div>
