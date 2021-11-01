@@ -11,9 +11,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from custom_admin.serializers import (AdminUserSerializer,
-                                      ChangePasswordSerializer,
-                                      InternAdminSerializer)
+from custom_admin.serializers import (
+    AdminUserSerializer,
+    ChangePasswordSerializer,
+    InternAdminSerializer,
+)
 
 
 class CustomAuthToken(ObtainAuthToken):
@@ -21,7 +23,7 @@ class CustomAuthToken(ObtainAuthToken):
 
     Args:
         ObtainAuthToken ([type]): [description]
-    """    
+    """
 
     def post(self, request, *args, **kwargs):
         """[summary]
@@ -31,17 +33,15 @@ class CustomAuthToken(ObtainAuthToken):
 
         Returns:
             [type]: [description]
-        """        
-        serializer = self.serializer_class(data=request.data,
-                                       context={'request': request})
+        """
+        serializer = self.serializer_class(
+            data=request.data, context={"request": request}
+        )
         serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
+        user = serializer.validated_data["user"]
         token, created = Token.objects.get_or_create(user=user)
-        return Response({
-            'token': token.key,
-            'user_id': user.pk,
-            'email': user.email
-        })
+        return Response({"token": token.key, "user_id": user.pk, "email": user.email})
+
 
 # ==================================================================================================================
 class UserAdminCreateView(APIView):
@@ -52,7 +52,7 @@ class UserAdminCreateView(APIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
 
     queryset = User.objects.all()
     serializer_class = AdminUserSerializer
@@ -67,7 +67,7 @@ class UserAdminCreateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         users = User.objects.all()
         serializer = AdminUserSerializer(users, many=True)
         return Response(serializer.data)
@@ -80,9 +80,9 @@ class UserAdminCreateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         serializer = AdminUserSerializer(data=request.data)
-        request.data['password'] = make_password("admin")
+        request.data["password"] = make_password("admin")
         if serializer.is_valid():
             if serializer.validated_data["permissions"] == "S":
                 serializer.validated_data["staff"] = True
@@ -92,6 +92,7 @@ class UserAdminCreateView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # ==================================================================================================================
 class UserAdminUpdateView(APIView):
@@ -105,7 +106,7 @@ class UserAdminUpdateView(APIView):
 
     Returns:
         [type]: [description]
-    """   
+    """
 
     queryset = User.objects.all()
     serializer_class = AdminUserSerializer
@@ -122,7 +123,7 @@ class UserAdminUpdateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         try:
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
@@ -138,7 +139,7 @@ class UserAdminUpdateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         try:
             UserInfo = self.get_object(user_id)
             serializer = AdminUserSerializer(UserInfo)
@@ -155,7 +156,7 @@ class UserAdminUpdateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         user = self.get_object(user_id)
         serializer = AdminUserSerializer(user, data=request.data)
         if serializer.is_valid():
@@ -173,13 +174,14 @@ class UserAdminUpdateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         UserInfo = self.get_object(user_id)
         UserInfo.delete()
         return Response(
             {"message": "User deleted successfully."},
             status=status.HTTP_204_NO_CONTENT,
         )
+
 
 # ==================================================================================================================
 class StackAdminCreateView(APIView):
@@ -190,7 +192,7 @@ class StackAdminCreateView(APIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
 
     queryset = Stack.objects.all()
     serializer_class = StackSerializer
@@ -205,7 +207,7 @@ class StackAdminCreateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         stacks = Stack.objects.all()
         serializer = StackSerializer(stacks, many=True)
         return Response(serializer.data)
@@ -218,7 +220,7 @@ class StackAdminCreateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         serializer = StackSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -238,7 +240,7 @@ class StackAdminUpdateView(APIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
 
     queryset = Stack.objects.all()
     serializer_class = StackSerializer
@@ -255,7 +257,7 @@ class StackAdminUpdateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         try:
             return Stack.objects.get(pk=stack_id)
         except Stack.DoesNotExist:
@@ -271,7 +273,7 @@ class StackAdminUpdateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         try:
             StackInfo = self.get_object(stack_id)
             serializer = StackSerializer(StackInfo)
@@ -288,7 +290,7 @@ class StackAdminUpdateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         stack = self.get_object(stack_id)
         serializer = StackSerializer(stack, data=request.data)
         if serializer.is_valid():
@@ -306,13 +308,15 @@ class StackAdminUpdateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         StackInfo = self.get_object(stack_id)
         StackInfo.delete()
         return Response(
             {"message": "Stack deleted successfully."},
             status=status.HTTP_204_NO_CONTENT,
         )
+
+
 # ==================================================================================================================
 class InternsAdminView(APIView):
     """[summary]
@@ -322,9 +326,11 @@ class InternsAdminView(APIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
+
     queryset = Intern.objects.all()
     serializer_class = InternAdminSerializer
+
     def get(self, request, format=None):
         """[summary]
 
@@ -334,7 +340,7 @@ class InternsAdminView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         interns = Intern.objects.all()
         serializer = InternAdminSerializer(interns, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -347,13 +353,14 @@ class InternsAdminView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         serializer = InternAdminSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # ==================================================================================================================
 class InternAdminUpdateView(APIView):
@@ -367,7 +374,8 @@ class InternAdminUpdateView(APIView):
 
     Returns:
         [type]: [description]
-    """    
+    """
+
     queryset = Intern.objects.all()
     serializer_class = InternSerializer
 
@@ -382,7 +390,7 @@ class InternAdminUpdateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         try:
             return Intern.objects.get(pk=intern_id)
         except Intern.DoesNotExist:
@@ -398,7 +406,7 @@ class InternAdminUpdateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         try:
             InternInfo = self.get_object(intern_id)
             serializer = InternSerializer(InternInfo)
@@ -415,14 +423,14 @@ class InternAdminUpdateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         try:
             instance = Intern.objects.get(pk=intern_id)
             if request.data.get("is_employed"):
                 is_employed = request.data.get("is_employed")
             else:
                 is_employed = False
-            
+
             if request.data.get("username"):
                 username = request.data.get("username")
             else:
@@ -502,7 +510,7 @@ class InternAdminUpdateView(APIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         StackInfo = self.get_object(intern_id)
         StackInfo.delete()
         return Response(
@@ -510,10 +518,10 @@ class InternAdminUpdateView(APIView):
             status=status.HTTP_204_NO_CONTENT,
         )
 
+
 class StaffInviteView(APIView):
 
     pass
-
 
 
 class ChangePasswordView(UpdateAPIView):
@@ -524,7 +532,8 @@ class ChangePasswordView(UpdateAPIView):
 
     Returns:
         [type]: [description]
-    """        
+    """
+
     serializer_class = ChangePasswordSerializer
     model = User
     permission_classes = (IsAuthenticated,)
@@ -537,7 +546,7 @@ class ChangePasswordView(UpdateAPIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         obj = self.request.user
         return obj
 
@@ -549,25 +558,30 @@ class ChangePasswordView(UpdateAPIView):
 
         Returns:
             [type]: [description]
-        """        
+        """
         self.object = self.get_object()
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
-            
+
             if not self.object.check_password(serializer.data.get("old_password")):
-                return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
-            
+                return Response(
+                    {"old_password": ["Wrong password."]},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
             if serializer.data.get("password") != serializer.data.get("password2"):
-                return Response({"password": "new password doesn't match "}, status=status.HTTP_400_BAD_REQUEST)
-            
+                return Response(
+                    {"password": "new password doesn't match "},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
             self.object.set_password(serializer.data.get("password"))
             self.object.save()
             response = {
-                'status': 'success',
-                'code': status.HTTP_200_OK,
-                'message': 'Password updated successfully',
-                
+                "status": "success",
+                "code": status.HTTP_200_OK,
+                "message": "Password updated successfully",
             }
 
             return Response(response)

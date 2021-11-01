@@ -35,6 +35,8 @@ def convert_stack_to_list(data):
     for item in data["stack"]:
         stacks.append(item["name"])
     data["stack"] = stacks
+
+
 # ==================================================================================================================
 
 
@@ -47,6 +49,7 @@ class JobView(APIView):
     Returns:
         [type]: [description]
     """
+
     parser_classes = (
         MultiPartParser,
         JSONParser,
@@ -98,6 +101,8 @@ class JobView(APIView):
             return Response("Unemployed", status=status.HTTP_204_NO_CONTENT)
         except Exception as e:
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
+
+
 # ==================================================================================================================
 
 
@@ -110,6 +115,7 @@ class JobUpdateView(UpdateAPIView):
     Returns:
         [type]: [description]
     """
+
     queryset = Jobs.objects.all()
     serializer_class = JobSerializer
     permission_classes = (permissions.AllowAny,)
@@ -158,6 +164,8 @@ class JobUpdateView(UpdateAPIView):
         job = Jobs.objects.get(pk=pk, intern=intern)
         serializer = JobSerializer(job)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 # ==================================================================================================================
 
 
@@ -217,6 +225,8 @@ class InternDetailView(APIView):
         intern = self.get_object(intern_id)
         intern.delete()
         return Response(status=status.HTTP_200_OK)
+
+
 # ==================================================================================================================
 
 
@@ -261,6 +271,8 @@ class InternsView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 # ==================================================================================================================
 
 
@@ -273,6 +285,7 @@ class InternUpdate(UpdateAPIView):
     Returns:
         [type]: [description]
     """
+
     parser_classes = (
         MultiPartParser,
         JSONParser,
@@ -380,6 +393,8 @@ class InternUpdate(UpdateAPIView):
         instance.save()
         serializer = InternSerializer(instance)
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+
 # ==================================================================================================================
 
 
@@ -390,13 +405,14 @@ class Search(generics.ListAPIView):
     Args:
         generics ([type]): [description]
     """
+
     queryset = Intern.objects.all()
     serializer_class = InternSerializer
-    filterset_fields = ['id', 'full_name', 'stack']
+    filterset_fields = ["id", "full_name", "stack"]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    ordering_fields = ['id', 'full_name', 'stack']
-    ordering = ('full_name',)
-    search_fields = ['id', 'full_name', 'stack__name']
+    ordering_fields = ["id", "full_name", "stack"]
+    ordering = ("full_name",)
+    search_fields = ["id", "full_name", "stack__name"]
 
     def get(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -432,6 +448,7 @@ class NewsLetterSubscribeView(APIView):
     Returns:
         [type]: [description]
     """
+
     queryset = NewsLetter.objects.all()
     serializer_class = NewsLetterSerializer
 
@@ -449,6 +466,8 @@ class NewsLetterSubscribeView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 # ==================================================================================================================
 
 
@@ -471,6 +490,8 @@ class NewsLetterSubscribersView(APIView):
         subscriber = NewsLetter.objects.all()
         serializer = NewsLetterSerializer(subscriber, many=True)
         return Response(serializer.data)
+
+
 # ==================================================================================================================
 
 
@@ -499,6 +520,8 @@ class InternStackList(APIView):
             convert_stack_to_list(datum)
         paginated_data = paginator.paginate_queryset(data, request=request)
         return paginator.get_paginated_response(paginated_data)
+
+
 # ==================================================================================================================
 
 
@@ -525,8 +548,7 @@ class StatisticView(APIView):
             # serializer = StatisticSerializer(statistic)
             # data = serializer.data
             all_interns = Intern.objects.filter(batch=batch)
-            employed_interns = Intern.objects.filter(
-                batch=batch, is_employed=True)
+            employed_interns = Intern.objects.filter(batch=batch, is_employed=True)
             response_body = {
                 "year": statistic.year,
                 "male": statistic.male,
@@ -539,6 +561,8 @@ class StatisticView(APIView):
             return Response(response_body, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
+
+
 # ==================================================================================================================
 
 
@@ -557,8 +581,7 @@ def all_stats(request):
         statistics = Statistic.objects.all()
         for stat in statistics:
             all_interns = Intern.objects.filter(batch=stat.year)
-            employed_interns = Intern.objects.filter(
-                batch=stat.year, is_employed=True)
+            employed_interns = Intern.objects.filter(batch=stat.year, is_employed=True)
 
             response_body = {
                 "year": stat.year,
@@ -573,6 +596,8 @@ def all_stats(request):
         return Response(data, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
+
+
 # ==================================================================================================================
 
 
@@ -595,6 +620,8 @@ def total_salary(request, batch):
         return Response({"total_salary": f"{salary}"}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
+
+
 # ==================================================================================================================
 
 
@@ -625,6 +652,8 @@ class BatchList(APIView):
             return paginator.get_paginated_response(paginated_data)
         except Exception as e:
             return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
+
+
 # ==================================================================================================================
 
 
@@ -651,6 +680,8 @@ def get_interns_by_year_and_stack(request, batch, stack):
         return paginator.get_paginated_response(paginated_data)
     except Exception as e:
         return Response({"Wahala": f"{e}"}, status.HTTP_400_BAD_REQUEST)
+
+
 # ==================================================================================================================
 
 
@@ -685,6 +716,8 @@ class GetStacksPerBatch(APIView):
             return Response(data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"Message": f"{e}"}, status.HTTP_400_BAD_REQUEST)
+
+
 # ==================================================================================================================
 
 
@@ -697,6 +730,7 @@ class SponsorView(APIView):
     Returns:
         [type]: [description]
     """
+
     parser_classes = (
         MultiPartParser,
         JSONParser,
@@ -776,6 +810,8 @@ class SponsorView(APIView):
                 "error": True,
             }
             return Response(data, status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 # ==================================================================================================================
 
 
@@ -796,6 +832,7 @@ def get_all_jobs(request):
         data = serializer.data
         interns.append(data)
     return Response({"data": interns})
+
 
 # class DynamicSearchFilter(filters.SearchFilter):
 #     def get_search_fields(self, view, request):

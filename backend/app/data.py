@@ -96,7 +96,7 @@ def create_stat(request):
 def get_image_link(photo):
     x = photo.index("(")
     y = photo.index(")")
-    image = photo[x + 1: y]
+    image = photo[x + 1 : y]
     if image[0:4] == "http":
         return image
     else:
