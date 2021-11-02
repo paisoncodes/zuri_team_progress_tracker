@@ -175,6 +175,15 @@ class UserAdminUpdateView(APIView):
         Returns:
             [type]: [description]
         """
+
+        user_is_admin = request.user.is_admin
+
+        if user_is_admin == False:
+            return Response(
+                {"mesage": "You can't perform this operation"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
         UserInfo = self.get_object(user_id)
         UserInfo.delete()
         return Response(
@@ -309,6 +318,14 @@ class StackAdminUpdateView(APIView):
         Returns:
             [type]: [description]
         """
+        user_is_admin = request.user.is_admin
+
+        if user_is_admin == False:
+            return Response(
+                {"mesage": "You can't perform this operation"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
         StackInfo = self.get_object(stack_id)
         StackInfo.delete()
         return Response(
@@ -511,6 +528,14 @@ class InternAdminUpdateView(APIView):
         Returns:
             [type]: [description]
         """
+        user_is_admin = request.user.is_admin
+
+        if user_is_admin == False:
+            return Response(
+                {"mesage": "You can't perform this operation"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+            
         StackInfo = self.get_object(intern_id)
         StackInfo.delete()
         return Response(
