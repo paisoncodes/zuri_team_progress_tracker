@@ -10,13 +10,13 @@
 <div v-if="showLoder" class="flex justify-center">
   <CustomLoader />
   </div>
-  <div v-else  v-for="(intern, index) in getAllInterns" :key="index" >
+  <div  v-for="(intern, index) in getAllInterns" :key="index" >
     <div class="grid  md:grid-cols-4 sm:grid-cols-1   bg-brand-red-light-3 mb-5" v-if="batch== intern.batch">
      <!-- <div class="icon" style=" width:inherit; height:100%;">
          <img class="object-contain object-center  h-full w-full" style="width:inherit; height:100%;" :src="intern.picture"/>
      </div> -->
      
-      <div class="icon h-72" :style="{ backgroundImage: `url('${intern.picture}')` }">
+      <div class="icon" :style="{ backgroundImage: `url('${intern.picture}')` }">
          <!-- <img class="object-contain object-center  h-full w-full"/> -->
      </div>
 
@@ -223,10 +223,10 @@ async created() {
   this.showLoder = true
  await this.interns().then(()=>{
    this.internsJobs()
-    this.showLoder = false
+  this.showLoder = false
    this.pager = Math.round(this.count / 20);
  })
-
+ console.log(this.getAllInterns)
 }
 }
 </script>
@@ -236,7 +236,7 @@ async created() {
   background-repeat: no-repeat;  
   background-size:cover; 
   background-position: center;
-  /* height:30; */
+  height:20rem;
 }
   .tracker{
     width:600px;
