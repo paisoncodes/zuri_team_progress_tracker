@@ -23,7 +23,7 @@ from rest_framework import permissions
 schema_view = get_schema_view(
     openapi.Info(
         title="Progress Tracker API",
-        default_version='1.0.0',
+        default_version="1.0.0",
         description="Tracks the progress of past interns",
         #   terms_of_service="https://www.google.com/policies/terms/",
         #   contact=openapi.Contact(email="contact@snippets.local"),
@@ -35,18 +35,24 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/v1/', include('app.urls')),
-    path('api/v1/admin/', include('custom_admin.urls')),
-
+    path("admin/", admin.site.urls),
+    path("api/v1/", include("app.urls")),
+    path("api/v1/admin/", include("custom_admin.urls")),
 ]
 
 
 urlpatterns += [
-    url(r'^swagger(?P<format>\.json|\.yaml)$',
-        schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    url(r'^api/v1/docs/$', schema_view.with_ui('swagger',
-        cache_timeout=0), name='schema-swagger-ui'),
-    url(r'^redoc/$', schema_view.with_ui('redoc',
-        cache_timeout=0), name='schema-redoc'),
+    url(
+        r"^swagger(?P<format>\.json|\.yaml)$",
+        schema_view.without_ui(cache_timeout=0),
+        name="schema-json",
+    ),
+    url(
+        r"^api/v1/docs/$",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
+    url(
+        r"^redoc/$", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"
+    ),
 ]
