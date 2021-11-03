@@ -178,7 +178,7 @@ class UserAdminUpdateView(APIView):
 
         user_is_admin = request.user.is_admin
 
-        if user_is_admin == False:
+        if user_is_admin is False:
             return Response(
                 {"mesage": "You can't perform this operation"},
                 status=status.HTTP_401_UNAUTHORIZED
@@ -320,7 +320,7 @@ class StackAdminUpdateView(APIView):
         """
         user_is_admin = request.user.is_admin
 
-        if user_is_admin == False:
+        if user_is_admin is False:
             return Response(
                 {"mesage": "You can't perform this operation"},
                 status=status.HTTP_401_UNAUTHORIZED
@@ -530,7 +530,7 @@ class InternAdminUpdateView(APIView):
         """
         user_is_admin = request.user.is_admin
 
-        if user_is_admin == False:
+        if user_is_admin is False:
             return Response(
                 {"mesage": "You can't perform this operation"},
                 status=status.HTTP_401_UNAUTHORIZED
