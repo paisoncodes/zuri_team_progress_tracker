@@ -35,7 +35,7 @@ export default {
             'getTotalSalary'
         ]),
         AllStack() {
-           this.getAllStack()
+            this.getAllStack()
             if(this.stackContain.length > 0) {
               this.stackContain.splice(0, 1, this.allStack.stack)
             }

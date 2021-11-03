@@ -33,39 +33,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # corspolicy settings
-CORS_ALLOW_ALL_ORIGINS = False
-CORS_ORIGIN_WHITELIST = (
-    "http://localhost:8080",
-    "https://zuriprogresstracker.netlify.app",
-)
+# CORS_ALLOW_ALL_ORIGINS = False
+# CORS_ORIGIN_WHITELIST = (
+#     "http://localhost:8080",
+#     "https://zuriprogresstracker.netlify.app",
+# )
 
-# CORS_ALLOW_CREDENTIALS = True
-
-# CORS_PREFLIGHT_MAX_AGE = 86400
-
-# CORS_REPLACE_HTTPS_REFERER = True
-
-
-# CORS_ALLOW_METHODS = [
-#     'DELETE',
-#     'GET',
-#     'OPTIONS',
-#     'PATCH',
-#     'POST',
-#     'PUT',
-#     'HEAD',
-# ]
 
 
 # rest_framework global configs
 REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PARSER_CLASSES": [
         "rest_framework.parsers.JSONParser",
     ],
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema"
-    # "DEFAULT_PAGINATION_CLASS": [
-    #     'apps.core.pagination.StandardResultsSetPagination',
-    # ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication"
+    ],
 }
 
 
@@ -94,12 +78,14 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "cloudinary",
     "whitenoise.runserver_nostatic",
+    "django_filters",
+    "rest_framework.authtoken",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -108,6 +94,31 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_PREFLIGHT_MAX_AGE = 86400
+
+CORS_REPLACE_HTTPS_REFERER = True
+
+CORS_ALLOW_HEADERS = ['*']
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+    "HEAD",
+]
+
+REST_FRAMEWORK = {
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 20,
+}
 
 ROOT_URLCONF = "config.urls"
 

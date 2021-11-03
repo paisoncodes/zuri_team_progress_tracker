@@ -1,25 +1,57 @@
-from django.db.models.query import QuerySet
-from rest_framework import status, permissions
-from rest_framework.views import APIView
+from app.cloudinary import upload_image
+from app.models import Intern, Stack, User
+from app.serializers import *
+from django.contrib.auth.hashers import make_password
+from django.http import Http404
+from rest_framework import status
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.generics import UpdateAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from custom_admin.serializers import (
     AdminUserSerializer,
+    ChangePasswordSerializer,
     InternAdminSerializer,
 )
-from app.models import User, Stack, Intern, Jobs, NewsLetter
-from app.serializers import *
-from django.http import Http404
-from rest_framework.decorators import api_view
-from rest_framework.parsers import MultiPartParser, JSONParser
-from app.cloudinary import upload_image
 
-# Create your views here.
+
+class CustomAuthToken(ObtainAuthToken):
+    """[summary]
+
+    Args:
+        ObtainAuthToken ([type]): [description]
+    """
+
+    def post(self, request, *args, **kwargs):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        serializer = self.serializer_class(
+            data=request.data, context={"request": request}
+        )
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data["user"]
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({"token": token.key, "user_id": user.pk, "email": user.email})
+
 
 # ==================================================================================================================
 class UserAdminCreateView(APIView):
-    """
-    Create Users View
+    """[summary]
+
+    Args:
+        APIView ([type]): [description]
+
+    Returns:
+        [type]: [description]
     """
 
     queryset = User.objects.all()
@@ -27,12 +59,30 @@ class UserAdminCreateView(APIView):
     # permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
 
     def get(self, request, format=None):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            format ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            [type]: [description]
+        """
         users = User.objects.all()
         serializer = AdminUserSerializer(users, many=True)
         return Response(serializer.data)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
         serializer = AdminUserSerializer(data=request.data)
+        request.data["password"] = make_password("admin")
         if serializer.is_valid():
             if serializer.validated_data["permissions"] == "S":
                 serializer.validated_data["staff"] = True
@@ -43,10 +93,19 @@ class UserAdminCreateView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 # ==================================================================================================================
 class UserAdminUpdateView(APIView):
-    """
-    Update Users View
+    """[summary]
+
+    Args:
+        APIView ([type]): [description]
+
+    Raises:
+        Http404: [description]
+
+    Returns:
+        [type]: [description]
     """
 
     queryset = User.objects.all()
@@ -54,14 +113,32 @@ class UserAdminUpdateView(APIView):
     # permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
 
     def get_object(self, user_id):
+        """[summary]
+
+        Args:
+            user_id ([type]): [description]
+
+        Raises:
+            Http404: [description]
+
+        Returns:
+            [type]: [description]
+        """
         try:
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             raise Http404
 
     def get(self, request, user_id, format=None):
-        """
-        Get User Details
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            user_id ([type]): [description]
+            format ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            [type]: [description]
         """
         try:
             UserInfo = self.get_object(user_id)
@@ -71,6 +148,15 @@ class UserAdminUpdateView(APIView):
             return Response({"message": f"{e}"}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, user_id, *args, **kwargs):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            user_id ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
         user = self.get_object(user_id)
         serializer = AdminUserSerializer(user, data=request.data)
         if serializer.is_valid():
@@ -79,9 +165,25 @@ class UserAdminUpdateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, user_id, format=None):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            user_id ([type]): [description]
+            format ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            [type]: [description]
         """
-        Delete User
-        """
+
+        user_is_admin = request.user.is_admin
+
+        if user_is_admin is False:
+            return Response(
+                {"mesage": "You can't perform this operation"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
         UserInfo = self.get_object(user_id)
         UserInfo.delete()
         return Response(
@@ -89,10 +191,16 @@ class UserAdminUpdateView(APIView):
             status=status.HTTP_204_NO_CONTENT,
         )
 
+
 # ==================================================================================================================
 class StackAdminCreateView(APIView):
-    """
-    Create Stack View
+    """[summary]
+
+    Args:
+        APIView ([type]): [description]
+
+    Returns:
+        [type]: [description]
     """
 
     queryset = Stack.objects.all()
@@ -100,21 +208,47 @@ class StackAdminCreateView(APIView):
     # permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
 
     def get(self, request, format=None):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            format ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            [type]: [description]
+        """
         stacks = Stack.objects.all()
         serializer = StackSerializer(stacks, many=True)
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
         serializer = StackSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 # ==================================================================================================================
 class StackAdminUpdateView(APIView):
-    """
-    Update Stack View
+    """[summary]
+
+    Args:
+        APIView ([type]): [description]
+
+    Raises:
+        Http404: [description]
+
+    Returns:
+        [type]: [description]
     """
 
     queryset = Stack.objects.all()
@@ -122,14 +256,32 @@ class StackAdminUpdateView(APIView):
     # permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
 
     def get_object(self, stack_id):
+        """[summary]
+
+        Args:
+            stack_id ([type]): [description]
+
+        Raises:
+            Http404: [description]
+
+        Returns:
+            [type]: [description]
+        """
         try:
             return Stack.objects.get(pk=stack_id)
         except Stack.DoesNotExist:
             raise Http404
 
     def get(self, request, stack_id, format=None):
-        """
-        Get Stack Details
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            stack_id ([type]): [description]
+            format ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            [type]: [description]
         """
         try:
             StackInfo = self.get_object(stack_id)
@@ -139,6 +291,15 @@ class StackAdminUpdateView(APIView):
             return Response({"message": f"{e}"}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, stack_id, *args, **kwargs):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            stack_id ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
         stack = self.get_object(stack_id)
         serializer = StackSerializer(stack, data=request.data)
         if serializer.is_valid():
@@ -147,26 +308,69 @@ class StackAdminUpdateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, stack_id, format=None):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            stack_id ([type]): [description]
+            format ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            [type]: [description]
         """
-        Delete Stack
-        """
+        user_is_admin = request.user.is_admin
+
+        if user_is_admin is False:
+            return Response(
+                {"mesage": "You can't perform this operation"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
         StackInfo = self.get_object(stack_id)
         StackInfo.delete()
         return Response(
             {"message": "Stack deleted successfully."},
             status=status.HTTP_204_NO_CONTENT,
         )
+
+
 # ==================================================================================================================
 class InternsAdminView(APIView):
+    """[summary]
+
+    Args:
+        APIView ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
     queryset = Intern.objects.all()
     serializer_class = InternAdminSerializer
+
     def get(self, request, format=None):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            format ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            [type]: [description]
+        """
         interns = Intern.objects.all()
         serializer = InternAdminSerializer(interns, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
+        """[summary]
 
+        Args:
+            request ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
         serializer = InternAdminSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         if serializer.is_valid():
@@ -174,25 +378,51 @@ class InternsAdminView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 # ==================================================================================================================
 class InternAdminUpdateView(APIView):
-    """
-    Update Stack View
+    """[summary]
+
+    Args:
+        APIView ([type]): [description]
+
+    Raises:
+        Http404: [description]
+
+    Returns:
+        [type]: [description]
     """
 
     queryset = Intern.objects.all()
     serializer_class = InternSerializer
-    # permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
 
     def get_object(self, intern_id):
+        """[summary]
+
+        Args:
+            intern_id ([type]): [description]
+
+        Raises:
+            Http404: [description]
+
+        Returns:
+            [type]: [description]
+        """
         try:
             return Intern.objects.get(pk=intern_id)
         except Intern.DoesNotExist:
             raise Http404
 
     def get(self, request, intern_id, format=None):
-        """
-        Get Stack Details
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            intern_id ([type]): [description]
+            format ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            [type]: [description]
         """
         try:
             InternInfo = self.get_object(intern_id)
@@ -202,8 +432,14 @@ class InternAdminUpdateView(APIView):
             return Response({"message": f"{e}"}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, intern_id, *args, **kwargs):
-        """
-        Updates an intern
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            intern_id ([type]): [description]
+
+        Returns:
+            [type]: [description]
         """
         try:
             instance = Intern.objects.get(pk=intern_id)
@@ -211,7 +447,7 @@ class InternAdminUpdateView(APIView):
                 is_employed = request.data.get("is_employed")
             else:
                 is_employed = False
-            
+
             if request.data.get("username"):
                 username = request.data.get("username")
             else:
@@ -282,9 +518,24 @@ class InternAdminUpdateView(APIView):
             return Response({"exception": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 
     def delete(self, request, intern_id, format=None):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+            intern_id ([type]): [description]
+            format ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            [type]: [description]
         """
-        Delete Stack
-        """
+        user_is_admin = request.user.is_admin
+
+        if user_is_admin is False:
+            return Response(
+                {"mesage": "You can't perform this operation"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+            
         StackInfo = self.get_object(intern_id)
         StackInfo.delete()
         return Response(
@@ -292,6 +543,72 @@ class InternAdminUpdateView(APIView):
             status=status.HTTP_204_NO_CONTENT,
         )
 
+
 class StaffInviteView(APIView):
 
     pass
+
+
+class ChangePasswordView(UpdateAPIView):
+    """[summary]
+
+    Args:
+        UpdateAPIView ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
+    serializer_class = ChangePasswordSerializer
+    model = User
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self, queryset=None):
+        """[summary]
+
+        Args:
+            queryset ([type], optional): [description]. Defaults to None.
+
+        Returns:
+            [type]: [description]
+        """
+        obj = self.request.user
+        return obj
+
+    def update(self, request, *args, **kwargs):
+        """[summary]
+
+        Args:
+            request ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        self.object = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+
+            if not self.object.check_password(serializer.data.get("old_password")):
+                return Response(
+                    {"old_password": ["Wrong password."]},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            if serializer.data.get("password") != serializer.data.get("password2"):
+                return Response(
+                    {"password": "new password doesn't match "},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            self.object.set_password(serializer.data.get("password"))
+            self.object.save()
+            response = {
+                "status": "success",
+                "code": status.HTTP_200_OK,
+                "message": "Password updated successfully",
+            }
+
+            return Response(response)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

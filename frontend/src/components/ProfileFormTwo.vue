@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div class="cursor-pointer flex justify-end pb-2" @click="toggleProfileEditModal">
+            <img src="../assets/closeicon.svg" alt="" class="w-4 h-4 m-2"/>
+        </div>
         <div class="block xs:flex justify-between items-center mb-4 xs:mb-10">
             <p style="color:red" v-if="this.$store.state.formTwoConfirmation" class="text-center">Information saved</p>
             <h1 class="text-2xl">EDIT PROFILE</h1>
@@ -60,7 +63,7 @@ export default {
             'editJob'
         ]),
         ...mapMutations([
-            'setImageTwo'
+            'setImageTwo', "toggleProfileEditModal"
         ]),
 
         async uploadImage(e) {

@@ -23,8 +23,8 @@ module.exports = {
               3: '#CFC4C1',
             },
             light: '#A08F8F',
-            blue: '#4774E8'
-          }
+          },
+          blue: '#4774E8'
         },
       },
       screens: {

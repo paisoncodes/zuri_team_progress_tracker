@@ -1,27 +1,25 @@
 from django.urls import path
-from django.contrib import admin
 
-
+from .data import create_an_intern, create_stacks, create_stat
 from .views import (
-    InternUpdate,
-    InternsView,
+    BatchList,
+    GetStacksPerBatch,
     InternDetailView,
     InternStackList,
-    JobView,
+    InternsView,
+    InternUpdate,
     JobUpdateView,
-    NewsLetterSubscribeView,
+    JobView,
     NewsLetterSubscribersView,
+    NewsLetterSubscribeView,
+    Search,
+    SponsorView,
     StatisticView,
-    BatchList,
     all_stats,
+    get_all_jobs,
     get_interns_by_year_and_stack,
     total_salary,
-    SponsorView,
 )
-from app import views
-
-from . import data
-
 
 urlpatterns = [
     # ================================================================================================================
@@ -45,23 +43,22 @@ urlpatterns = [
     ),
     path(
         "interns/batch/<int:batch>/stack/<str:stack>/",
-        views.get_interns_by_year_and_stack,
+        get_interns_by_year_and_stack,
         name="stack_list_and_count",
     ),
     # ================================================================================================================
-    path(
-        "stacks/batch/<int:batch>/", views.GetStacksPerBatch.as_view(), name="get_stats"
-    ),
+    path("stacks/batch/<int:batch>/", GetStacksPerBatch.as_view(), name="get_stats"),
     path("subscribers/", NewsLetterSubscribersView.as_view(), name="subscribers"),
     path("subscribers/subscribe/", NewsLetterSubscribeView.as_view(), name="subscribe"),
     # ================================================================================================================
     path("statistics/batch/<int:batch>/", StatisticView.as_view()),
-    path("statistics/", views.all_stats, name="all_stats"),
+    path("statistics/", all_stats, name="all_stats"),
     # ================================================================================================================
     path("sponsors/", SponsorView.as_view()),
     path("sponsors/<str:id>/", SponsorView.as_view()),
-    path("populate_interns/", data.create_an_intern),
-    path("populate_stacks/", data.create_stacks),
-    path("populate_statistic/", data.create_stat),
-    path("tistic/", views.get_all_jobs),
+    path("populate/interns/", create_an_intern),
+    path("populate/stacks/", create_stacks),
+    path("populate/statistics/", create_stat),
+    path("tistic/", get_all_jobs),
+    path("search/", Search.as_view(), name="search"),
 ]
