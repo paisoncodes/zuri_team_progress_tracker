@@ -5,9 +5,11 @@
         Total Intern Count: {{getAllInterns.length}} / {{yearFinalists[0]}}
       </p>    
     </div>
-    <div class="grid md:grid-cols-4 sm:grid-cols-1 bg-brand-red-light-3 mb-5" v-for="(intern, index) in getAllInterns" :key="index" >
-      <div class="icon h-72 rounded" :style="{ backgroundImage: `url('${intern.picture}')` }">
+    <div class="sm:grid md:grid-cols-4 bg-brand-red-light-3 mb-5" v-for="(intern, index) in getAllInterns" :key="index" >
+      <div class="h-72">
+        <img class="icon w-full h-full object-cover" :src="intern.picture" alt="">
       </div>
+      
       <div class="md:col-span-3 mx-8 mt-5">
         <div class="">
           <div class="grid md:grid-cols-2 gap-4">
@@ -29,7 +31,7 @@
                   <div class="h-9 w-9 rounded-full bg-brand-gray-dark-3"></div>
                   <div class="absolute top-12">JOBLESS</div>            
                 </div>
-                <div class="relative bottom-6">2017</div>
+                <div class="flex flex-wrap relative bottom-6">2017</div>
 
                 <div class="relative grid justify-items-center h-12 w-12">
                   <img src="@/assets/paypal.png" class="border-solid border-2 border-brand-gray-dark-3 h-12 w-12 rounded-full" alt="">
