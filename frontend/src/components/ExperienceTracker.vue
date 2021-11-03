@@ -5,10 +5,10 @@
         Total Intern Count: {{getAllInterns.length}} / {{yearFinalists[0]}}
       </p>    
     </div>
-    <div class="grid md:grid-cols-4 sm:grid-cols-1  bg-brand-red-light-3 mb-5" v-for="(intern, index) in getAllInterns" :key="index" >
+    <div class="grid md:grid-cols-4 sm:grid-cols-1 bg-brand-red-light-3 mb-5" v-for="(intern, index) in getAllInterns" :key="index" >
       <div class="icon h-72 rounded" :style="{ backgroundImage: `url('${intern.picture}')` }">
       </div>
-      <div class="md:col-span-3 mx-5 mt-5">
+      <div class="md:col-span-3 mx-8 mt-5">
         <div class="">
           <div class="grid md:grid-cols-2 gap-4">
             <div class="w-full text-brand-gray-dark-1 font-normal">
@@ -20,31 +20,64 @@
             </div>          
           </div>
           <div>
-            <h3 class="my-4 text-brand-gray-dark-2">EXPERIENCE TRACKER</h3>          
-            <div class="py-3"> 
-              <div class="my-10 h-3 flex justify-between items-center text-brand-gray-dark-2 bg-brand-gray-dark-3">
-                <div class="h-10 w-10 relative grid justify-items-center tracker-jobless">
-                  <div class="h-10 w-10 rounded-full bg-brand-gray-dark-3"></div>
-                  <div class="absolute top-11">JOBLESS</div>            
+            <h3 class="my-4 text-brand-gray-dark-2">EXPERIENCE TRACKER</h3>
+            <!-- Large screen sizes -->
+            <div class="hidden lg:block px-4 py-3"> 
+              <div class="flex items-center justify-between space-x-3 text-center w-11/12 my-10 h-3 text-brand-gray-dark-2 bg-brand-gray-dark-3">
+
+                <div class="relative h-9 w-9 grid justify-items-center">
+                  <div class="h-9 w-9 rounded-full bg-brand-gray-dark-3"></div>
+                  <div class="absolute top-12">JOBLESS</div>            
                 </div>
-                <div class="relative bottom-4">2016</div>
-                <div class="h-12 w-12 relative grid justify-items-center">
-                  <img src="@/assets/paypal.png" class="border-solid border-2 border-brand-gray-dark-3 h-12 w-12  rounded-full" alt="">
-                  <div class="absolute top-12">PAYPAL</div>
+                <div class="relative bottom-6">2017</div>
+
+                <div class="relative grid justify-items-center h-12 w-12">
+                  <img src="@/assets/paypal.png" class="border-solid border-2 border-brand-gray-dark-3 h-12 w-12 rounded-full" alt="">
+                  <div class="absolute top-14">PAYPAL</div>
                 </div>
-                <div  class="relative bottom-4">2017</div>
-                <div class="h-12 w-12 relative grid justify-items-center ">
+                <div class="relative bottom-6">2018</div>
+
+                <div class="relative grid justify-items-center h-12 w-12">
                   <img src="@/assets/flutterwave.png" class="h-12 w-12 border-solid border-2 border-brand-gray-dark-3 rounded-full" alt="">
-                  <div class="absolute top-12">FLUTTERWAVE</div>
+                  <div class="absolute top-14">FLUTTERWAVE</div>
                 </div>
-                <div class="relative bottom-4">2018</div>
-                <div class="h-12 w-12 relative grid justify-items-center">
+                <div class="relative bottom-6">2019</div>
+
+                <div class="relative grid justify-items-center h-12 w-12">
                   <img src="@/assets/paystack.png" class="h-12 w-12 border-solid border-2 border-brand-gray-dark-3  rounded-full" alt="">
-                    <div class="absolute top-12">PAYSTACK</div>
+                    <div class="absolute top-14">PAYSTACK</div>
                 </div>
-                <div  class="relative bottom-4 " >2019</div>
-                <div class="h-20 w-20 grid justify-items-center relative">
-                  <img src="@/assets/hotels.png" class="h-20 w-20 border-solid border-2 border-brand-gray-dark-1  rounded-full" alt="">
+                <div  class="relative bottom-6">2020</div>
+
+                <div class="relative h-24 w-24 grid justify-items-center">
+                  <img src="@/assets/hotels.png" class="h-24 w-24 border-solid border-2 border-brand-gray-dark-1  rounded-full" alt="">
+                </div>
+              </div>
+            </div>
+            <!-- Smaller screen sizes -->
+            <div class="block lg:hidden px-4 py-3"> 
+              <div class="flex items-center justify-between space-x-3 text-center w-11/12 my-10 h-3 text-brand-gray-dark-2 bg-brand-gray-dark-3">
+
+                <div class="relative h-9 w-9 grid justify-items-center">
+                  <div class="h-9 w-9 rounded-full bg-brand-gray-dark-3"></div>
+                  <div class="absolute top-12">JOBLESS</div>            
+                </div>
+                <div class="relative bottom-6">2018</div>
+
+                <div class="relative grid justify-items-center h-12 w-12">
+                  <img src="@/assets/paypal.png" class="border-solid border-2 border-brand-gray-dark-3 h-12 w-12 rounded-full" alt="">
+                  <div class="absolute top-14">PAYPAL</div>
+                </div>
+                <div class="relative bottom-6">2019</div>
+
+                <div class="relative grid justify-items-center h-12 w-12">
+                  <img src="@/assets/flutterwave.png" class="h-12 w-12 border-solid border-2 border-brand-gray-dark-3 rounded-full" alt="">
+                  <div class="absolute top-14">FLUTTERWAVE</div>
+                </div>
+                <div class="relative bottom-6">2020</div>
+
+                <div class="relative h-24 w-24 grid justify-items-center">
+                  <img src="@/assets/hotels.png" class="h-24 w-24 border-solid border-2 border-brand-gray-dark-1  rounded-full" alt="">
                 </div>
               </div>
             </div>
