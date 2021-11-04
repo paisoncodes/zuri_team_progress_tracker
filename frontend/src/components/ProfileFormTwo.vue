@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div class="cursor-pointer flex justify-end pb-2" @click="toggleProfileEditModal">
+        <form action="">
+            <div class="cursor-pointer flex justify-end pb-2" @click="toggleProfileEditModal">
             <img src="../assets/closeicon.svg" alt="" class="w-4 h-4 m-2"/>
         </div>
         <div class="block xs:flex justify-between items-center mb-4 xs:mb-10">
@@ -19,7 +20,7 @@
             </div>
             <div class="w-full mb-3">
                 <label class="">DATE GOTTEN</label><br>
-                <input autocomplete type="text" v-model="dateGotten" placeholder="Enter your current pay here" class="w-full text-brand-gray-light p-2 mt-1 sm:mt-3  border focus:outline-none border-black">
+                <input autocomplete type="date" v-model="dateGotten" placeholder="Enter your current pay here" class="w-full text-brand-gray-light p-2 mt-1 sm:mt-3  border focus:outline-none border-black">
             </div>
         </div>
         <div class="w-full mb-3 sm:mb-5 sm:mr-12">
@@ -31,6 +32,7 @@
             <img class="w-16 h-16 cursor-pointer" src="../assets/carbon_image.png" alt="">
             <input @change="upload" type="file" accept="image/*" id="image" />
         </div>
+        </form>
     </div>
 </template>
 

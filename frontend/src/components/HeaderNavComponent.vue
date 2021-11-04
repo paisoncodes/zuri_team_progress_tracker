@@ -1,5 +1,5 @@
 <template>
-<div class="w-full min-h-pth bg-brand-red-light-1 py-2">
+<div class="w-full h-screen min-h-pth bg-brand-red-light-1 py-2">
     <div class="flex items-center justify-between py-6 px-6 mx-auto max-w-7xl ">
 
         <div class="text-base font-normal text-brand-gray-dark-1 font-mulish">Zuri Progress</div>
@@ -77,9 +77,8 @@ export default {
                     )
                     .then((response) => {
                         this.isSubscribed = true; 
-                        console.log(response)
                         this.subscriber_email = ''
-                        
+                        return response
                     });
             },
    }

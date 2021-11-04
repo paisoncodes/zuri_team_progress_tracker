@@ -81,7 +81,6 @@ export default createStore({
     async getStack({commit, getters}, payload) {
       const year = getters.year
       await ContributionServices.getStack(payload, year).then(response => {
-       // console.log(response)
         commit("allInterns", response.data.results)
         commit("setCount", response.data.count)
         commit("setNext", response.data.next);
@@ -122,6 +121,7 @@ export default createStore({
         formData.append('is_employed', state.formOne.employed)
         formData.append('image', state.imageOne)     
       await ContributionServices.editIntern(state.currentUserID, formData).then(res => {
+        console.log(res)
         return res
       })
       } catch (error) {
@@ -139,8 +139,12 @@ export default createStore({
       formData.append('gotten_at', state.formTwo.dateGotten)
       formData.append('image', state.imageTwo)
 
+    //   for(var pair of formData.entries()){
+    //     console.log(pair[0], pair[1]);
+    // }
+
       await ContributionServices.postJob(state.currentUserID, formData).then(res => {
-        console.log(res)
+        return res
       })
       } catch (error) {
         console.log(error)
