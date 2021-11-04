@@ -24,10 +24,10 @@ class ContributionServices {
         return axiosConfig.get(`/api/v1/interns/${user_id}/jobs/`)
     }
     editIntern(intern_id, data){
-        return axiosClientForm.put(`/api/v1/interns/${intern_id}/update`, data)
+        return axiosConfig.put(`/api/v1/interns/${intern_id}/update/`, data)
     }
     postJob(intern_id,data){
-        return axiosClientForm.post(`/api/v1/interns/${intern_id}/jobs`, data)
+        return axiosClientForm.post(`/api/v1/interns/${intern_id}/jobs/`, data)
     }
     getProgresStat() {
         return axiosConfig.get("/api/v1/statistics/")

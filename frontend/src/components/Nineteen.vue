@@ -53,7 +53,6 @@ export default {
       axios.get('https://zuri-progress-tracker.herokuapp.com/api/v1/interns/batch/2019/total_salary/').then(response => {
         this.totalCombinedSalary = response.data.total_salary
         this.isFetchingTotalCombinedSalary = false;
-        console.log(this.totalCombinedSalary);
       }).catch(() => {
         this.isFetchingTotalCombinedSalary = false;
       })
