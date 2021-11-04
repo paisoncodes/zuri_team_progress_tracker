@@ -15,7 +15,7 @@ env/
 Pipfile*
 
 openapi.yaml
-backend/app/migrations
+
 
 db.sqlite3
 
@@ -52,3 +52,4 @@ node_modules
 backend/app/__pycache__
 backend/config/__pycache__
 .idea
+# /backend/app/migrations/

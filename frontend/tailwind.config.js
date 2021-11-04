@@ -23,8 +23,8 @@ module.exports = {
               3: '#CFC4C1',
             },
             light: '#A08F8F',
-            blue: '#4774E8'
-          }
+          },
+          blue: '#4774E8'
         },
       },
       screens: {
@@ -33,7 +33,13 @@ module.exports = {
       fontFamily: {
         'mulish': ['Mulish', 'sans-serif'],
         'poppins': ['Poppins', 'sans-serif']
-      }
+      },
+      fontSize: {
+        'md': '2rem',
+        },
+      height: {
+        'pth': '39.8rem',
+        },
     },
   },
   variants: {
