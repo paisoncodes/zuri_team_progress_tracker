@@ -1,20 +1,49 @@
 <template>
   <div>
     <div class="bg-white text-center flex flex-col">
-      <NavbarComponent/>
-      <HomeContainer />
+      <div v-show="this.$store.state.profileModalActive">
+        <ProfileCard class="fixed" />
+      </div>
+      <HeaderNavComponent />
+      <TabContainer class="padTop" />
+      <LoginModal v-if="showLogin" />
     </div>
     <Footer />
   </div>
-</template>
+</template> 
 
 <script>
-import HomeContainer from '../components/HomeContainer.vue'
-import Footer from '../components/Footer.vue'
-import NavbarComponent from '../components/NavbarComponent.vue'
-
+import ProfileCard from "../components/ProfileCard.vue";
+import HeaderNavComponent from "../components/HeaderNavComponent.vue";
+import TabContainer from "../components/TabContainer.vue";
+import Footer from "../components/Footer.vue";
+import LoginModal from "@/components/LoginModal.vue";
 export default {
-  components: { NavbarComponent, HomeContainer, Footer },
-  name: 'Home',
-}
+  components: {
+    ProfileCard,
+    HeaderNavComponent,
+    TabContainer,
+    LoginModal,
+    Footer,
+  },
+  name: "Home",
+  data() {
+    return {
+      displayCard: this.$store.state.profileModalActive,
+      showLogin: false,
+    };
+  },
+  mounted() {
+    this.eventBus.on("toggleLoginModal", (data) => {
+      this.showLogin = data;
+    });
+  },
+};
 </script>
+
+
+<style>
+.padTop {
+  margin: 4rem 0 0 0;
+}
+</style>
