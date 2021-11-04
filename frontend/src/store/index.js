@@ -75,7 +75,6 @@ export default createStore({
         commit("setCount", response.data.count)
         commit("allInterns", response.data.results)
         commit("setNext", response.data.next);
-        console.log(response)
       })
     },
     async getStack({commit, getters}, payload) {
@@ -121,7 +120,6 @@ export default createStore({
         formData.append('is_employed', state.formOne.employed)
         formData.append('image', state.imageOne)     
       await ContributionServices.editIntern(state.currentUserID, formData).then(res => {
-        console.log(res)
         return res
       })
       } catch (error) {
