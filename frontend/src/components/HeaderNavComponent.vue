@@ -17,22 +17,22 @@
         <div class="md:hidden flex items-center">
            <button class="mobile-menu-button"><img src="../assets/hamburgerIcon.png" class="w-7 h-5" color="brand-gray-dark-1" v-on:click="menu()"></button>
         </div>
-
-     </div>
-     <!--mobile menu-->
-        <div class="mobile-menu hidden px-5 font-mulish text-brand-gray-dark-1 font-normal lg:hidden md:hidden">
-            <a href="https://zuriprogresstracker.netlify.app/" class=" block py-2 text-base">Home</a>
-            <a href="https://training.zuri.team/curriculum" class=" block py-2 text-base">Curriculum</a>
-            <a href="https://hng.tech/" class=" block py-2 text-base">Program</a>
-            <a href="#" class=" block py-2 text-base text-brand-red-dark">Progress so far</a>
-            <a href="https://training.zuri.team/enrollment">
-               <button class="bg-brand-red-dark hover:bg-opacity-75 text-white font-normal py-4 text-base w-full">Join Zuri Training</button>
-            </a>
-        </div>
-    <div class="flex justify-center items-center lg:mt-10 md:mt-10 mt-10">
+        
+    </div>
+    <!--mobile menu-->
+    <div class="mobile-menu hidden px-5 font-mulish text-brand-gray-dark-1 font-normal lg:hidden md:hidden">
+        <a href="https://zuriprogresstracker.netlify.app/" class=" block py-2 text-base">Home</a>
+        <a href="https://training.zuri.team/curriculum" class=" block py-2 text-base">Curriculum</a>
+        <a href="https://hng.tech/" class=" block py-2 text-base">Program</a>
+        <a href="#" class=" block py-2 text-base text-brand-red-dark">Progress so far</a>
+        <a href="https://training.zuri.team/enrollment">
+            <button class="bg-brand-red-dark hover:bg-opacity-75 text-white font-normal py-4 text-base w-full">Join Zuri Training</button>
+        </a>
+    </div>
+    <div class="header-body flex justify-center items-center">
         <div class="border-0">
             <div class="font-normal font-mulish">
-                <p class="text-brand-red-dark lg:text-3xl text-center md:text-3xl text-base text-center py-2 font-medium">INTERNS PROGRESS TRACKER</p>
+                <p class="text-brand-red-dark lg:text-3xl text-center md:text-3xl text-base py-2 font-medium">INTERNS PROGRESS TRACKER</p>
                 <h2 class="text-brand-gray-dark-1 lg:text-md text-center md:text-md text-base lg:leading-10 md:leading-10 leading-2 font-medium">GET TO KNOW HOW WELL OUR INTERNS ARE DOING<br>
                     AND WHERE THEY CURRENTLY ARE</h2>
             </div>
@@ -86,11 +86,13 @@ export default {
 </script>
 
 <style>
-   #hideMe{
-   animation: hideAnimation 0s ease-in 4s;
-   animation-fill-mode: forwards;
- }
-
+#hideMe{
+    animation: hideAnimation 0s ease-in 4s;
+    animation-fill-mode: forwards;
+}
+.header-body {
+    height: calc(100vh - 82px);
+}
 @keyframes hideAnimation {
   to {
     visibility: hidden;
