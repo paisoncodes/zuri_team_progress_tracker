@@ -9,22 +9,21 @@
       <div class="h-72">
         <img class="w-full h-full object-cover" :src="intern.picture" alt="">
       </div>
-      
       <div class="md:col-span-3 mx-8 mt-5">
         <div class="grid md:grid-cols-2 md:gap-4">
-          <div class="w-full text-brand-gray-dark-1 font-normal">
-            <p class="mb-2 md:mb-0 text-xl">{{intern.full_name}}</p>
-            <p class="mb-2 md:mb-0  text-base">{{intern.stack.join(', ')}}</p>
+          <div class="w-full text-brand-gray-dark-1">
+            <p class="mb-2 md:mb-0 text-xl font-bold">{{intern.full_name}}</p>
+            <p class="mb-2 md:mb-0 text-base text-brand-gray-dark-4 font-medium">{{intern.stack.join(', ')}}</p>
           </div>
           <div class="w-full">
-            <p class="leading-tight text-brand-gray-dark-2">{{intern.about}}</p>
+            <p class="leading-tight text-brand-gray-light">{{intern.about}}</p>
           </div>          
         </div>
-        <div class="py-2">
-          <h3 class="my-4 text-brand-gray-dark-2">EXPERIENCE TRACKER</h3>
+        <div class="py-2 text-brand-gray-light">
+          <h3 class="my-4">EXPERIENCE TRACKER</h3>
           <!-- Large screen sizes -->
           <div class="hidden lg:block px-4 py-3"> 
-            <div class="flex items-center justify-between space-x-3 text-center w-11/12 my-10 h-3 text-brand-gray-dark-2 bg-brand-gray-dark-3">
+            <div class="flex items-center justify-between space-x-3 text-center w-11/12 my-10 h-3 bg-brand-gray-dark-3 text-sm">
 
               <div class="relative h-9 w-9 grid justify-items-center">
                 <div class="h-9 w-9 rounded-full bg-brand-gray-dark-3"></div>
@@ -57,7 +56,7 @@
           </div>
           <!-- Smaller screen sizes e.g Tabs -->
           <div class="hidden sm:block lg:hidden px-4 py-3"> 
-            <div class="flex items-center justify-between space-x-3 text-center w-11/12 my-10 h-3 text-brand-gray-dark-2 bg-brand-gray-dark-3">
+            <div class="flex items-center justify-between space-x-3 text-center w-11/12 my-10 h-3 text-brand-gray-light bg-brand-gray-dark-3 text-sm">
 
               <div class="relative h-9 w-9 grid justify-items-center">
                 <div class="h-9 w-9 rounded-full bg-brand-gray-dark-3"></div>
@@ -88,7 +87,7 @@
             <div><img class="w-10 rounded-full" src="@/assets/flutterwave.png" alt=""></div>
             <div><img class="w-10 rounded-full" src="@/assets/paypal.png" alt=""></div>
             <div><img class="w-10 rounded-full" src="@/assets/hotels.png" alt=""></div>
-            <div><img class="w-10 rounded-full" src="@/assets/paystack.png" alt=""></div>
+            <div><img class="w-10 rounded-full" src="@/assets/ss.jpeg" alt=""></div>
           </div>
           <!-- Edit button -->
           <div @click="showLogin(intern.id)" class="flex justify-end text-blue-500 cursor-pointer w-100 mt-3"  >
@@ -98,7 +97,6 @@
             <div class="ml-3">Edit</div>
           </div>
         </div>
-
       </div>
     </div>
     <!-- Pagination -->
