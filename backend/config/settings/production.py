@@ -8,6 +8,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "165.22.122.43",
+    "progress.zuri.team",
     "zuri-progress-tracker.herokuapp.com",
 ]
 
