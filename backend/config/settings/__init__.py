@@ -1,9 +1,9 @@
 from .common import *
-import os
+from decouple import config
 
 # you need to set "env = 'prod'" as an environment variable
 # in your OS (on which your website is hosted)
-if os.environ.get("env") == "prod":
+if config("env") == "prod":
     from .production import *
 else:
     from .development import *
