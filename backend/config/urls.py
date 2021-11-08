@@ -25,10 +25,8 @@ schema_view = get_schema_view(
         title="Progress Tracker API",
         default_version="1.0.0",
         description="Tracks the progress of past interns",
-        #   terms_of_service="https://www.google.com/policies/terms/",
-        #   contact=openapi.Contact(email="contact@snippets.local"),
-        #   license=openapi.License(name="BSD License"),
     ),
+    url="https://progress.zuri.team",
     public=True,
     permission_classes=(permissions.AllowAny,),
 )
