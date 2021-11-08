@@ -130,6 +130,9 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 20,
 }
 
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 ROOT_URLCONF = "config.urls"
 
 ### abstract user
