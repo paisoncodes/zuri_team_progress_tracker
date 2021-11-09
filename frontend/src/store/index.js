@@ -33,6 +33,7 @@ export default createStore({
       image: ''
     },
     formOneConfirmation: false,
+    statusMessage: "",
     formTwoConfirmation: false,
   },
   mutations: {
@@ -120,12 +121,17 @@ export default createStore({
         formData.append('is_employed', state.formOne.employed)
         formData.append('image', state.imageOne)     
       await ContributionServices.editIntern(state.currentUserID, formData).then(res => {
+        if(res.status == 202 || res.status == 200){
+        state.statusMessage = "Information Saved"
+        state.formOneConfirmation = !state.formOneConfirmation
+        console.log(res.status)
+        }
         return res
       })
       } catch (error) {
-        console.log(error)
-      }finally{
-        state.formOneConfirmation = !state.formOneConfirmation
+          state.statusMessage = "Error! Information Not Saved"
+          state.formOneConfirmation = !state.formOneConfirmation
+          console.log(error)
       }
     },
     async postJob({state}) {
@@ -137,18 +143,19 @@ export default createStore({
       formData.append('gotten_at', state.formTwo.dateGotten)
       formData.append('image', state.imageTwo)
 
-    //   for(var pair of formData.entries()){
-    //     console.log(pair[0], pair[1]);
-    // }
 
       await ContributionServices.postJob(state.currentUserID, formData).then(res => {
-        return res
+        if(res.status == 202 || res.status == 200){
+          state.statusMessage = "Information Saved"
+          state.formOneConfirmation = !state.formOneConfirmation
+          console.log(res.status)
+          }
+          return res
       })
       } catch (error) {
+        state.statusMessage = "Error! Information Not Saved"
+        state.formOneConfirmation = !state.formOneConfirmation
         console.log(error)
-      }
-      finally{
-        state.formTwoConfirmation = !state.formTwoConfirmation
       }
     },
     async getProgresStat({commit}, payload) {

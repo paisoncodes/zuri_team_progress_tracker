@@ -6,12 +6,16 @@
                     <component :is="component"></component>
                 </keep-alive>
                 <div :class="`mt-6 justify-end ${ component === 'FormTwo' ? 'hidden' : 'flex'}`">
-                    <button @click.prevent="editIntern" type="submit" class="py-3 px-12 text-brand-gray-dark-1 border border-black mr-3">Save</button>
-                    <button @click.prevent="component = 'FormTwo'" type="submit" class="py-3 px-12 bg-brand-gray-dark-1 text-white border border-brand-gray-dark-1">Add job</button>
+                    <button @click.prevent="editIntern" type="submit" class="py-3 px-12 text-brand-gray-dark-1 border border-black mr-3 hover:bg-brand-gray-light
+                  hover:text-white">Save</button>
+                    <button @click.prevent="component = 'FormTwo'" type="submit" class="py-3 px-12 bg-brand-gray-dark-1 text-white border border-brand-gray-dark-1 hover:bg-brand-gray-light
+                  hover:text-white">Add job</button>
                 </div>
                 <div :class="`mt-6 justify-end ${ component === 'FormOne' ? 'hidden' : 'flex' }`">
-                    <button  @click.prevent="toggleModal()" type="submit" class="py-3 px-12 text-brand-gray-dark-1 border border-black mr-3">Cancel</button>
-                    <button @click.prevent="postJob" type="submit" class="py-3 px-12 bg-brand-gray-dark-1 text-white border border-brand-gray-dark-1">Save</button>
+                    <button  @click.prevent="toggleModal()" type="submit" class="py-3 px-12 text-brand-gray-dark-1 border border-black mr-3 hover:bg-brand-gray-light
+                  hover:text-white">Cancel</button>
+                    <button @click.prevent="postJob" type="submit" class="py-3 px-12 bg-brand-gray-dark-1 text-white border border-brand-gray-dark-1 hover:bg-brand-gray-light
+                  hover:text-white">Save</button>
                 </div>
             </form>
         </div>
