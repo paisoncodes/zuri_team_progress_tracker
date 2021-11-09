@@ -5,7 +5,7 @@
             <img src="../assets/closeicon.svg" alt="" class="w-4 h-4 m-2"/>
         </div>
         <div class="block xs:flex justify-between items-center mb-4 xs:mb-10">
-            <p style="color:red" v-if="this.$store.state.formTwoConfirmation" class="text-center">Information saved</p>
+            <p style="color:red" v-if="this.$store.state.formTwoConfirmation" class="text-center">{{$store.state.statusMessage}}</p>
             <h1 class="text-2xl">EDIT PROFILE</h1>
                 <p class="text-2xl text-brand-gray-light">2/2</p>
         </div>
