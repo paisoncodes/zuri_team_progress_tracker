@@ -35,21 +35,11 @@ SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", cast=bool)
 
 ALLOWED_HOSTS = [
-    "0.0.0.0",
     "localhost",
     "127.0.0.1",
-    "165.22.122.43",
     "progress.zuri.team",
     "zuri-progress-tracker.herokuapp.com",
 ]
-
-# corspolicy settings
-# CORS_ALLOW_ALL_ORIGINS = False
-# CORS_ORIGIN_WHITELIST = (
-#     "http://localhost:8080",
-#     "https://zuriprogresstracker.netlify.app",
-# )
-
 
 # rest_framework global configs
 REST_FRAMEWORK = {
@@ -62,7 +52,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-
 SPECTACULAR_SETTINGS = {
     "TITLE": "Progress Tracker API",
     "DESCRIPTION": "Tracks the progress of past interns",
@@ -70,9 +59,7 @@ SPECTACULAR_SETTINGS = {
     # OTHER SETTINGS
 }
 
-
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
