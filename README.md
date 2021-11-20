@@ -7,7 +7,7 @@ Clone this project
 
 create .env file in the backend directory and add your env variable
 ```bash
-SECRET_KEY=
+SECRET_KEY= 'a secret'
 ```
 
 create virtual environment
