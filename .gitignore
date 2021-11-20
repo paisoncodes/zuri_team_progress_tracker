@@ -53,3 +53,5 @@ backend/app/__pycache__
 backend/config/__pycache__
 .idea
 # /backend/app/migrations/
+backend/start.sh
+frontend/dist
