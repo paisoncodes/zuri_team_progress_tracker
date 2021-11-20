@@ -33,6 +33,7 @@ export default createStore({
       image: ''
     },
     formOneConfirmation: false,
+    statusMessage: "",
     formTwoConfirmation: false,
   },
   mutations: {
@@ -75,13 +76,11 @@ export default createStore({
         commit("setCount", response.data.count)
         commit("allInterns", response.data.results)
         commit("setNext", response.data.next);
-        console.log(response)
       })
     },
     async getStack({commit, getters}, payload) {
       const year = getters.year
       await ContributionServices.getStack(payload, year).then(response => {
-       // console.log(response)
         commit("allInterns", response.data.results)
         commit("setCount", response.data.count)
         commit("setNext", response.data.next);
@@ -122,12 +121,17 @@ export default createStore({
         formData.append('is_employed', state.formOne.employed)
         formData.append('image', state.imageOne)     
       await ContributionServices.editIntern(state.currentUserID, formData).then(res => {
+        if(res.status == 202 || res.status == 200){
+        state.statusMessage = "Information Saved"
+        state.formOneConfirmation = !state.formOneConfirmation
+        console.log(res.status)
+        }
         return res
       })
       } catch (error) {
-        console.log(error)
-      }finally{
-        state.formOneConfirmation = !state.formOneConfirmation
+          state.statusMessage = "Error! Information Not Saved"
+          state.formOneConfirmation = !state.formOneConfirmation
+          console.log(error)
       }
     },
     async postJob({state}) {
@@ -139,14 +143,19 @@ export default createStore({
       formData.append('gotten_at', state.formTwo.dateGotten)
       formData.append('image', state.imageTwo)
 
+
       await ContributionServices.postJob(state.currentUserID, formData).then(res => {
-        console.log(res)
+        if(res.status == 202 || res.status == 200){
+          state.statusMessage = "Information Saved"
+          state.formOneConfirmation = !state.formOneConfirmation
+          console.log(res.status)
+          }
+          return res
       })
       } catch (error) {
+        state.statusMessage = "Error! Information Not Saved"
+        state.formOneConfirmation = !state.formOneConfirmation
         console.log(error)
-      }
-      finally{
-        state.formTwoConfirmation = !state.formTwoConfirmation
       }
     },
     async getProgresStat({commit}, payload) {

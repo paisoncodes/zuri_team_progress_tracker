@@ -1,17 +1,11 @@
 <template>
   <div class="flex flex-col w-full text-center bg-white">
-    <NavbarComponent />
-    <Subscribe />
-
-    <div class="pt-0">
-      <div class="px-6 py-10 mx-auto max-w-7xl bg-brand-red-light-1">
-        <MeetOurIntern :finalists="finalists" :totalCombinedSalary="totalCombinedSalary" :finalistDescription="finalistDescription"/>
-        <InternProfile />
-        <Interns />
-        <FilterButton />
-        <ExperienceTracker />
-        <Footer />
-      </div>
+    <div class="px-6 py-10 mx-auto max-w-7xl bg-brand-red-light-1">
+      <MeetOurIntern :finalists="finalists" :totalCombinedSalary="totalCombinedSalary" :finalistDescription="finalistDescription"/>
+      <InternProfile />
+      <Interns />
+      <FilterButton />
+      <ExperienceTracker />
     </div>
   </div>
 </template>
