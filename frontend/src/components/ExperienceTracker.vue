@@ -6,7 +6,7 @@
       </p>    
     </div>
     <div class="sm:grid md:grid-cols-4 mb-8 bg-brand-red-light-3" v-for="(intern, index) in getAllInterns" :key="index" >
-      <div class="h-72">
+      <div class="relative h-72">
         <img class="w-full h-full object-cover" :src="intern.picture" alt="">
       </div>
       <div class="md:col-span-3 mx-8 mt-5">
