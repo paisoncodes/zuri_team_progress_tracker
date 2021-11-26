@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 from pathlib import Path
+from decouple import config
 
 # from decouple import config
 from corsheaders.defaults import default_methods
@@ -28,18 +29,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = config("DEBUG", cast=bool)
 
-
-# corspolicy settings
-# CORS_ALLOW_ALL_ORIGINS = False
-# CORS_ORIGIN_WHITELIST = (
-#     "http://localhost:8080",
-#     "https://zuriprogresstracker.netlify.app",
-# )
-
-
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "progress.zuri.team",
+    "zuri-progress-tracker.herokuapp.com",
+]
 
 # rest_framework global configs
 REST_FRAMEWORK = {
@@ -52,7 +52,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-
 SPECTACULAR_SETTINGS = {
     "TITLE": "Progress Tracker API",
     "DESCRIPTION": "Tracks the progress of past interns",
@@ -60,9 +59,7 @@ SPECTACULAR_SETTINGS = {
     # OTHER SETTINGS
 }
 
-
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -120,6 +117,9 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 20,
 }
 
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 ROOT_URLCONF = "config.urls"
 
 ### abstract user
@@ -147,6 +147,17 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": config("DB_NAME"),
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST"),
+        "PORT": config("DB_PORT"),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

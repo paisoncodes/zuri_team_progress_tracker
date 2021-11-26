@@ -481,12 +481,13 @@ class NewsLetterSubscribersView(APIView):
         [type]: [description]
     """
 
-    def get(self):
+    def get(self, request):
         """[summary]
 
         Returns:
             [type]: [description]
         """
+        print(request)
         subscriber = NewsLetter.objects.all()
         serializer = NewsLetterSerializer(subscriber, many=True)
         return Response(serializer.data)

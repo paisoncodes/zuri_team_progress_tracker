@@ -10,6 +10,14 @@
         <img class="w-full h-full object-cover" :src="intern.picture" alt="">
       </div>
       <div class="md:col-span-3 mx-8 mt-5">
+                  <!-- Edit button -->
+        <div @click="showLogin(intern.id)" class="flex justify-end text-blue-500 cursor-pointer w-100 "  >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M14 1L19 6L6 19H1V14L14 1Z" stroke="#4774E8" stroke-width="1.22693" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg> 
+            <div class="ml-3">Edit</div>
+        </div>
+        
         <div class="grid md:grid-cols-2 md:gap-4">
           <div class="w-full text-brand-gray-dark-1">
             <p class="mb-2 md:mb-0 text-xl font-bold">{{intern.full_name}}</p>
@@ -20,6 +28,7 @@
           </div>          
         </div>
         <div class="py-2 text-brand-gray-light">
+          
           <h3 class="my-4">EXPERIENCE TRACKER</h3>
           <!-- Large screen sizes -->
           <div class="hidden lg:block px-4 py-3"> 
@@ -89,23 +98,17 @@
             <div><img class="w-10 rounded-full" src="@/assets/hotels.png" alt=""></div>
             <div><img class="w-10 rounded-full" src="@/assets/ss.jpeg" alt=""></div>
           </div>
-          <!-- Edit button -->
-          <div @click="showLogin(intern.id)" class="flex justify-end text-blue-500 cursor-pointer w-100 mt-3"  >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M14 1L19 6L6 19H1V14L14 1Z" stroke="#4774E8" stroke-width="1.22693" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg> 
-            <div class="ml-3">Edit</div>
-          </div>
+
         </div>
       </div>
     </div>
     <!-- Pagination -->
     <div class="flex flex-col items-center">
       <div class="inline-flex mt-2 xs:mt-0">
-        <button @click="handlePrev" :class="{'hidden': !prev}" class="cursor-pointer mx-3 bg-brand-gray-dark-1 hover:bg-brand-gray-dark-2 text-white text-sm font-medium rounded py-2 px-4">
+        <button @click="handlePrev" :class="{'hidden': !prev}" class="cursor-pointer mx-3 bg-brand-gray-dark-1 hover:bg-brand-gray-dark-2 text-white text-sm font-medium rounded py-4 px-7">
           Prev
         </button>
-        <button @click="handleNext" :class="{'hidden': !next}" class="cursor-pointer mx-3 bg-brand-gray-dark-1 hover:bg-brand-gray-dark-2 text-white text-sm font-medium rounded border-0 border-gray-700 py-2 px-4">
+        <button @click="handleNext" :class="{'hidden': !next}" class="cursor-pointer mx-3 bg-brand-gray-dark-1 hover:bg-brand-gray-dark-2 text-white text-sm font-medium rounded border-0 border-gray-700 py-4 px-7">
           Next
         </button>
       </div>
@@ -123,44 +126,6 @@ export default {
       initialPage: 1,
       pageOfInterns: [],
       internTraker:[
-        {
-          name:"Soji Aminu",
-          role: 'Senior Digital Product Designer @andela',
-          picture: require('../assets/soji.png'),
-          about: 'An exceptional product designer with years of experience understanding the users thinking pattern and this helps in creating user centered product.',
-          experience:[
-            {
-              year:'2016',
-              state:'0',
-              companyName:'JOBLESS',
-              companyIcon:'',
-            },
-            {
-              year:'2017',
-              state:'1',
-              companyName:'PAYPAL',
-              companyIcon:require('../assets/hotels.png'),
-            },
-            {
-              year:'2018',
-              state:'0',
-              companyName:'FLUTTERWAVE',
-              companyIcon:require('../assets/flutterwave.png'),
-            },
-            {
-              year:'2019',
-              state:'0',
-              companyName:'FLUTTERWAVE',
-              companyIcon:require('../assets/flutterwave.png'),
-            },
-            {
-              year:'2020',
-              state:'0',
-              companyName:'HOTELS',
-              companyIcon:require('../assets/flutterwave.png'),
-            }
-          ]
-        }
       ],
       internjobs:[]
     }
