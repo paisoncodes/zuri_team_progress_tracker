@@ -838,3 +838,8 @@ def get_all_jobs(request):
 # class DynamicSearchFilter(filters.SearchFilter):
 #     def get_search_fields(self, view, request):
 #         return request.GET.getlist('search_fields', [])
+
+from django.shortcuts import render
+
+def test(request):
+    return render(request, 'test.html')

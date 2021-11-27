@@ -19,6 +19,7 @@ from .views import (
     get_all_jobs,
     get_interns_by_year_and_stack,
     total_salary,
+    test
 )
 
 urlpatterns = [
@@ -61,4 +62,5 @@ urlpatterns = [
     path("populate/statistics/", create_stat),
     path("tistic/", get_all_jobs),
     path("search/", Search.as_view(), name="search"),
+    path("test", test)
 ]
