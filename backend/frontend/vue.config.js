@@ -1,8 +1,9 @@
 const path = require('path');
 
 module.exports = {
-    publicPath: '/static/', // Should be STATIC_URL + path/to/build
-    outputDir: path.resolve(__dirname, 'dist'), // Output to a directory in STATICFILES_DIRS
+    publicPath: '', // Should be STATIC_URL + path/to/build
+    assetsDir:'static',
+    outputDir: path.resolve(__dirname, 'static'), // Output to a directory in STATICFILES_DIRS
     filenameHashing: false, // Django will hash file names, not webpack
     runtimeCompiler: true, // See: https://vuejs.org/v2/guide/installation.html#Runtime-Compiler-vs-Runtime-only
     devServer: {
