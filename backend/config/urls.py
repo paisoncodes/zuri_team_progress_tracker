@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
+from django.urls.conf import re_path
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import TemplateView
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -37,6 +39,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/", include("app.urls")),
     path("api/v1/admin/", include("custom_admin.urls")),
+    re_path(r'^.*$', TemplateView.as_view(template_name="index.html"))
 ]
 
 
