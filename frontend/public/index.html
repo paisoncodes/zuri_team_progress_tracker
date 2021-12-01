@@ -1,3 +1,8 @@
+{% extends 'base.html' %}
+
+
+{% block html %}
+
 <!DOCTYPE html>
 <html lang="">
   <head>
@@ -8,10 +13,14 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
+    
+    {% block body %}
+      {{ block.super }}
+    {% endblock body %}
+      
     <!-- built files will be auto injected -->
   </body>
 </html>
+  
+{% endblock html %}
+  

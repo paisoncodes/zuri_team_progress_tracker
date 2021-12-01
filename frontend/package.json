@@ -15,7 +15,8 @@
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0",
-    "vuex-map-fields": "^1.4.1"
+    "vuex-map-fields": "^1.4.1",
+    "webpack-bundle-tracker": "0.4.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

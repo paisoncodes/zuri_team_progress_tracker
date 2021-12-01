@@ -18,7 +18,9 @@ yarn build
 
 cd ../backend
 
-# python3 manage.py collectstatic --noinput
+python3 manage.py migrate
+
+python3 manage.py collectstatic --noinput
 
 fuser -k 8000/tcp
 

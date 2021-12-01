@@ -1,0 +1,12 @@
+{% extends 'base-vue.html' %}
+{% load render_bundle from webpack_loader %}
+
+
+{% block content %}
+
+    <div id="app">
+        {% render_bundle  'app' %}
+    </div>
+
+{% endblock content %}
+    

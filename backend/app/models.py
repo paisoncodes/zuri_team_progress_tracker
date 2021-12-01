@@ -88,7 +88,7 @@ class Intern(models.Model):
         primary_key=True, default=uuid.uuid4, editable=False, unique=True
     )
     full_name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=255, blank=True)
+    email = models.EmailField(max_length=255, blank=True, unique=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     about = models.TextField()
     state = models.CharField(max_length=200)
