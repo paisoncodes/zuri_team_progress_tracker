@@ -4,7 +4,7 @@ module.exports = {
     publicPath: process.env.NODE_ENV === "production" ? "/static/dist/" : "http://localhost:8080",
     outputDir: "../backend/static/dist",
     indexPath: "../../templates/base-vue.html",
-
+    
     chainWebpack: config => {
         config.optimization
             .splitChunks(false)
