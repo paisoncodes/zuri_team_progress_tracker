@@ -71,3 +71,4 @@ utils-core==0.1.2
 virtualenv==20.4.7
 virtualenv-clone==0.5.4
 whitenoise==5.3.0
+django-webpack-loader==0.7.0

@@ -24,6 +24,27 @@ from corsheaders.defaults import default_headers
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_PREFLIGHT_MAX_AGE = 86400
+
+CORS_REPLACE_HTTPS_REFERER = True
+
+CORS_ALLOW_HEADERS = ['*']
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+    "HEAD",
+]
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -51,26 +72,6 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication"
     ],
 }
-
-CORS_ALLOW_ALL_ORIGINS = True
-
-CORS_ALLOW_CREDENTIALS = True
-
-CORS_PREFLIGHT_MAX_AGE = 86400
-
-CORS_REPLACE_HTTPS_REFERER = True
-
-CORS_ALLOW_HEADERS = ['*']
-
-CORS_ALLOW_METHODS = [
-    "DELETE",
-    "GET",
-    "OPTIONS",
-    "PATCH",
-    "POST",
-    "PUT",
-    "HEAD",
-]
 SPECTACULAR_SETTINGS = {
     "TITLE": "Progress Tracker API",
     "DESCRIPTION": "Tracks the progress of past interns",
@@ -87,6 +88,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    # "webpack_loader",
     "app.apps.AppConfig",
     "custom_admin",
     "corsheaders",
@@ -214,3 +216,15 @@ MEDIA_URL = "/media/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
+# # Webpack Loader
+# WEBPACK_LOADER = {
+#     "DEFAULT" : {
+#         "CACHE": not DEBUG,
+#         "BUNDLE_DIR_NAME": "dist/",
+#         "STATS_FILE": os.path.join(BASE_DIR, "../frontend/webpack-stats.json"),
+#         "TIMEOUT": 360000,
+#         "IGNORE": ['.*\.hot-update.js', '.*\.map']
+#     }
+# }

@@ -55,3 +55,4 @@ backend/config/__pycache__
 # /backend/app/migrations/
 backend/start.sh
 frontend/dist
+base-vue.html
