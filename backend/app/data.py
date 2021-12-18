@@ -125,7 +125,8 @@ def create_intern(data):
         batch=YEAR,
         is_employed=employed,
         current_salary=2500,
-        picture="https://res.cloudinary.com/psami-wondah/image/upload/v1635282292/profile_pic_yxkand.png"
+        picture=get_image_link(data["Your Photo"]),
+        # picture="https://res.cloudinary.com/psami-wondah/image/upload/v1635282292/profile_pic_yxkand.png"
     )
     intern.save()
     stack_data_list = data["Your Stacks"].split(",")
