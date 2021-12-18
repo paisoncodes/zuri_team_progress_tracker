@@ -23,7 +23,6 @@ from rest_framework import permissions
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 
-
 from django.views.generic import TemplateView
 
 
